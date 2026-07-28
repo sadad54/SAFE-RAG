@@ -35,6 +35,25 @@ python scripts/02_run_rag.py --preflight
 Kaggle Notebooks give ~30 GPU-hours a week free; Colab's free tier gives a T4 with
 shorter sessions. Either finishes the full 2,786-question run in well under an hour.
 
+### Turn these on before running anything
+
+**Kaggle** — right-hand panel → Settings:
+
+- **Internet: On.** Off by default. Without it you get
+  `fatal: unable to access ...: Could not resolve host: github.com`, and then a
+  confusing cascade: no clone, so no repo directory, so `%cd` fails, so `pip
+  install -e .` runs in `/kaggle/working` and reports "neither 'setup.py' nor
+  'pyproject.toml' found". One root cause, three error messages.
+  Enabling internet requires a **phone-verified Kaggle account** (Account settings).
+- **Accelerator: GPU T4 ×2** (or P100).
+
+**Colab** — Runtime → Change runtime type → T4 GPU. Internet is on by default and
+no phone verification is needed, so this is the faster route if you would rather
+not verify.
+
+There is no offline workaround: even with the repo and corpus uploaded as a Kaggle
+Dataset, the model weights still have to be downloaded from HuggingFace.
+
 Only step 02 needs to run there. The plan:
 
 1. Push your repo (already done).
