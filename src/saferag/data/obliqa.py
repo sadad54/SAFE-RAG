@@ -25,7 +25,8 @@ from typing import Any
 _QID_KEYS = ("QuestionID", "question_id", "qid", "id")
 _QUESTION_KEYS = ("Question", "question", "query", "text")
 _PASSAGES_KEYS = ("Passages", "passages", "relevant_passages", "positives", "contexts")
-_PID_KEYS = ("PassageID", "passage_id", "pid", "id", "DocumentID")
+_PID_KEYS = ("PassageID", "passage_id", "pid", "id")
+_DOCID_KEYS = ("DocumentID", "document_id", "doc_id")
 _PTEXT_KEYS = ("Passage", "passage", "text", "content", "body")
 
 
@@ -87,9 +88,14 @@ def adapt_record(record: dict[str, Any]) -> Question:
             continue
         if not isinstance(p, dict):
             continue
-        pid = _first(p, _PID_KEYS) or f"{qid}::p{i}"
+        # ObliQA's PassageID is only unique WITHIN a document ("3)", "1.1.2"),
+        # so the key must be composite. Joining on PassageID alone collides
+        # across the 40 ADGM documents and silently corrupts the S3 screen.
+        pid = _first(p, _PID_KEYS) or f"p{i}"
+        doc = _first(p, _DOCID_KEYS)
+        full_id = f"{doc}::{pid}" if doc is not None else f"{qid}::{pid}"
         ptext = _first(p, _PTEXT_KEYS) or ""
-        passages.append(Passage(passage_id=str(pid), text=str(ptext)))
+        passages.append(Passage(passage_id=full_id, text=str(ptext)))
 
     return Question(
         question_id=str(qid),

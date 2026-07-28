@@ -237,7 +237,43 @@ def test_rrf_promotes_consensus():
 # --------------------------------------------------------------------------
 
 
-def test_adapter_handles_capitalised_layout():
+def test_adapter_handles_real_obliqa_record():
+    """The exact shape documented in the ObliQA README."""
+    q = adapt_record(
+        {
+            "QuestionID": "7824b4b4-bb50-432f-bc81-9f4cb80b2320",
+            "Question": "What documentation does the FSRA require?",
+            "Passages": [
+                {"DocumentID": 30, "PassageID": "3)", "Passage": "INTRODUCTION. The framework..."},
+                {"DocumentID": 30, "PassageID": "9)", "Passage": "DISCLOSURES. Rule 11.2.1..."},
+            ],
+            "Group": 3,
+        }
+    )
+    assert q.question_id == "7824b4b4-bb50-432f-bc81-9f4cb80b2320"
+    assert q.gold_passage_ids == ["30::3)", "30::9)"]
+
+
+def test_passage_ids_are_document_scoped():
+    """PassageID alone is only unique within a document.
+
+    Regression guard: joining on the bare PassageID collides across ObliQA's 40
+    documents, which would silently corrupt the S3 attribution screen -- the two
+    passages below are different text under the same PassageID '3.1'.
+    """
+    a = adapt_record(
+        {"QuestionID": "q1", "Question": "a",
+         "Passages": [{"DocumentID": 11, "PassageID": "3.1", "Passage": "Doc 11 text."}]}
+    )
+    b = adapt_record(
+        {"QuestionID": "q2", "Question": "b",
+         "Passages": [{"DocumentID": 30, "PassageID": "3.1", "Passage": "Doc 30 text."}]}
+    )
+    assert a.gold_passage_ids != b.gold_passage_ids
+    assert build_passage_corpus([a, b]) == {"11::3.1": "Doc 11 text.", "30::3.1": "Doc 30 text."}
+
+
+def test_adapter_handles_capitalised_layout_without_docid():
     q = adapt_record(
         {
             "QuestionID": "q1",
@@ -246,7 +282,7 @@ def test_adapter_handles_capitalised_layout():
         }
     )
     assert q.question_id == "q1"
-    assert q.gold_passage_ids == ["p1"]
+    assert q.gold_passage_ids == ["q1::p1"]
 
 
 def test_adapter_handles_snake_case_layout():
@@ -273,10 +309,12 @@ def test_adapter_raises_loudly_on_unknown_layout():
     assert "Keys present" in str(exc.value)
 
 
-def test_build_corpus_deduplicates():
-    a = adapt_record({"qid": "q1", "query": "a", "passages": [{"pid": "p1", "text": "same"}]})
-    b = adapt_record({"qid": "q2", "query": "b", "passages": [{"pid": "p1", "text": "same"}]})
-    assert build_passage_corpus([a, b]) == {"p1": "same"}
+def test_build_corpus_deduplicates_shared_passages():
+    """The same ADGM passage cited by two questions appears once in the corpus."""
+    rec = {"DocumentID": 11, "PassageID": "1.1.2", "Passage": "same"}
+    a = adapt_record({"QuestionID": "q1", "Question": "a", "Passages": [rec]})
+    b = adapt_record({"QuestionID": "q2", "Question": "b", "Passages": [rec]})
+    assert build_passage_corpus([a, b]) == {"11::1.1.2": "same"}
 
 
 # --------------------------------------------------------------------------
