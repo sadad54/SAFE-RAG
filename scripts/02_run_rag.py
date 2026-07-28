@@ -24,10 +24,12 @@ from saferag.config import load_config  # noqa: E402
 from saferag.data.obliqa import load_questions  # noqa: E402
 from saferag.generation.generator import (  # noqa: E402
     build_generator,
+    gpu_report,
     prompt_fingerprint,
     render_prompt,
     write_prompt_template,
 )
+from saferag.generation.schema import check_schema  # noqa: E402
 from saferag.retrieval.hybrid import HybridRetriever  # noqa: E402
 from saferag.utils.io import write_jsonl  # noqa: E402
 from saferag.utils.logging import get_logger  # noqa: E402
@@ -36,18 +38,85 @@ from saferag.utils.provenance import stamp  # noqa: E402
 log = get_logger("run_rag")
 
 
+def _selftest(generator, prompts: list[str]) -> int:
+    """Batched and unbatched generation must agree.
+
+    Decoder-only models need LEFT padding for batched generation. Get it wrong and
+    the model continues from pad tokens instead of from the prompt -- output stays
+    fluent and plausible while being wrong, which is the worst kind of bug. This
+    catches it in about a minute on the real model rather than after a long run.
+    """
+    if len(prompts) < 2:
+        log.error("Need at least 2 prompts for the self-test.")
+        return 1
+
+    log.info("Generating %d prompts one at a time...", len(prompts))
+    solo = [generator.generate([p])[0] for p in prompts]
+    log.info("Generating the same %d as one batch...", len(prompts))
+    batched = generator.generate(prompts)
+
+    mismatches = [i for i, (a, b) in enumerate(zip(solo, batched, strict=True)) if a != b]
+
+    print("\n" + "=" * 70)
+    print("  BATCHING SELF-TEST")
+    print("=" * 70)
+    for i, (a, b) in enumerate(zip(solo, batched, strict=True)):
+        print(f"    prompt {i}: {'MISMATCH' if a != b else 'ok'}")
+        if a != b:
+            print(f"      unbatched: {a[:110]!r}")
+            print(f"      batched  : {b[:110]!r}")
+
+    print()
+    if mismatches:
+        print("  FAILED. Batched output differs from unbatched.")
+        print("  Almost always left-padding: check tokenizer.padding_side == 'left'")
+        print("  and that pad_token is set. Use --batch-size 1 until it is fixed;")
+        print("  results from a mismatching batch configuration are not trustworthy.")
+        print("=" * 70 + "\n")
+        return 1
+
+    n_valid = sum(1 for o in batched if check_schema(o).valid)
+    print("  PASSED. Batching is safe at this size.")
+    print(f"  Schema-valid outputs: {n_valid}/{len(batched)}")
+    if n_valid < len(batched):
+        print("  Some output did not parse. Inspect before the full run:")
+        for o in batched:
+            if not check_schema(o).valid:
+                print(f"    {o[:200]!r}")
+                break
+    print("=" * 70 + "\n")
+    return 0
+
+
 def main() -> int:
     ap = base_parser("Generate structured answers over ObliQA.")
     ap.add_argument("--backend", default=None, help="Override generation backend (vllm|hf|stub)")
     ap.add_argument("--limit", type=int, default=None, help="Override number of questions")
     ap.add_argument("--no-dense", action="store_true", help="BM25 only (skips torch entirely)")
-    ap.add_argument("--batch-size", type=int, default=32, help="Generation batch size")
+    ap.add_argument("--batch-size", type=int, default=8, help="Generation batch size")
+    ap.add_argument("--model", default=None, help="Override the generation model")
+    ap.add_argument(
+        "--preflight", action="store_true",
+        help="Report GPU/VRAM and the recommended model size, then exit",
+    )
+    ap.add_argument(
+        "--selftest", action="store_true",
+        help="Generate 4 prompts unbatched and batched, check they agree, then exit",
+    )
     args = ap.parse_args()
+
+    if args.preflight:
+        print("\n  PREFLIGHT")
+        for k, v in gpu_report().items():
+            print(f"    {k:<10} {v}")
+        print()
+        return 0
 
     cfg = load_config(args.config)
     p = paths(cfg)
 
     backend = args.backend or cfg.generation.backend
+    model_name = args.model or cfg.generation.model
     limit = args.limit or cfg.data.n_questions
 
     files = sorted(list(p["raw"].glob("*.json")) + list(p["raw"].glob("*.jsonl")))
@@ -79,7 +148,10 @@ def main() -> int:
         rrf_k=cfg.retrieval.fusion.rrf_k,
     )
 
-    log.info("Building generator: backend=%s model=%s", backend, cfg.generation.model)
+    log.info("Building generator: backend=%s model=%s", backend, model_name)
+    if backend != "stub":
+        for k, v in gpu_report().items():
+            log.info("  %s: %s", k, v)
     gen_kwargs = {}
     if backend != "stub":
         gen_kwargs = {
@@ -88,7 +160,7 @@ def main() -> int:
         }
         if backend == "vllm":
             gen_kwargs["temperature"] = cfg.generation.temperature
-    generator = build_generator(backend, cfg.generation.model, **gen_kwargs)
+    generator = build_generator(backend, model_name, **gen_kwargs)
 
     # Retrieve first, so generation can be batched.
     log.info("Retrieving top-%d", cfg.retrieval.top_k)
@@ -98,6 +170,9 @@ def main() -> int:
         contexts.append([(h.passage_id, corpus.get(h.passage_id, "")) for h in hits])
 
     prompts = [render_prompt(q.question, ctx) for q, ctx in zip(questions, contexts, strict=True)]
+
+    if args.selftest:
+        return _selftest(generator, prompts[:4])
 
     log.info("Generating %d answers", len(prompts))
     raw_outputs: list[str] = []
@@ -124,7 +199,7 @@ def main() -> int:
         config_path=str(args.config),
         seed=cfg.seed,
         models={
-            "generator": cfg.generation.model if backend != "stub" else "stub",
+            "generator": model_name if backend != "stub" else "stub",
             "dense_retriever": "none" if args.no_dense else cfg.retrieval.dense.model,
         },
         backend=backend,

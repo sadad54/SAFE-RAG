@@ -30,8 +30,13 @@ retrieval:
 
 generation:
   # MUST be a different model family from checks.nli.model. See pre-registration S5.
+  # Pick by VRAM -- run `python scripts/02_run_rag.py --preflight` to check:
+  #   >=14 GB  Qwen/Qwen2.5-7B-Instruct
+  #    8-14 GB Qwen/Qwen2.5-3B-Instruct
+  #    <8 GB   Qwen/Qwen2.5-1.5B-Instruct
+  # Whichever you use goes in the provenance header; record it in the write-up.
   model: Qwen/Qwen2.5-7B-Instruct
-  backend: vllm                   # vllm | hf | stub
+  backend: hf                     # vllm (Linux+CUDA) | hf (anywhere) | stub
   max_new_tokens: 512
   temperature: 0.0                # [REGISTERED] deterministic
   seed: 20260728

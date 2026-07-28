@@ -2,11 +2,11 @@
 
 Three backends:
 
-* ``vllm``  -- fast batched local inference. Linux + CUDA. Use this on the cluster.
-* ``hf``    -- transformers fallback. Slow, but runs anywhere torch runs.
+* ``vllm``  -- fast batched local inference. Linux + CUDA.
+* ``hf``    -- transformers. Runs anywhere torch runs, including Windows. Batched.
 * ``stub``  -- deterministic fake output. No models, no GPU. Used by the tests and
-               useful for exercising the whole pipeline end to end on a laptop
-               before committing cluster time.
+               for exercising the whole pipeline end to end before committing real
+               compute.
 
 Temperature is pinned to 0 and the seed is recorded, because the pilot's numbers
 must be reproducible from the manifest.
@@ -48,6 +48,46 @@ def render_prompt(question: str, passages: Sequence[tuple[str, str]]) -> str:
 def prompt_fingerprint() -> str:
     """Hash of the prompt template, recorded in provenance."""
     return hashlib.sha256(PROMPT_V1.encode()).hexdigest()[:12]
+
+
+def gpu_report() -> dict[str, object]:
+    """What hardware is available, and what model size it can hold.
+
+    Returned rather than printed so callers can put it in a provenance header.
+    Degrades to a CPU verdict when torch is missing.
+    """
+    try:
+        import torch
+    except ImportError:
+        return {"torch": False, "cuda": False, "advice": "torch not installed: pip install -e '.[models]'"}
+
+    if not torch.cuda.is_available():
+        return {
+            "torch": True,
+            "cuda": False,
+            "advice": "No CUDA device. A 7B model on CPU is impractically slow "
+                      "(hours for a few hundred items). Use --limit for a smoke run, "
+                      "or move generation to the cluster.",
+        }
+
+    props = torch.cuda.get_device_properties(0)
+    vram_gb = props.total_memory / 1024**3
+    if vram_gb >= 20:
+        advice = "Fits a 7B model in fp16 comfortably."
+    elif vram_gb >= 14:
+        advice = "7B in fp16 is tight but usually fits. Reduce --batch-size if you OOM."
+    elif vram_gb >= 8:
+        advice = "Too small for 7B in fp16. Use a 3B model, e.g. Qwen/Qwen2.5-3B-Instruct."
+    else:
+        advice = "Use a 1.5B model, e.g. Qwen/Qwen2.5-1.5B-Instruct, and expect weaker output."
+
+    return {
+        "torch": True,
+        "cuda": True,
+        "device": props.name,
+        "vram_gb": round(vram_gb, 1),
+        "advice": advice,
+    }
 
 
 class Generator(ABC):
@@ -100,44 +140,92 @@ class StubGenerator(Generator):
 
 
 class HFGenerator(Generator):
-    """transformers backend. Correct but slow; fine for a few hundred items."""
+    """transformers backend, batched. Works on Windows.
+
+    Decoder-only models must be LEFT-padded for batched generation: right padding
+    puts pad tokens between the prompt and the first generated token, and the
+    model continues from padding instead of from the prompt. This is the single
+    most common cause of silently garbage batched output.
+    """
 
     name = "hf"
 
-    def __init__(self, model: str, max_new_tokens: int = 512, seed: int = 20260728) -> None:
+    def __init__(
+        self,
+        model: str,
+        max_new_tokens: int = 512,
+        seed: int = 20260728,
+        dtype: str = "auto",
+    ) -> None:
         try:
             import torch
             from transformers import AutoModelForCausalLM, AutoTokenizer, set_seed
         except ImportError as exc:  # pragma: no cover
             raise ImportError("pip install -e '.[models]'") from exc
+
         set_seed(seed)
-        self.tok = AutoTokenizer.from_pretrained(model)
-        self.model = AutoModelForCausalLM.from_pretrained(
-            model, torch_dtype="auto", device_map="auto"
-        )
-        self.max_new_tokens = max_new_tokens
         self._torch = torch
+        self.tok = AutoTokenizer.from_pretrained(model)
+        if self.tok.pad_token is None:
+            self.tok.pad_token = self.tok.eos_token
+        self.tok.padding_side = "left"
+
+        torch_dtype = (
+            torch.float16 if dtype == "auto" and torch.cuda.is_available()
+            else torch.float32 if dtype == "auto"
+            else getattr(torch, dtype)
+        )
+        self.model = AutoModelForCausalLM.from_pretrained(
+            model,
+            torch_dtype=torch_dtype,
+            device_map="auto" if torch.cuda.is_available() else None,
+        ).eval()
+        if not torch.cuda.is_available():
+            self.model.to("cpu")
+        self.max_new_tokens = max_new_tokens
+
+    def _apply_template(self, prompt: str) -> str:
+        if getattr(self.tok, "chat_template", None):
+            return self.tok.apply_chat_template(
+                [{"role": "user", "content": prompt}],
+                tokenize=False,
+                add_generation_prompt=True,
+            )
+        return prompt
 
     def generate(self, prompts: Sequence[str]) -> list[str]:
-        outputs = []
-        for prompt in prompts:
-            messages = [{"role": "user", "content": prompt}]
-            text = self.tok.apply_chat_template(
-                messages, tokenize=False, add_generation_prompt=True
-            )
-            inputs = self.tok(text, return_tensors="pt").to(self.model.device)
+        if not prompts:
+            return []
+        texts = [self._apply_template(p) for p in prompts]
+        enc = self.tok(texts, return_tensors="pt", padding=True, truncation=False).to(
+            self.model.device
+        )
+        try:
             with self._torch.no_grad():
                 ids = self.model.generate(
-                    **inputs, max_new_tokens=self.max_new_tokens, do_sample=False
+                    **enc,
+                    max_new_tokens=self.max_new_tokens,
+                    do_sample=False,
+                    pad_token_id=self.tok.pad_token_id,
                 )
-            outputs.append(
-                self.tok.decode(ids[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
-            )
-        return outputs
+        except RuntimeError as exc:  # pragma: no cover - hardware dependent
+            if "out of memory" in str(exc).lower():
+                raise RuntimeError(
+                    f"CUDA out of memory generating a batch of {len(prompts)}.\n"
+                    "  Reduce --batch-size (try 4, then 2), or switch to a smaller "
+                    "model such as Qwen/Qwen2.5-3B-Instruct.\n"
+                    "  Run `python scripts/02_run_rag.py --preflight` to see your VRAM."
+                ) from exc
+            raise
+
+        prompt_len = enc["input_ids"].shape[1]
+        return [
+            self.tok.decode(seq[prompt_len:], skip_special_tokens=True) for seq in ids
+        ]
 
 
 class VLLMGenerator(Generator):
-    """vLLM backend. Use this on the cluster; it is the only one fast enough for 2,000 items."""
+    """vLLM backend. Linux + CUDA, and the only one fast enough for the full split."""
 
     name = "vllm"
 
