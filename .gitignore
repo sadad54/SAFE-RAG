@@ -1,0 +1,51 @@
+# Data — never commit corpus text or model outputs
+data/raw/
+data/interim/
+data/processed/
+data/index/
+!data/**/.gitkeep
+
+# Annotation labels ARE committed (they are the research output).
+# Only the working scratch files are ignored.
+data/annotation/*.tmp
+data/annotation/*.lock
+
+# Runs
+runs/
+outputs/
+*.log
+
+# Models
+models/
+*.bin
+*.safetensors
+*.gguf
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets
+.env
+*.key

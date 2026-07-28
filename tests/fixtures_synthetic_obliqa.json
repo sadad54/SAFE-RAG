@@ -1,0 +1,3590 @@
+[
+ {
+  "QuestionID": "q0",
+  "Question": "What are the client money segregation requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p0_0",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 6 per cent, and records relating to client money segregation must be retained for 3 years."
+   },
+   {
+    "PassageID": "p0_1",
+    "Passage": "A Authorised Person entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Authorised Person is 8 per cent, and records relating to client money segregation must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q1",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p1_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 6 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q2",
+  "Question": "What are the reporting obligations requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p2_0",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 12 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q3",
+  "Question": "What are the reporting obligations requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p3_0",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 8 per cent, and records relating to reporting obligations must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q4",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p4_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 6 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   },
+   {
+    "PassageID": "p4_1",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 9 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q5",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p5_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 14 per cent, and records relating to client money segregation must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q6",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p6_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 16 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q7",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p7_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 6 per cent, and records relating to clearing arrangements must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q8",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p8_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 15 per cent, and records relating to reporting obligations must be retained for 6 years."
+   },
+   {
+    "PassageID": "p8_1",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 19 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q9",
+  "Question": "What are the client money segregation requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p9_0",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 12 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q10",
+  "Question": "What are the record retention period requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p10_0",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 15 per cent, and records relating to record retention period must be retained for 8 years."
+   },
+   {
+    "PassageID": "p10_1",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 14 per cent, and records relating to record retention period must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q11",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p11_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 10 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   },
+   {
+    "PassageID": "p11_1",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 20 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q12",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p12_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 15 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q13",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p13_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 19 per cent, and records relating to financial promotions must be retained for 3 years."
+   },
+   {
+    "PassageID": "p13_1",
+    "Passage": "A Category 1 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 1 is 13 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q14",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p14_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 19 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   },
+   {
+    "PassageID": "p14_1",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 16 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q15",
+  "Question": "What are the record retention period requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p15_0",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 8 per cent, and records relating to record retention period must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q16",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p16_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 9 per cent, and records relating to client money segregation must be retained for 8 years."
+   },
+   {
+    "PassageID": "p16_1",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 17 per cent, and records relating to client money segregation must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q17",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p17_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 19 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q18",
+  "Question": "What are the record retention period requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p18_0",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 18 per cent, and records relating to record retention period must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q19",
+  "Question": "What are the clearing arrangements requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p19_0",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 16 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   },
+   {
+    "PassageID": "p19_1",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 12 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q20",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p20_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 12 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q21",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p21_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 10 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   },
+   {
+    "PassageID": "p21_1",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 5 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q22",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p22_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 15 per cent, and records relating to financial promotions must be retained for 4 years."
+   },
+   {
+    "PassageID": "p22_1",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 6 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q23",
+  "Question": "What are the reporting obligations requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p23_0",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 17 per cent, and records relating to reporting obligations must be retained for 6 years."
+   },
+   {
+    "PassageID": "p23_1",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 20 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q24",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p24_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 7 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q25",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p25_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 15 per cent, and records relating to client money segregation must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q26",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p26_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 9 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q27",
+  "Question": "What are the record retention period requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p27_0",
+    "Passage": "A Category 1 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 1 is 7 per cent, and records relating to record retention period must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q28",
+  "Question": "What are the reporting obligations requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p28_0",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 13 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q29",
+  "Question": "What are the record retention period requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p29_0",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 8 per cent, and records relating to record retention period must be retained for 3 years."
+   },
+   {
+    "PassageID": "p29_1",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 19 per cent, and records relating to record retention period must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q30",
+  "Question": "What are the record retention period requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p30_0",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 9 per cent, and records relating to record retention period must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q31",
+  "Question": "What are the clearing arrangements requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p31_0",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 20 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   },
+   {
+    "PassageID": "p31_1",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 5 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q32",
+  "Question": "What are the record retention period requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p32_0",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 5 per cent, and records relating to record retention period must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q33",
+  "Question": "What are the clearing arrangements requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p33_0",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 13 per cent, and records relating to clearing arrangements must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q34",
+  "Question": "What are the client money segregation requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p34_0",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 12 per cent, and records relating to client money segregation must be retained for 7 years."
+   },
+   {
+    "PassageID": "p34_1",
+    "Passage": "A Authorised Person entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Authorised Person is 15 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q35",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p35_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 12 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q36",
+  "Question": "What are the client money segregation requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p36_0",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 16 per cent, and records relating to client money segregation must be retained for 8 years."
+   },
+   {
+    "PassageID": "p36_1",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 5 per cent, and records relating to client money segregation must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q37",
+  "Question": "What are the record retention period requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p37_0",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 16 per cent, and records relating to record retention period must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q38",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p38_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 12 per cent, and records relating to record retention period must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q39",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p39_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 15 per cent, and records relating to reporting obligations must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q40",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p40_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 20 per cent, and records relating to financial promotions must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q41",
+  "Question": "What are the clearing arrangements requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p41_0",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 8 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q42",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p42_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 18 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q43",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p43_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 19 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   },
+   {
+    "PassageID": "p43_1",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 10 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q44",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p44_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 19 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q45",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p45_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 16 per cent, and records relating to financial promotions must be retained for 4 years."
+   },
+   {
+    "PassageID": "p45_1",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 9 per cent, and records relating to financial promotions must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q46",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p46_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 9 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q47",
+  "Question": "What are the client money segregation requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p47_0",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 13 per cent, and records relating to client money segregation must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q48",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p48_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 15 per cent, and records relating to financial promotions must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q49",
+  "Question": "What are the reporting obligations requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p49_0",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 6 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q50",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p50_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 9 per cent, and records relating to reporting obligations must be retained for 7 years."
+   },
+   {
+    "PassageID": "p50_1",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 5 per cent, and records relating to reporting obligations must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q51",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p51_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 9 per cent, and records relating to financial promotions must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q52",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p52_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 6 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q53",
+  "Question": "What are the financial promotions requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p53_0",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 8 per cent, and records relating to financial promotions must be retained for 7 years."
+   },
+   {
+    "PassageID": "p53_1",
+    "Passage": "A Category 1 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 1 is 12 per cent, and records relating to financial promotions must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q54",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p54_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 19 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q55",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p55_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 15 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   },
+   {
+    "PassageID": "p55_1",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 11 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q56",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p56_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 12 per cent, and records relating to reporting obligations must be retained for 8 years."
+   },
+   {
+    "PassageID": "p56_1",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 13 per cent, and records relating to reporting obligations must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q57",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p57_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 18 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q58",
+  "Question": "What are the reporting obligations requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p58_0",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 7 per cent, and records relating to reporting obligations must be retained for 8 years."
+   },
+   {
+    "PassageID": "p58_1",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 18 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q59",
+  "Question": "What are the clearing arrangements requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p59_0",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 8 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   },
+   {
+    "PassageID": "p59_1",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 9 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q60",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p60_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 8 per cent, and records relating to reporting obligations must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q61",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p61_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 10 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q62",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p62_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 15 per cent, and records relating to financial promotions must be retained for 6 years."
+   },
+   {
+    "PassageID": "p62_1",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 16 per cent, and records relating to financial promotions must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q63",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p63_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 5 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   },
+   {
+    "PassageID": "p63_1",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 19 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q64",
+  "Question": "What are the reporting obligations requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p64_0",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 14 per cent, and records relating to reporting obligations must be retained for 7 years."
+   },
+   {
+    "PassageID": "p64_1",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 8 per cent, and records relating to reporting obligations must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q65",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p65_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 13 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   },
+   {
+    "PassageID": "p65_1",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 13 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q66",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p66_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 17 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   },
+   {
+    "PassageID": "p66_1",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 20 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q67",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p67_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 6 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   },
+   {
+    "PassageID": "p67_1",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 18 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q68",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p68_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 13 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q69",
+  "Question": "What are the client money segregation requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p69_0",
+    "Passage": "A Authorised Person entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Authorised Person is 13 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q70",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p70_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 18 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   },
+   {
+    "PassageID": "p70_1",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 9 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q71",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p71_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 8 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q72",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p72_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q73",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p73_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 14 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q74",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p74_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 13 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q75",
+  "Question": "What are the record retention period requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p75_0",
+    "Passage": "A Category 1 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 1 is 5 per cent, and records relating to record retention period must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q76",
+  "Question": "What are the financial promotions requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p76_0",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 20 per cent, and records relating to financial promotions must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q77",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p77_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 20 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   },
+   {
+    "PassageID": "p77_1",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 14 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q78",
+  "Question": "What are the client money segregation requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p78_0",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 11 per cent, and records relating to client money segregation must be retained for 8 years."
+   },
+   {
+    "PassageID": "p78_1",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 17 per cent, and records relating to client money segregation must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q79",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p79_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 7 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q80",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p80_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 6 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q81",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p81_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 12 per cent, and records relating to financial promotions must be retained for 8 years."
+   },
+   {
+    "PassageID": "p81_1",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 6 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q82",
+  "Question": "What are the client money segregation requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p82_0",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 19 per cent, and records relating to client money segregation must be retained for 3 years."
+   },
+   {
+    "PassageID": "p82_1",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 16 per cent, and records relating to client money segregation must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q83",
+  "Question": "What are the record retention period requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p83_0",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 6 per cent, and records relating to record retention period must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q84",
+  "Question": "What are the record retention period requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p84_0",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 5 per cent, and records relating to record retention period must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q85",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p85_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 13 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   },
+   {
+    "PassageID": "p85_1",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 12 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q86",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p86_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 7 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   },
+   {
+    "PassageID": "p86_1",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 6 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q87",
+  "Question": "What are the record retention period requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p87_0",
+    "Passage": "A Category 1 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 1 is 12 per cent, and records relating to record retention period must be retained for 3 years."
+   },
+   {
+    "PassageID": "p87_1",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 9 per cent, and records relating to record retention period must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q88",
+  "Question": "What are the reporting obligations requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p88_0",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 20 per cent, and records relating to reporting obligations must be retained for 4 years."
+   },
+   {
+    "PassageID": "p88_1",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 9 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q89",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p89_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 9 per cent, and records relating to clearing arrangements must be retained for 7 years."
+   },
+   {
+    "PassageID": "p89_1",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 5 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q90",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p90_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 7 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q91",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p91_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 8 per cent, and records relating to client money segregation must be retained for 6 years."
+   },
+   {
+    "PassageID": "p91_1",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 6 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q92",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p92_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 20 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q93",
+  "Question": "What are the reporting obligations requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p93_0",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 7 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q94",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p94_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 13 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   },
+   {
+    "PassageID": "p94_1",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 12 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q95",
+  "Question": "What are the client money segregation requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p95_0",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 20 per cent, and records relating to client money segregation must be retained for 6 years."
+   },
+   {
+    "PassageID": "p95_1",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 20 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q96",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p96_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 7 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q97",
+  "Question": "What are the record retention period requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p97_0",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 14 per cent, and records relating to record retention period must be retained for 7 years."
+   },
+   {
+    "PassageID": "p97_1",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 9 per cent, and records relating to record retention period must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q98",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p98_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 13 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   },
+   {
+    "PassageID": "p98_1",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 11 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q99",
+  "Question": "What are the record retention period requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p99_0",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 19 per cent, and records relating to record retention period must be retained for 6 years."
+   },
+   {
+    "PassageID": "p99_1",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 8 per cent, and records relating to record retention period must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q100",
+  "Question": "What are the record retention period requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p100_0",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 20 per cent, and records relating to record retention period must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q101",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p101_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 19 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q102",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p102_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 7 per cent, and records relating to client money segregation must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q103",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p103_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 16 per cent, and records relating to client money segregation must be retained for 4 years."
+   },
+   {
+    "PassageID": "p103_1",
+    "Passage": "A Authorised Person entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Authorised Person is 13 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q104",
+  "Question": "What are the client money segregation requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p104_0",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 20 per cent, and records relating to client money segregation must be retained for 6 years."
+   },
+   {
+    "PassageID": "p104_1",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 10 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q105",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p105_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 17 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   },
+   {
+    "PassageID": "p105_1",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 18 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q106",
+  "Question": "What are the record retention period requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p106_0",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 15 per cent, and records relating to record retention period must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q107",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p107_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 8 per cent, and records relating to record retention period must be retained for 4 years."
+   },
+   {
+    "PassageID": "p107_1",
+    "Passage": "A Category 1 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 1 is 14 per cent, and records relating to record retention period must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q108",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p108_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 17 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   },
+   {
+    "PassageID": "p108_1",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 16 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q109",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p109_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 8 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   },
+   {
+    "PassageID": "p109_1",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 9 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q110",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p110_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to reporting obligations must be retained for 5 years."
+   },
+   {
+    "PassageID": "p110_1",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 5 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q111",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p111_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 7 per cent, and records relating to financial promotions must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q112",
+  "Question": "What are the reporting obligations requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p112_0",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 14 per cent, and records relating to reporting obligations must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q113",
+  "Question": "What are the financial promotions requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p113_0",
+    "Passage": "A Category 1 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 1 is 10 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q114",
+  "Question": "What are the record retention period requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p114_0",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 14 per cent, and records relating to record retention period must be retained for 5 years."
+   },
+   {
+    "PassageID": "p114_1",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 17 per cent, and records relating to record retention period must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q115",
+  "Question": "What are the record retention period requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p115_0",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 17 per cent, and records relating to record retention period must be retained for 3 years."
+   },
+   {
+    "PassageID": "p115_1",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 10 per cent, and records relating to record retention period must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q116",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p116_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 12 per cent, and records relating to financial promotions must be retained for 6 years."
+   },
+   {
+    "PassageID": "p116_1",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 19 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q117",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p117_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 12 per cent, and records relating to financial promotions must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q118",
+  "Question": "What are the record retention period requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p118_0",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 15 per cent, and records relating to record retention period must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q119",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p119_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 5 per cent, and records relating to record retention period must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q120",
+  "Question": "What are the reporting obligations requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p120_0",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 11 per cent, and records relating to reporting obligations must be retained for 6 years."
+   },
+   {
+    "PassageID": "p120_1",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 15 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q121",
+  "Question": "What are the record retention period requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p121_0",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 9 per cent, and records relating to record retention period must be retained for 8 years."
+   },
+   {
+    "PassageID": "p121_1",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 11 per cent, and records relating to record retention period must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q122",
+  "Question": "What are the client money segregation requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p122_0",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 17 per cent, and records relating to client money segregation must be retained for 8 years."
+   },
+   {
+    "PassageID": "p122_1",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 18 per cent, and records relating to client money segregation must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q123",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p123_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 18 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q124",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p124_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 5 per cent, and records relating to financial promotions must be retained for 3 years."
+   },
+   {
+    "PassageID": "p124_1",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 19 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q125",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p125_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 9 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q126",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p126_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 19 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q127",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p127_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 9 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q128",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p128_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 9 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   },
+   {
+    "PassageID": "p128_1",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 18 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q129",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p129_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 14 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q130",
+  "Question": "What are the client money segregation requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p130_0",
+    "Passage": "A Authorised Person entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Authorised Person is 13 per cent, and records relating to client money segregation must be retained for 4 years."
+   },
+   {
+    "PassageID": "p130_1",
+    "Passage": "A Authorised Person entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Authorised Person is 5 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q131",
+  "Question": "What are the record retention period requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p131_0",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 13 per cent, and records relating to record retention period must be retained for 5 years."
+   },
+   {
+    "PassageID": "p131_1",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 20 per cent, and records relating to record retention period must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q132",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p132_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 5 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q133",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p133_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q134",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p134_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 12 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   },
+   {
+    "PassageID": "p134_1",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 16 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q135",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p135_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 18 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   },
+   {
+    "PassageID": "p135_1",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 11 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q136",
+  "Question": "What are the clearing arrangements requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p136_0",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q137",
+  "Question": "What are the record retention period requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p137_0",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 12 per cent, and records relating to record retention period must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q138",
+  "Question": "What are the record retention period requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p138_0",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 8 per cent, and records relating to record retention period must be retained for 7 years."
+   },
+   {
+    "PassageID": "p138_1",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 10 per cent, and records relating to record retention period must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q139",
+  "Question": "What are the reporting obligations requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p139_0",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 9 per cent, and records relating to reporting obligations must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q140",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p140_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 9 per cent, and records relating to client money segregation must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q141",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p141_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 10 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q142",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p142_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 8 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   },
+   {
+    "PassageID": "p142_1",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 15 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q143",
+  "Question": "What are the clearing arrangements requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p143_0",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 6 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   },
+   {
+    "PassageID": "p143_1",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 16 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q144",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p144_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 5 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q145",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p145_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 18 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   },
+   {
+    "PassageID": "p145_1",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 11 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q146",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p146_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 7 per cent, and records relating to record retention period must be retained for 3 years."
+   },
+   {
+    "PassageID": "p146_1",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 11 per cent, and records relating to record retention period must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q147",
+  "Question": "What are the reporting obligations requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p147_0",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 15 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q148",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p148_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 12 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   },
+   {
+    "PassageID": "p148_1",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 6 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q149",
+  "Question": "What are the reporting obligations requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p149_0",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 6 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q150",
+  "Question": "What are the clearing arrangements requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p150_0",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 15 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q151",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p151_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 13 per cent, and records relating to record retention period must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q152",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p152_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 5 per cent, and records relating to record retention period must be retained for 8 years."
+   },
+   {
+    "PassageID": "p152_1",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 7 per cent, and records relating to record retention period must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q153",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p153_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 19 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   },
+   {
+    "PassageID": "p153_1",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 18 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q154",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p154_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 5 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q155",
+  "Question": "What are the clearing arrangements requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p155_0",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 12 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q156",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p156_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 7 per cent, and records relating to reporting obligations must be retained for 7 years."
+   },
+   {
+    "PassageID": "p156_1",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 17 per cent, and records relating to reporting obligations must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q157",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p157_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 6 per cent, and records relating to reporting obligations must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q158",
+  "Question": "What are the financial promotions requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p158_0",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 10 per cent, and records relating to financial promotions must be retained for 6 years."
+   },
+   {
+    "PassageID": "p158_1",
+    "Passage": "A Category 1 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 1 is 7 per cent, and records relating to financial promotions must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q159",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p159_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 8 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q160",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p160_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 10 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   },
+   {
+    "PassageID": "p160_1",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 18 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q161",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p161_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 8 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q162",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p162_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 16 per cent, and records relating to record retention period must be retained for 5 years."
+   },
+   {
+    "PassageID": "p162_1",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to record retention period must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q163",
+  "Question": "What are the client money segregation requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p163_0",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 12 per cent, and records relating to client money segregation must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q164",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p164_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 15 per cent, and records relating to financial promotions must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q165",
+  "Question": "What are the record retention period requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p165_0",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 12 per cent, and records relating to record retention period must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q166",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p166_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 6 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   },
+   {
+    "PassageID": "p166_1",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 20 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q167",
+  "Question": "What are the record retention period requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p167_0",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 14 per cent, and records relating to record retention period must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q168",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p168_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 11 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q169",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p169_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 19 per cent, and records relating to financial promotions must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q170",
+  "Question": "What are the clearing arrangements requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p170_0",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 8 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q171",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p171_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 11 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   },
+   {
+    "PassageID": "p171_1",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 15 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q172",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p172_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 6 per cent, and records relating to client money segregation must be retained for 7 years."
+   },
+   {
+    "PassageID": "p172_1",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 5 per cent, and records relating to client money segregation must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q173",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p173_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 10 per cent, and records relating to clearing arrangements must be retained for 7 years."
+   },
+   {
+    "PassageID": "p173_1",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 7 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q174",
+  "Question": "What are the reporting obligations requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p174_0",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 7 per cent, and records relating to reporting obligations must be retained for 6 years."
+   },
+   {
+    "PassageID": "p174_1",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 17 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q175",
+  "Question": "What are the client money segregation requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p175_0",
+    "Passage": "A Authorised Person entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Authorised Person is 10 per cent, and records relating to client money segregation must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q176",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p176_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 14 per cent, and records relating to reporting obligations must be retained for 6 years."
+   },
+   {
+    "PassageID": "p176_1",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 14 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q177",
+  "Question": "What are the record retention period requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p177_0",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 18 per cent, and records relating to record retention period must be retained for 3 years."
+   },
+   {
+    "PassageID": "p177_1",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to record retention period must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q178",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p178_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 18 per cent, and records relating to client money segregation must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q179",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p179_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 17 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q180",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p180_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 9 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q181",
+  "Question": "What are the financial promotions requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p181_0",
+    "Passage": "A Category 1 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 1 is 17 per cent, and records relating to financial promotions must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q182",
+  "Question": "What are the financial promotions requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p182_0",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 10 per cent, and records relating to financial promotions must be retained for 4 years."
+   },
+   {
+    "PassageID": "p182_1",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 14 per cent, and records relating to financial promotions must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q183",
+  "Question": "What are the client money segregation requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p183_0",
+    "Passage": "A Authorised Person entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Authorised Person is 8 per cent, and records relating to client money segregation must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q184",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p184_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 9 per cent, and records relating to client money segregation must be retained for 3 years."
+   },
+   {
+    "PassageID": "p184_1",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 15 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q185",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p185_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 7 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   },
+   {
+    "PassageID": "p185_1",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 10 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q186",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p186_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 11 per cent, and records relating to financial promotions must be retained for 6 years."
+   },
+   {
+    "PassageID": "p186_1",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 11 per cent, and records relating to financial promotions must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q187",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p187_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 17 per cent, and records relating to financial promotions must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q188",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p188_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 11 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q189",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p189_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 15 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q190",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p190_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 14 per cent, and records relating to financial promotions must be retained for 8 years."
+   },
+   {
+    "PassageID": "p190_1",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 14 per cent, and records relating to financial promotions must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q191",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p191_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 16 per cent, and records relating to reporting obligations must be retained for 6 years."
+   },
+   {
+    "PassageID": "p191_1",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 19 per cent, and records relating to reporting obligations must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q192",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p192_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 19 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   },
+   {
+    "PassageID": "p192_1",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 19 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q193",
+  "Question": "What are the reporting obligations requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p193_0",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 7 per cent, and records relating to reporting obligations must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q194",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p194_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 7 per cent, and records relating to reporting obligations must be retained for 6 years."
+   },
+   {
+    "PassageID": "p194_1",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 6 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q195",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p195_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 7 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   },
+   {
+    "PassageID": "p195_1",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 17 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q196",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p196_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 8 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q197",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p197_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 10 per cent, and records relating to reporting obligations must be retained for 8 years."
+   },
+   {
+    "PassageID": "p197_1",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 7 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q198",
+  "Question": "What are the record retention period requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p198_0",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 15 per cent, and records relating to record retention period must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q199",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p199_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 13 per cent, and records relating to reporting obligations must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q200",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p200_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 12 per cent, and records relating to client money segregation must be retained for 5 years."
+   },
+   {
+    "PassageID": "p200_1",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 6 per cent, and records relating to client money segregation must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q201",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p201_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 13 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q202",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p202_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 13 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q203",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p203_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 19 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   },
+   {
+    "PassageID": "p203_1",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 8 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q204",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p204_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 16 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   },
+   {
+    "PassageID": "p204_1",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 16 per cent, and records relating to clearing arrangements must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q205",
+  "Question": "What are the record retention period requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p205_0",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 7 per cent, and records relating to record retention period must be retained for 6 years."
+   },
+   {
+    "PassageID": "p205_1",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 10 per cent, and records relating to record retention period must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q206",
+  "Question": "What are the record retention period requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p206_0",
+    "Passage": "A Category 1 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 1 is 14 per cent, and records relating to record retention period must be retained for 8 years."
+   },
+   {
+    "PassageID": "p206_1",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 15 per cent, and records relating to record retention period must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q207",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p207_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 12 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q208",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p208_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 18 per cent, and records relating to financial promotions must be retained for 7 years."
+   },
+   {
+    "PassageID": "p208_1",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 6 per cent, and records relating to financial promotions must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q209",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p209_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 5 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q210",
+  "Question": "What are the financial promotions requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p210_0",
+    "Passage": "A Category 1 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 1 is 14 per cent, and records relating to financial promotions must be retained for 3 years."
+   },
+   {
+    "PassageID": "p210_1",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 16 per cent, and records relating to financial promotions must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q211",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p211_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 9 per cent, and records relating to reporting obligations must be retained for 4 years."
+   },
+   {
+    "PassageID": "p211_1",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 20 per cent, and records relating to reporting obligations must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q212",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p212_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 9 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q213",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p213_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 13 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q214",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p214_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 16 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q215",
+  "Question": "What are the reporting obligations requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p215_0",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 12 per cent, and records relating to reporting obligations must be retained for 4 years."
+   },
+   {
+    "PassageID": "p215_1",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 6 per cent, and records relating to reporting obligations must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q216",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p216_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 10 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   },
+   {
+    "PassageID": "p216_1",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 6 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q217",
+  "Question": "What are the financial promotions requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p217_0",
+    "Passage": "A Category 1 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 1 is 9 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q218",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p218_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 10 per cent, and records relating to financial promotions must be retained for 7 years."
+   },
+   {
+    "PassageID": "p218_1",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 7 per cent, and records relating to financial promotions must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q219",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p219_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 5 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   },
+   {
+    "PassageID": "p219_1",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 19 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q220",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p220_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 8 per cent, and records relating to client money segregation must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q221",
+  "Question": "What are the clearing arrangements requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p221_0",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 8 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q222",
+  "Question": "What are the clearing arrangements requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p222_0",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 13 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q223",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p223_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 13 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   },
+   {
+    "PassageID": "p223_1",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 7 per cent, and records relating to clearing arrangements must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q224",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p224_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 12 per cent, and records relating to client money segregation must be retained for 8 years."
+   },
+   {
+    "PassageID": "p224_1",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 10 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q225",
+  "Question": "What are the client money segregation requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p225_0",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 15 per cent, and records relating to client money segregation must be retained for 7 years."
+   },
+   {
+    "PassageID": "p225_1",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 17 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q226",
+  "Question": "What are the reporting obligations requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p226_0",
+    "Passage": "A Authorised Person entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Authorised Person is 5 per cent, and records relating to reporting obligations must be retained for 3 years."
+   },
+   {
+    "PassageID": "p226_1",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 12 per cent, and records relating to reporting obligations must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q227",
+  "Question": "What are the client money segregation requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p227_0",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 7 per cent, and records relating to client money segregation must be retained for 7 years."
+   },
+   {
+    "PassageID": "p227_1",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 9 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q228",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p228_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 10 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q229",
+  "Question": "What are the clearing arrangements requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p229_0",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 5 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q230",
+  "Question": "What are the clearing arrangements requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p230_0",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 7 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q231",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p231_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 11 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   },
+   {
+    "PassageID": "p231_1",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 17 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q232",
+  "Question": "What are the client money segregation requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p232_0",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 8 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q233",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p233_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 14 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q234",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p234_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 11 per cent, and records relating to client money segregation must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q235",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p235_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 13 per cent, and records relating to record retention period must be retained for 3 years."
+   },
+   {
+    "PassageID": "p235_1",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 13 per cent, and records relating to record retention period must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q236",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p236_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 15 per cent, and records relating to clearing arrangements must be retained for 7 years."
+   },
+   {
+    "PassageID": "p236_1",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 20 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q237",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p237_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 18 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q238",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p238_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 16 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q239",
+  "Question": "What are the financial promotions requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p239_0",
+    "Passage": "A Category 1 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 1 is 7 per cent, and records relating to financial promotions must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q240",
+  "Question": "What are the client money segregation requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p240_0",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 5 per cent, and records relating to client money segregation must be retained for 7 years."
+   },
+   {
+    "PassageID": "p240_1",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 14 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q241",
+  "Question": "What are the record retention period requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p241_0",
+    "Passage": "A Category 1 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 1 is 8 per cent, and records relating to record retention period must be retained for 6 years."
+   },
+   {
+    "PassageID": "p241_1",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 20 per cent, and records relating to record retention period must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q242",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p242_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 10 per cent, and records relating to financial promotions must be retained for 5 years."
+   },
+   {
+    "PassageID": "p242_1",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 12 per cent, and records relating to financial promotions must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q243",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p243_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 20 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q244",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p244_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 16 per cent, and records relating to capital adequacy ratio must be retained for 3 years."
+   },
+   {
+    "PassageID": "p244_1",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 17 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q245",
+  "Question": "What are the reporting obligations requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p245_0",
+    "Passage": "A Category 1 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 1 is 16 per cent, and records relating to reporting obligations must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q246",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p246_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 10 per cent, and records relating to record retention period must be retained for 6 years."
+   },
+   {
+    "PassageID": "p246_1",
+    "Passage": "A Category 2 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 2 is 19 per cent, and records relating to record retention period must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q247",
+  "Question": "What are the financial promotions requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p247_0",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 16 per cent, and records relating to financial promotions must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q248",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p248_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 19 per cent, and records relating to financial promotions must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q249",
+  "Question": "What are the clearing arrangements requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p249_0",
+    "Passage": "A Authorised Person entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Authorised Person is 10 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   },
+   {
+    "PassageID": "p249_1",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 13 per cent, and records relating to clearing arrangements must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q250",
+  "Question": "What are the client money segregation requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p250_0",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 19 per cent, and records relating to client money segregation must be retained for 8 years."
+   },
+   {
+    "PassageID": "p250_1",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 11 per cent, and records relating to client money segregation must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q251",
+  "Question": "What are the clearing arrangements requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p251_0",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 9 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q252",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p252_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 10 per cent, and records relating to financial promotions must be retained for 4 years."
+   },
+   {
+    "PassageID": "p252_1",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to financial promotions must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q253",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p253_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 11 per cent, and records relating to client money segregation must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q254",
+  "Question": "What are the client money segregation requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p254_0",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 14 per cent, and records relating to client money segregation must be retained for 6 years."
+   },
+   {
+    "PassageID": "p254_1",
+    "Passage": "A Category 3 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to client money segregation must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q255",
+  "Question": "What are the record retention period requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p255_0",
+    "Passage": "A Category 1 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 1 is 17 per cent, and records relating to record retention period must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q256",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p256_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 18 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   },
+   {
+    "PassageID": "p256_1",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 14 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q257",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p257_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 17 per cent, and records relating to client money segregation must be retained for 3 years."
+   },
+   {
+    "PassageID": "p257_1",
+    "Passage": "A Category 2 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 2 is 18 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q258",
+  "Question": "What are the financial promotions requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p258_0",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 12 per cent, and records relating to financial promotions must be retained for 8 years."
+   },
+   {
+    "PassageID": "p258_1",
+    "Passage": "A Authorised Person entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Authorised Person is 12 per cent, and records relating to financial promotions must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q259",
+  "Question": "What are the clearing arrangements requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p259_0",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 19 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q260",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p260_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 18 per cent, and records relating to record retention period must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q261",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p261_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 13 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q262",
+  "Question": "What are the reporting obligations requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p262_0",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 18 per cent, and records relating to reporting obligations must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q263",
+  "Question": "What are the clearing arrangements requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p263_0",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 5 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   },
+   {
+    "PassageID": "p263_1",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 8 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q264",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p264_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 10 per cent, and records relating to financial promotions must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q265",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p265_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 8 per cent, and records relating to financial promotions must be retained for 7 years."
+   },
+   {
+    "PassageID": "p265_1",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 11 per cent, and records relating to financial promotions must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q266",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p266_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 16 per cent, and records relating to financial promotions must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q267",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p267_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to reporting obligations must be retained for 8 years."
+   },
+   {
+    "PassageID": "p267_1",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 17 per cent, and records relating to reporting obligations must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q268",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p268_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 6 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   },
+   {
+    "PassageID": "p268_1",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 17 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q269",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p269_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 18 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q270",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p270_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 8 per cent, and records relating to financial promotions must be retained for 4 years."
+   },
+   {
+    "PassageID": "p270_1",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 17 per cent, and records relating to financial promotions must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q271",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p271_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 11 per cent, and records relating to reporting obligations must be retained for 4 years."
+   },
+   {
+    "PassageID": "p271_1",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 7 per cent, and records relating to reporting obligations must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q272",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p272_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 9 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q273",
+  "Question": "What are the reporting obligations requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p273_0",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 9 per cent, and records relating to reporting obligations must be retained for 6 years."
+   },
+   {
+    "PassageID": "p273_1",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 12 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q274",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p274_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 18 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   },
+   {
+    "PassageID": "p274_1",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 20 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q275",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p275_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 14 per cent, and records relating to record retention period must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q276",
+  "Question": "What are the reporting obligations requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p276_0",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 7 per cent, and records relating to reporting obligations must be retained for 8 years."
+   },
+   {
+    "PassageID": "p276_1",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 9 per cent, and records relating to reporting obligations must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q277",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p277_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 15 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q278",
+  "Question": "What are the record retention period requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p278_0",
+    "Passage": "A Authorised Person entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Authorised Person is 5 per cent, and records relating to record retention period must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q279",
+  "Question": "What are the clearing arrangements requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p279_0",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 13 per cent, and records relating to clearing arrangements must be retained for 7 years."
+   },
+   {
+    "PassageID": "p279_1",
+    "Passage": "A Category 1 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 1 is 9 per cent, and records relating to clearing arrangements must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q280",
+  "Question": "What are the reporting obligations requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p280_0",
+    "Passage": "A Category 2 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 2 is 9 per cent, and records relating to reporting obligations must be retained for 4 years."
+   },
+   {
+    "PassageID": "p280_1",
+    "Passage": "A Recognised Body entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Recognised Body is 10 per cent, and records relating to reporting obligations must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q281",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p281_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 11 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   },
+   {
+    "PassageID": "p281_1",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 7 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q282",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p282_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 8 per cent, and records relating to clearing arrangements must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q283",
+  "Question": "What are the client money segregation requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p283_0",
+    "Passage": "A Recognised Body entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Recognised Body is 20 per cent, and records relating to client money segregation must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q284",
+  "Question": "What are the capital adequacy ratio requirements for a Authorised Person entity?",
+  "Passages": [
+   {
+    "PassageID": "p284_0",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 19 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   },
+   {
+    "PassageID": "p284_1",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 12 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q285",
+  "Question": "What are the financial promotions requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p285_0",
+    "Passage": "A Category 2 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 2 is 10 per cent, and records relating to financial promotions must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q286",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p286_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 14 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   },
+   {
+    "PassageID": "p286_1",
+    "Passage": "A Category 3 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 3 is 18 per cent, and records relating to clearing arrangements must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q287",
+  "Question": "What are the client money segregation requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p287_0",
+    "Passage": "A Category 1 entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Category 1 is 5 per cent, and records relating to client money segregation must be retained for 3 years."
+   },
+   {
+    "PassageID": "p287_1",
+    "Passage": "A Authorised Person entity must comply with the client money segregation requirements set out in this chapter. The applicable threshold for a Authorised Person is 6 per cent, and records relating to client money segregation must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q288",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p288_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 20 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   },
+   {
+    "PassageID": "p288_1",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 11 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q289",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p289_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 15 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q290",
+  "Question": "What are the record retention period requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p290_0",
+    "Passage": "A Category 3 entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Category 3 is 11 per cent, and records relating to record retention period must be retained for 5 years."
+   },
+   {
+    "PassageID": "p290_1",
+    "Passage": "A Recognised Body entity must comply with the record retention period requirements set out in this chapter. The applicable threshold for a Recognised Body is 15 per cent, and records relating to record retention period must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q291",
+  "Question": "What are the financial promotions requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p291_0",
+    "Passage": "A Category 3 entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Category 3 is 14 per cent, and records relating to financial promotions must be retained for 5 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q292",
+  "Question": "What are the reporting obligations requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p292_0",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 15 per cent, and records relating to reporting obligations must be retained for 7 years."
+   },
+   {
+    "PassageID": "p292_1",
+    "Passage": "A Category 3 entity must comply with the reporting obligations requirements set out in this chapter. The applicable threshold for a Category 3 is 16 per cent, and records relating to reporting obligations must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q293",
+  "Question": "What are the capital adequacy ratio requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p293_0",
+    "Passage": "A Recognised Body entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Recognised Body is 11 per cent, and records relating to capital adequacy ratio must be retained for 5 years."
+   },
+   {
+    "PassageID": "p293_1",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 9 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q294",
+  "Question": "What are the capital adequacy ratio requirements for a Category 1 entity?",
+  "Passages": [
+   {
+    "PassageID": "p294_0",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 17 per cent, and records relating to capital adequacy ratio must be retained for 7 years."
+   },
+   {
+    "PassageID": "p294_1",
+    "Passage": "A Authorised Person entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Authorised Person is 6 per cent, and records relating to capital adequacy ratio must be retained for 6 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q295",
+  "Question": "What are the capital adequacy ratio requirements for a Category 3 entity?",
+  "Passages": [
+   {
+    "PassageID": "p295_0",
+    "Passage": "A Category 3 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 3 is 6 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q296",
+  "Question": "What are the financial promotions requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p296_0",
+    "Passage": "A Recognised Body entity must comply with the financial promotions requirements set out in this chapter. The applicable threshold for a Recognised Body is 17 per cent, and records relating to financial promotions must be retained for 7 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q297",
+  "Question": "What are the clearing arrangements requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p297_0",
+    "Passage": "A Category 2 entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Category 2 is 11 per cent, and records relating to clearing arrangements must be retained for 3 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q298",
+  "Question": "What are the clearing arrangements requirements for a Recognised Body entity?",
+  "Passages": [
+   {
+    "PassageID": "p298_0",
+    "Passage": "A Recognised Body entity must comply with the clearing arrangements requirements set out in this chapter. The applicable threshold for a Recognised Body is 8 per cent, and records relating to clearing arrangements must be retained for 8 years."
+   }
+  ]
+ },
+ {
+  "QuestionID": "q299",
+  "Question": "What are the capital adequacy ratio requirements for a Category 2 entity?",
+  "Passages": [
+   {
+    "PassageID": "p299_0",
+    "Passage": "A Category 2 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 2 is 8 per cent, and records relating to capital adequacy ratio must be retained for 8 years."
+   },
+   {
+    "PassageID": "p299_1",
+    "Passage": "A Category 1 entity must comply with the capital adequacy ratio requirements set out in this chapter. The applicable threshold for a Category 1 is 16 per cent, and records relating to capital adequacy ratio must be retained for 4 years."
+   }
+  ]
+ }
+]
