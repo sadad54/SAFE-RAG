@@ -49,3 +49,9 @@ desktop.ini
 # Secrets
 .env
 *.key
+
+# Vendored dataset downloads -- never commit the corpus itself.
+# ObliQA has no LICENSE file, so redistribution terms are unstated.
+ObliQADataset-main/
+ObliQADataset*/
+*.zip
