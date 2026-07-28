@@ -1,0 +1,612 @@
+% SAFE-RAG Research Grant Proposal -- revised July 2026
+% Rebuilt to match the original Word/markdown-style layout:
+% A4, 2 cm margins, Cambria-metric serif (Caladea), 11 pt body,
+% blue numbered headings with a dark-blue rule, running header, page footer.
+% Compile with: xelatex SAFE_RAG_grant_proposal_revised.tex  (twice, for LastPage)
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{fontspec}
+\usepackage[a4paper,left=2cm,right=2cm,top=2.06cm,bottom=2.2cm,
+            headheight=14pt,headsep=0.30cm,footskip=1.05cm]{geometry}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage{needspace}
+
+% ---------------------------------------------------------------- fonts
+% Caladea is metrically compatible with Cambria, the font of the source file.
+\setmainfont{Caladea}[
+  Path = /usr/share/fonts/truetype/crosextra/,
+  UprightFont = Caladea-Regular.ttf,
+  BoldFont = Caladea-Bold.ttf,
+  ItalicFont = Caladea-Italic.ttf,
+  BoldItalicFont = Caladea-BoldItalic.ttf ]
+\newfontfamily\symbolfont{DejaVu Sans}
+
+% ---------------------------------------------------------------- colours
+\definecolor{headblue}{RGB}{46,116,181}   % heading text  (Word Heading 1)
+\definecolor{ruleblue}{RGB}{31,56,100}    % heading rule / title / table head
+\definecolor{cellgrey}{RGB}{238,242,247}  % metadata table label column
+\definecolor{hdrgrey}{gray}{0.8}          % running-header rule
+
+% ---------------------------------------------------------------- spacing
+\linespread{1.00}
+\frenchspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+\setlength{\arrayrulewidth}{0.5pt}
+\setlength{\emergencystretch}{2em}
+
+\setlist[itemize]{leftmargin=36pt,labelwidth=18pt,labelsep=0pt,align=left,
+                  itemsep=5pt,parsep=0pt,topsep=6pt,partopsep=0pt,
+                  label={\symbolfont\fontsize{7.5}{7.5}\selectfont\char"25CF}}
+
+% ---------------------------------------------------------------- headings
+\titleformat{\section}[hang]
+  {\color{headblue}\fontsize{13}{15}\bfseries}{\thesection.}{0.35em}{}
+  [{\vspace{2.5pt}\color{ruleblue}\titlerule[0.75pt]}]
+\titlespacing*{\section}{0pt}{15pt}{4pt}
+
+\titleformat{\subsection}[hang]
+  {\fontsize{11.5}{14}\bfseries\itshape}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{13pt}{5pt}
+
+% ---------------------------------------------------------------- head/foot
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\fontsize{8}{10}\selectfont SAFE-RAG Research Grant Proposal}
+\fancyfoot[C]{\fontsize{8}{10}\selectfont Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\headrule}{\color{hdrgrey}\hrule height 0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ---------------------------------------------------------------- reference list
+\newcommand{\refitem}[2]{%
+  \par\noindent\hangindent=19pt\hangafter=1
+  \makebox[19pt][l]{[#1]}#2\par}
+
+\begin{document}
+\fontsize{11}{15}\selectfont
+
+% ================================================================ title block
+{\centering
+\vspace*{-2pt}
+{\color{ruleblue}\fontsize{10}{12}\bfseries RESEARCH GRANT PROPOSAL}\par
+\vspace{6pt}
+{\color{ruleblue}\fontsize{16}{19}\bfseries SAFE-RAG: A Schema-Grounded and
+Faithfulness-Aware Self-Correcting Retrieval-Augmented Generation Framework for
+Trustworthy Financial Compliance Question Answering\par}
+\par}
+
+\vspace{12pt}
+
+% ================================================================ metadata table
+{\setlength{\parskip}{0pt}\fontsize{10}{13}\selectfont
+\renewcommand{\arraystretch}{1.45}
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{|>{\columncolor{cellgrey}\bfseries}p{108pt}|p{328pt}|}
+\hline
+Principal Investigator & Adnan Mashrur Sadad \\ \hline
+Supervisor & Dr. Siti Nur Khadijah Aishah Ibrahim \\ \hline
+Host Institution & Malaysia-Japan International Institute of Technology (MJIIT),
+Universiti Teknologi Malaysia, Kuala Lumpur, Malaysia \\ \hline
+Proposed Duration & 12 months \\ \hline
+Submission Date & July 2026 \\ \hline
+\end{tabular}\par}
+
+\vspace{4pt}
+
+% ================================================================ 1
+\section{Executive Summary}
+
+Retrieval-augmented generation (RAG) has become the default approach for question
+answering over financial filings, regulatory rulebooks, and audit documentation,
+because it grounds model output in retrieved evidence rather than relying on
+parametric memory alone. In financial compliance settings, however, a free-text
+answer is rarely sufficient: a compliance officer or downstream reporting system
+needs a structured judgment, for example a clause identifier, an obligation status,
+and a supporting citation, that can be parsed without further human interpretation.
+
+A scoping review of 35 papers (2021-2026) conducted for this proposal, spanning
+schema-constrained generation, RAG faithfulness evaluation, agentic self-correction,
+and financial document question answering, found that no existing system jointly
+performs schema validation, evidence-faithfulness checking, and typed corrective
+routing in a financial or regulatory compliance setting. Thirty of those papers were
+identified in the original May-July 2026 search; a further five were added by a
+July 2026 update sweep of arXiv listings, and three of the five materially narrow the
+gap claimed by an earlier draft of this proposal, as recorded in Sections 3, 4 and 8.1.
+Systems that guarantee schema-valid output make no claim about whether the values
+inside that output are actually supported by evidence; systems that check faithfulness
+are evaluated almost exclusively on free text and cannot detect deceptive grounding, a
+documented failure mode in which a response is faithful to some retrieved passage but
+wrong because that passage concerns the wrong entity or clause.
+
+This project proposes SAFE-RAG, a framework that classifies each generated answer as
+schema-invalid, faithful-but-misattributed, or valid, and routes each condition to a
+distinct corrective action: local regeneration, entity-constrained re-retrieval, or
+abstention. The typed-routing paradigm the design adopts was first demonstrated in a
+tool-calling agent setting, where it raised recovery rates from 32.76\% to 89.68\%
+[11], and was carried into retrieval-augmented generation during 2026 [19], [20], [21].
+That typed routing outperforms undifferentiated retry is therefore taken here as an
+established premise rather than claimed as a finding of this project. What remains
+untested, and what this proposal claims, is the pair of conditions being routed over:
+every published RAG diagnosis vocabulary is trajectory-oriented and can express neither
+schema invalidity against a target output schema nor entity-level misattribution, and
+none of this work has been evaluated on financial or regulatory content. SAFE-RAG will
+be evaluated against pre-registered, falsifiable hypotheses on the ObliQA regulatory
+corpus and FinanceBench-derived financial filings, under a correction budget matched
+across every compared condition. The project is scoped to deliver a publishable
+contribution within 12 months, with an initial deployment context aligned to
+Malaysia's regulatory-technology development priorities. [18]
+
+% ================================================================ 2
+\section{Background}
+
+Financial institutions increasingly rely on large language models to support regulatory
+compliance and document analysis. Retrieval-augmented generation improves factual
+grounding over parametric generation alone and has become the default architecture for
+question answering over structured financial and regulatory text, building on an
+established benchmark landscape of numerical and tabular reasoning datasets such as
+FinQA [1], TAT-QA [2], ConvFinQA [3], and MultiHiertt [4], and alongside
+finance-specialized language models such as BloombergGPT [5].
+
+Two distinct failure surfaces nonetheless remain unresolved in this setting. First,
+generated output can fail to conform to the structured schema a downstream compliance
+system expects. Second, output can conform to that schema while still being unsupported
+by, or misattributed to, the wrong part of the retrieved evidence. Existing research
+addresses these two surfaces in separate literatures: work on schema-constrained
+decoding such as XGrammar [6] guarantees syntactic validity but makes no claim about
+evidential correctness, while work on faithfulness and hallucination detection such as
+RAGAS [7], AlignScore [8], and FRANQ [9] checks whether a claim is entailed by retrieved
+context but does not verify that the evidence concerns the correct entity, clause, or
+category.
+
+% ================================================================ 3
+\section{Problem Statement}
+
+Current RAG systems deployed in financial and regulatory compliance settings cannot
+reliably distinguish between two failure modes: \textbf{structural failure}, where the
+output does not parse against the required schema, and \textbf{attribution failure},
+where the output is schema-valid and passes standard faithfulness checks, yet cites
+evidence about the wrong entity, clause, or category. This second failure mode, recently
+termed \textit{deceptive grounding} [10], is invisible to standard faithfulness metrics
+because those metrics ask only whether a claim is supported by some evidence, not
+whether that evidence is about the correct subject.
+
+Compounding this, systems that do detect a failure typically respond with the same
+generic retry action regardless of what actually went wrong. That typing a failure
+before correcting it outperforms generic retry is, however, no longer an open question.
+It was first demonstrated on a tool-calling agent benchmark, where typed,
+failure-specific correction achieved 89.68\% recovery against 32.76\% for generic retry
+[11], and during 2026 the same paradigm was carried into retrieval-augmented generation.
+One system diagnoses the failure type and the earliest failure point in an agentic RAG
+trajectory and then applies a repair conditioned on that diagnosis, reporting higher
+answer accuracy at lower token cost than rerun-style recovery [19]; a second reaches a
+comparable result by routing on a probed hidden-state failure state [20]; and a third
+evaluates diagnose-and-repair under an explicitly fixed correction budget [21]. This
+proposal therefore adopts typed routing as a premise of its design rather than
+presenting it as a finding.
+
+What remains unresolved is the vocabulary in which failures are diagnosed. Every
+existing RAG diagnosis vocabulary is trajectory-oriented, consisting of categories such
+as retrieval insufficiency, reasoning error, and malformed tool call. None diagnoses
+schema validity against a target output schema, and none performs entity-level
+attribution checking. The second omission is not incidental. A deceptive-grounding
+failure is, by construction, a trajectory in which retrieval succeeded, reasoning was
+sound, and every claim is entailed by retrieved text, so it is invisible to a
+sufficiency-based diagnosis model for exactly the reason it is invisible to a
+faithfulness metric [10]. A diagnosis vocabulary built for trajectory repair cannot
+express it. The closest available vocabulary is a peer-reviewed taxonomy of the error
+types that occur in realistic RAG systems, released with an annotated error dataset and
+a taxonomy-aligned automatic evaluator [22], but that work stops at classification and
+offline evaluation and does not drive an inference-time controller. No system identified
+in this review applies typed failure classification to the specific combination of
+schema-validity and evidence-faithfulness failures that arises in structured-output RAG
+for financial and regulatory compliance.
+
+% ================================================================ 4
+\section{Research Gap}
+
+A capability coverage analysis of the 35 reviewed studies, scored against five
+dimensions, schema-constrained structured output (C1), faithfulness and
+evidence-grounding (C2), agentic retrieval control (C3), typed error routing (C4), and
+financial or regulatory compliance domain application (C5), returns two findings. The
+first is a correction. C4 is no longer empty outside the tool-calling domain: three of
+the five studies added by the July 2026 update sweep score full coverage on typed error
+routing within retrieval-augmented generation [19], [20], [21]. An earlier draft of this
+proposal claimed that C4 was unoccupied in the RAG setting, and that claim is withdrawn.
+The second finding is unaffected by those additions: no reviewed study scores full
+coverage on C1, C2 and C4 simultaneously. The one reviewed system that couples schema
+structure with evidence attribution does so in the regulatory domain but has no typed
+routing mechanism [23]; the three RAG typed-routing systems implement neither schema
+validation nor entity-level attribution checking; and the original typed-routing system
+attains C4 outside RAG entirely [11]. That empty three-way conjunction, rather than typed
+routing in general, is what this proposal claims.
+
+Three concrete gaps follow from this pattern, and they are complementary rather than
+independent:
+
+\begin{itemize}
+\item \textbf{Gap 1:} schema validity and faithfulness are addressed by largely disjoint
+literatures that rarely cite each other and have not been combined into a single
+validation step that checks both properties of the same output. The single exception
+among the reviewed studies enforces a per-rule schema by injecting it at generation time
+in order to make attribution checkable in regulatory compliance question answering [23];
+because that constraint is applied uniformly to every query, the two properties are never
+diagnosed separately as conditions of the same generated output.
+
+\item \textbf{Gap 2:} typed error routing outperforms generic retry, and this has now
+been shown inside retrieval-augmented generation as well as for tool-calling agents [11],
+[19], [20], [21]. What has not been shown is routing over the pair of conditions targeted
+here. Every published diagnosis vocabulary types failures at the level of the agent
+trajectory; none diagnoses schema invalidity against a target output schema, none checks
+whether cited evidence concerns the entity, clause, or category named in the query, and
+none of this work is evaluated on financial or regulatory content.
+
+\item \textbf{Gap 3:} financial RAG systems invest heavily in retrieval engineering,
+fine-tuned retrievers, hybrid search, reranking, but remain single-pass at inference,
+with no per-query, quality-triggered repair loop. The closest competitor intervenes on
+attribution in the regulatory domain by constraining generation uniformly rather than by
+repairing diagnosed failures [23], so it never has to decide which condition failed: it
+has no schema-invalidity branch, no re-retrieval branch, no abstention branch, and it
+reports no comparison against an undifferentiated retry baseline.
+\end{itemize}
+
+Together, these gaps motivate a framework that diagnoses schema validity and evidence
+faithfulness as two separately detected conditions, transplants typed routing onto that
+specific pair of conditions, and targets financial compliance question answering
+specifically, where institutional demand for structured, auditable output is already
+documented [15], [16] and existing benchmarks remove the need to construct a new corpus
+from scratch.
+
+% ================================================================ 5
+\section{Research Questions}
+
+\textbf{RQ1.} Can a schema validator and an evidence-attribution checker operate as two
+independently diagnosable conditions over structured RAG output in the financial
+compliance domain, such that each condition can be detected without relying on the other?
+
+\textbf{RQ2.} Given that typed routing is already established to outperform
+undifferentiated retry over trajectory-level failure taxonomies [11], [19], [20], does
+the specific two-condition typing proposed here, schema invalidity routed to local
+regeneration and evidence misattribution routed to entity-constrained re-retrieval,
+outperform an undifferentiated single-retry baseline that uses the same validator and
+checker components, under a matched correction budget?
+
+\textbf{RQ3.} Does the proposed evidence-attribution check reduce
+deceptive-grounding-style errors, defined as schema-valid, faithfulness-metric-passing
+answers that cite evidence concerning the wrong entity, clause, or category, relative to
+standard faithfulness checking alone?
+
+% ================================================================ 6
+\section{Research Objectives}
+
+\textbf{RO1.} Complete a PRISMA 2020-compliant systematic literature review that extends
+the 35-paper scoping review already conducted for this proposal, and finalize the schema
+design and adversarial test subset.
+
+\textbf{RO2.} Develop a schema validator and an evidence-attribution checker that
+independently diagnose structural and evidential failure in generated RAG output.
+
+\textbf{RO3.} Develop a typed corrective-routing controller that maps each diagnosed
+failure condition to a distinct action: local regeneration, entity-constrained
+re-retrieval, or abstention.
+
+\textbf{RO4.} Implement and evaluate SAFE-RAG against five baseline conditions and six
+metrics on the ObliQA and FinDER/FinanceBench corpora, with every condition run under a
+matched correction budget, and test pre-registered hypotheses H1-H3.
+
+% ================================================================ 7
+\section{Scope of Research}
+
+The project is scoped to financial and regulatory compliance document question answering.
+The primary evaluation corpus is ObliQA [15], comprising 27,869 question-and-passage pairs
+drawn from real Abu Dhabi Global Markets financial regulation, supplemented by FinDER [16]
+(5,703 expert-annotated analyst-style query, evidence, and answer triplets drawn from
+S\&P 500 filings) and by filings from the FinanceBench benchmark [17]. A subset of both
+corpora will be extended into schema-bound question-and-answer pairs, and a smaller
+adversarial test set will be hand-constructed to contain deceptive-grounding-style
+failures, which neither corpus contains by design.
+
+The scope explicitly excludes construction of a new base corpus, and excludes empirical
+demonstration of domain generality beyond finance; the latter is identified as a
+direction for future work rather than a claim of the present project.
+
+% ================================================================ 8
+\section{Research Methodology}
+
+\subsection{Systematic Review}
+
+The proposal is grounded in a scoping review already conducted (May-July 2026) using
+targeted Boolean searches across arXiv, Google Scholar, ACL Anthology, and IEEE Xplore,
+from which 30 papers meeting defined inclusion criteria were selected for full-text
+review. A supplementary update sweep was run in July 2026 against arXiv listings for
+cs.CL and cs.IR, using the additional query terms (``failure-aware'' OR ``diagnose'' OR
+``repair'') AND (``retrieval-augmented generation'' OR ``agentic RAG''), specifically to
+capture typed-routing work published into the RAG setting during the review period. That
+sweep returned five further papers meeting the same inclusion criteria [19], [20], [21],
+[22], [23], bringing the total to 35. Three of the five materially narrow the gap claimed
+by an earlier draft of this proposal, and their inclusion is reported explicitly here
+rather than absorbed silently, because the publication rate in this area is itself a
+threat to the validity of any gap claim (Section 8.4).
+
+The funded project will formalize this scoping work into a complete, reproducible
+systematic review following the PRISMA 2020 reporting standard and the Kitchenham and
+Charters protocol for software-engineering literature reviews, including full
+per-database screening counts and a supervisor-verified second screening pass to address
+the single-reviewer limitation of the scoping stage.
+
+\subsection{SAFE-RAG Architecture}
+
+SAFE-RAG extends a standard retrieve-then-generate pipeline with two independently
+diagnosed checks and a routing function. A hybrid retriever combines dense retrieval
+scores in the style of Dense Passage Retrieval [13] with sparse lexical scores in the
+style of BM25 [14], optionally followed by cross-encoder reranking, to return the top-k
+passages for a query. A generator then produces a structured answer conditioned on the
+query, the retrieved context, and a target schema.
+
+A schema validator computes a binary pass/fail indicator of whether the generated answer
+parses against the schema. On failure, the corrective action is local regeneration
+against the same retrieved context, since the fault concerns output structure rather than
+evidence quality. On schema pass, an evidence-attribution checker computes a composite
+score combining an entailment component, following established faithfulness-scoring
+approaches [7], [8], with an attribution component that verifies the retrieved evidence
+concerns the same entity, clause, or category named in the query, following the
+entity-attribution verification approach used to detect deceptive grounding [10]. A
+routing function uses both checks, together with the number of correction attempts
+already made, to decide whether to return the answer, regenerate, re-retrieve using an
+entity-constrained reformulated query, or abstain after a configured maximum number of
+attempts.
+
+Two considerations justify diagnosing the conditions separately rather than collapsing
+them into a single quality score. First, self-correction driven by no external, specific
+signal of what is wrong frequently fails to improve output and can degrade it [12].
+Second, repairability depends on failure type: format failures can be repaired by
+rewriting over evidence that is already sufficient, whereas evidence failures cannot, an
+asymmetry reported directly in the RAG repair literature [19]. A two-condition router is
+the mechanism by which that asymmetry is exploited.
+
+\subsection{Evaluation Design}
+
+Five conditions will be compared: naive RAG with no schema enforcement and no
+faithfulness check (a floor); schema-constrained generation only; faithfulness-checking
+only; an undifferentiated single-retry baseline in which any detected failure triggers
+the same generic retry regardless of type, using the same underlying validator and
+checker components (the key comparison for RQ2); and the full SAFE-RAG system.
+
+All five conditions will be run under a matched correction budget, defined as an equal
+maximum number of generator and retriever calls per query. This control is not optional:
+a repair loop compared against a single-pass baseline without budget control measures
+additional compute rather than the value of the diagnosis [21], and results will not be
+reported in a form that confounds the two. A secondary sweep will vary the maximum number
+of correction attempts across one, two, and three to characterize how the advantage of
+typing scales with the budget available.
+
+Six metrics will be reported: schema validity rate; faithfulness score (entailment-based,
+consistent with RePASs and AlignScore [8]); entity-attribution accuracy, a metric
+introduced for this project; end-task correctness; repair efficiency (additional model or
+retrieval calls required per query, within the matched budget); and abstention
+precision/recall. To avoid the circularity of using a single automated judge both to
+trigger repair and to score the result, the entailment model used inside the routing loop
+and the model used to compute the reported faithfulness metric will be drawn from
+different model families, and both will be validated against a human-annotated subsample
+of at least 150 items before the main experiments are run.
+
+Three pre-registered hypotheses will be tested:
+
+\begin{itemize}
+\item \textbf{H1.} On the adversarial deceptive-grounding test subset, SAFE-RAG achieves
+entity-attribution accuracy at least 15 percentage points higher than the
+faithfulness-checked-only baseline.
+
+\item \textbf{H2.} Under a matched correction budget, SAFE-RAG achieves higher end-task
+correctness than the undifferentiated single-retry baseline while consuming no more
+additional model or retrieval calls per query on average. The budget-matching condition is
+what makes this hypothesis falsifiable; without it, any observed difference is
+attributable to additional compute [21].
+
+\item \textbf{H3.} Ablating the typed-routing step, so any detected failure triggers the
+same generic retry action using the same validator and checker components, reduces
+end-task correctness relative to the full SAFE-RAG system, mirroring the ablation result
+reported for typed routing in its original tool-calling domain [11] and its replication
+within RAG [19].
+\end{itemize}
+
+\subsection{Limitations and Risk Mitigation}
+
+Two risks specific to this proposal are recorded here, alongside the review limitations
+noted in Section 8.1, so that their mitigations form part of the funded work plan.
+
+The first concerns the durability of the gap claim itself. A contribution defined by an
+absence in a fast-moving literature decays measurably over months: three of the five
+papers added by the July 2026 update sweep were posted within the four months preceding
+this submission, and two of them narrowed the gap claimed by an earlier draft of this
+document. The mitigation is procedural rather than analytical. The claim is stated at the
+narrowest defensible scope rather than the broadest available one, restricted to the
+conjunction of schema invalidity and evidence misattribution in a compliance setting; a
+standing arXiv alert on the four query clusters used in the review will be maintained for
+the duration of the project; and the capability coverage assessment described in Section 4
+will be re-run at each milestone review. A gap claim in this area should be read as a
+dated observation, not as a stable property of the literature.
+
+The second concerns the base rate of the failure mode the attribution branch targets.
+Because the adversarial subset described in Section 7 is hand-constructed, its
+distribution does not by itself establish how often deceptive grounding occurs in
+practice. The rate at which it arises naturally in ObliQA and FinDER will therefore be
+measured and reported as a descriptive statistic in its own right, and a low measured rate
+would weaken the practical motivation for the attribution branch even if the H1 result
+holds on the adversarial subset. That measurement is scheduled early, in Months 1 to 2,
+precisely so that a negative result arrives before the implementation phase commits
+resources, allowing the balance of effort between the schema-validity and attribution
+branches to be revised while the project can still absorb the change.
+
+% ================================================================ 9
+\section{Expected Outcomes}
+
+\begin{itemize}
+\item A validated SAFE-RAG framework and an open research prototype comprising the schema
+validator, evidence-attribution checker, and typed routing controller.
+
+\item A completed PRISMA 2020-compliant systematic review formalizing the present
+35-paper scoping review.
+
+\item A reusable adversarial deceptive-grounding test set for financial and regulatory RAG
+evaluation, together with a reported measurement of the natural rate of deceptive
+grounding in ObliQA and FinDER.
+
+\item A manuscript reporting the framework and evaluation results, targeted at a
+regulatory natural language processing or applied machine learning venue, with submission
+planned before the end of the project.
+
+\item A direct contribution toward the applicant's graduate research program, extending
+the applicant's prior schema-validated self-correction prototype into a formally evaluated
+contribution.
+\end{itemize}
+
+% ================================================================ 10
+\section{Research Contributions}
+
+This project contributes: (1) a 35-paper scoping literature review scored against five
+capability dimensions, establishing that the conjunction of schema-constrained output,
+evidence-attribution checking, and typed corrective routing is currently unoccupied, while
+recording explicitly that typed routing on its own is now established within RAG;
+(2) SAFE-RAG, an architecture that performs schema validation and evidence-attribution
+checking as two independently diagnosed conditions and routes each detected failure type
+to a distinct corrective action; (3) an evaluation plan with pre-registered, falsifiable
+hypotheses, run under a matched correction budget and built on existing regulatory and
+financial benchmarks rather than a newly constructed corpus; and (4) a concrete deployment
+pathway aligned with Malaysia's regulatory-technology development priorities [18].
+
+% ================================================================ 11
+\Needspace*{6\baselineskip}
+\section{Project Timeline}
+
+The timeline below is deliberately compressed to 12 months rather than the multi-year
+horizon typical of a new framework proposal. This is possible because the scoping review,
+gap analysis, and architecture design described in this proposal are already complete; the
+funded period begins directly with implementation. The literature review, framework
+design, and evaluation plan are treated as parallel, continuously updated work rather than
+sequential gates, so that a submittable manuscript can be assembled from Month 9 onward
+rather than only after every phase below has fully closed. The literature-monitoring task
+described in Section 8.4 runs across the full period rather than concluding with the
+Month 2 review.
+
+\vspace{6pt}
+
+{\setlength{\parskip}{0pt}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{5pt}
+\fontsize{9.5}{12}\selectfont
+\begin{tabular}{|>{\bfseries}m{90pt}|>{\centering\arraybackslash}m{60pt}|p{280pt}|}
+\hline
+\rowcolor{ruleblue}
+\textcolor{white}{\fontsize{10}{12}\selectfont\textbf{Phase}} &
+\textcolor{white}{\fontsize{10}{12}\selectfont\textbf{Months}} &
+\textcolor{white}{\fontsize{10}{12}\selectfont\textbf{Milestone / Deliverable}} \\ \hline
+1. Systematic review \& design & 1--2 & Full PRISMA 2020-compliant systematic review
+completed (extending the 35-paper scoping review already conducted for this proposal);
+schema design finalized; adversarial deceptive-grounding test subset constructed; natural
+rate of deceptive grounding in ObliQA and FinDER measured and reported. \\ \hline
+2. Core diagnostic components & 3--5 & Schema validator and evidence-attribution checker
+implemented and unit-validated against a human-annotated subset; entailment models for the
+routing loop and for the reported faithfulness metric selected from different model
+families. \\ \hline
+3. Typed routing controller & 6--8 & Rule-based routing policy implemented and integrated
+with the diagnostic components; learned routing policy explored if time permits. \\ \hline
+4. Evaluation & 9--10 & All five baseline conditions run on ObliQA and
+FinDER/FinanceBench under a matched correction budget; hypotheses H1--H3 tested against
+pre-registered criteria. \\ \hline
+5. Analysis \& publication & 11--12 & Results analysed; manuscript prepared and submitted
+to a regulatory NLP or applied machine learning venue. \\ \hline
+\end{tabular}\par}
+
+% ================================================================ 12
+\section{Conclusion}
+
+This proposal identifies a specific, evidenced gap in the current literature. Typed error
+routing, established first for tool-calling agents and carried during 2026 into agentic
+RAG trajectories, is a demonstrated mechanism rather than an open question, and this
+proposal treats it as a premise. What no reviewed system does is diagnose output structure
+and evidence attribution as two independently detectable conditions over the same
+structured output and route each to a corrective action selected on the basis of which
+condition failed. The existing diagnosis vocabularies, built for trajectory-level repair,
+cannot express a faithful-but-misattributed answer at all, and no typed-routing system in
+this line has been evaluated on financial or regulatory content. SAFE-RAG addresses that
+gap directly, diagnosing schema invalidity and evidence misattribution as two independently
+detected conditions and routing each to a distinct corrective action, while building on
+existing regulatory and financial benchmarks rather than requiring new data collection.
+
+The evaluation plan specifies falsifiable, pre-registered hypotheses against both an
+undifferentiated-retry baseline and a faithfulness-only baseline, under a correction budget
+matched across all conditions, directly testing whether typed diagnosis over this
+particular pair of conditions, rather than correction activity or additional compute in
+general, accounts for any observed improvement. Within a compressed 12-month timeline, the
+project is designed to extend the applicant's prior schema-validated self-correction
+prototype into a formally evaluated, publishable research contribution, with an initial
+deployment context aligned to Malaysia's regulatory-technology priorities and a technical
+contribution intended to generalize to other high-stakes, structured-output domains in
+future work.
+
+% ================================================================ references
+\section*{References}
+
+{\setlength{\parskip}{6pt}\fontsize{9.5}{12}\selectfont
+
+\refitem{1}{Z. Chen et al., ``FinQA: A Dataset of Numerical Reasoning over Financial
+Data,'' in \textit{Proc. EMNLP}, 2021.}
+\refitem{2}{F. Zhu et al., ``TAT-QA: A Question Answering Benchmark on a Hybrid of
+Tabular and Textual Content in Finance,'' in \textit{Proc. ACL}, 2021.}
+\refitem{3}{Z. Chen et al., ``ConvFinQA: Exploring the Chain of Numerical Reasoning in
+Conversational Finance Question Answering,'' in \textit{Proc. EMNLP}, 2022.}
+\refitem{4}{Y. Zhao et al., ``MultiHiertt: Numerical Reasoning over Multi Hierarchical
+Tabular and Textual Data,'' in \textit{Proc. ACL}, 2022.}
+\refitem{5}{S. Wu et al., ``BloombergGPT: A Large Language Model for Finance,''
+arXiv:2303.17564, 2023.}
+\refitem{6}{``XGrammar: Flexible and Efficient Structured Generation Engine for Large
+Language Models,'' arXiv:2411.15100, 2024.}
+\refitem{7}{S. Es, J. James, L. Espinosa-Anke, and S. Schockaert, ``RAGAS: Automated
+Evaluation of Retrieval Augmented Generation,'' arXiv:2309.15217, 2023.}
+\refitem{8}{Y. Zha, Y. Yang, R. Li, and Z. Hu, ``AlignScore: Evaluating Factual
+Consistency with a Unified Alignment Function,'' in \textit{Proc. ACL}, 2023.}
+\refitem{9}{``Faithfulness-Aware Uncertainty Quantification for Fact-Checking
+Retrieval-Augmented Generation (FRANQ),'' arXiv:2505.21072, 2026.}
+\refitem{10}{``Deceptive Grounding: Entity Attribution Failure in Clinical
+Retrieval-Augmented Generation,'' arXiv:2607.09349, 2026.}
+\refitem{11}{``PALADIN: Self-Correcting Language Model Agents to Cure Tool-Failure
+Cases,'' in \textit{Proc. ICLR}, arXiv:2509.25238, 2026.}
+\refitem{12}{``Large Language Models Cannot Self-Correct Reasoning Yet,'' in
+\textit{Proc. ICLR}, arXiv:2310.01798, 2024.}
+\refitem{13}{V. Karpukhin et al., ``Dense Passage Retrieval for Open-Domain Question
+Answering,'' in \textit{Proc. EMNLP}, 2020.}
+\refitem{14}{S. Robertson and H. Zaragoza, ``The Probabilistic Relevance Framework: BM25
+and Beyond,'' Foundations and Trends in Information Retrieval, vol. 3, no. 4,
+pp. 333-389, 2009.}
+\refitem{15}{``RIRAG: Regulatory Information Retrieval and Answer Generation,'' in
+\textit{Proc. EMNLP}, arXiv:2409.05677, 2024.}
+\refitem{16}{``FinDER: A Financial Dataset for Question Answering and Evaluating
+Retrieval-Augmented Generation,'' in \textit{Proc. ICLR Workshop}, arXiv:2504.15800, 2025.}
+\refitem{17}{P. Islam et al., ``FinanceBench: A New Benchmark for Financial Question
+Answering,'' arXiv:2311.11944, 2023.}
+\refitem{18}{Bank Negara Malaysia, ``Financial Sector Blueprint 2022 to 2026,'' Kuala
+Lumpur, Malaysia, 2022.}
+\refitem{19}{``Doctor-RAG: A Failure-Aware Repair Framework for Agentic
+Retrieval-Augmented Generation,'' arXiv:2604.00865, 2026.}
+\refitem{20}{``Skill-RAG: Failure-State-Aware Retrieval Augmentation via Hidden-State
+Probing and Skill Routing,'' arXiv:2604.15771, 2026.}
+\refitem{21}{``Diagnosing and Repairing Factual Errors in RAG under Budget Constraints,''
+arXiv:2606.29377, 2026.}
+\refitem{22}{K. K. Leung, M. Belbahri, Y. Sui, A. Labach, X. Zhang, S. A. Rose, and
+J. C. Cresswell, ``Classifying and Addressing the Diversity of Errors in
+Retrieval-Augmented Generation Systems,'' in \textit{Proc. EACL}, arXiv:2510.13975, 2026.}
+\refitem{23}{``Citation-Closure Retrieval and Per-Rule Attribution for Real-World
+Regulatory Compliance Question Answering,'' arXiv:2605.29742, 2026.}
+
+}
+
+\end{document}
