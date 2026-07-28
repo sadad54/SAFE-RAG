@@ -76,15 +76,19 @@ Then retrieve the one file you need:
 ```
 
 It will be roughly 20 MB (each record carries the ten retrieved passages in full).
-Download it and put it at `data/interim/answers.jsonl` locally.
+Download it and put it at `data/interim/answers.jsonl` locally, then carry on from
+step 03. The NLI model that S2 needs is small enough to run on CPU, though it will
+take a while.
 
-3. Download `data/interim/answers.jsonl` and drop it into the same path locally.
-4. Continue on your laptop from step 03 — the NLI model for S2 is small enough for
-   CPU, though it will take a while.
+The provenance header records the git SHA, config hash, seed and model revision, so
+a run done in a notebook is exactly as reproducible as one done locally. Note in the
+write-up where it ran.
 
-The provenance header records the git SHA, config hash, seed and model revision,
-so a run done in a notebook is exactly as reproducible as one done locally. Note
-in the write-up where it ran.
+**Using a 3B model instead of 7B is not a pre-registration deviation.** Section 5
+specifies "one open-weight instruction-tuned model" and requires the exact
+identifier to be recorded in the run manifest, which happens automatically. Model
+size is a reported fact, not a registered constant. What *would* be a deviation is
+changing the sample size, the thresholds, or the allocation.
 
 ---
 
