@@ -13,11 +13,11 @@ from __future__ import annotations
 import json
 import sys
 
-from _common import base_parser, paths  # noqa: E402
+from _common import base_parser, get_corpus, paths  # noqa: E402
 from tqdm import tqdm  # noqa: E402
 
 from saferag.config import load_config  # noqa: E402
-from saferag.data.obliqa import build_passage_corpus, load_questions  # noqa: E402
+from saferag.data.obliqa import load_questions  # noqa: E402
 from saferag.retrieval.hybrid import HybridRetriever  # noqa: E402
 from saferag.utils.logging import get_logger  # noqa: E402
 
@@ -39,7 +39,7 @@ def main() -> int:
         return 1
 
     questions = list(load_questions(files[0], limit=cfg.data.n_questions))
-    corpus = build_passage_corpus(questions)
+    corpus = get_corpus(cfg, questions)
     log.info("%d questions, %d unique passages", len(questions), len(corpus))
 
     lengths = [len(t.split()) for t in corpus.values()]

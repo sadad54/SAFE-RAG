@@ -17,11 +17,11 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from _common import ROOT, base_parser, paths  # noqa: E402
+from _common import ROOT, base_parser, get_corpus, paths  # noqa: E402
 from tqdm import tqdm  # noqa: E402
 
 from saferag.config import load_config  # noqa: E402
-from saferag.data.obliqa import build_passage_corpus, load_questions  # noqa: E402
+from saferag.data.obliqa import load_questions  # noqa: E402
 from saferag.generation.generator import (  # noqa: E402
     build_generator,
     prompt_fingerprint,
@@ -62,7 +62,7 @@ def main() -> int:
         return 1
     log.info("Loaded %d questions", len(questions))
 
-    corpus = build_passage_corpus(questions)
+    corpus = get_corpus(cfg, questions)
     log.info("Passage corpus: %d unique passages", len(corpus))
     if len(corpus) < 50:
         log.warning(

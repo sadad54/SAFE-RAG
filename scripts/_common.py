@@ -26,6 +26,30 @@ def base_parser(description: str) -> argparse.ArgumentParser:
     return ap
 
 
+def get_corpus(cfg, questions) -> dict[str, str]:  # noqa: ANN001
+    """Full ADGM corpus if it has been downloaded, otherwise the gold-passage union.
+
+    The fallback exists so the pipeline runs for a smoke test, but it is NOT valid
+    for results: an index built only from cited passages has no true distractors,
+    so retrieval is artificially easy and the measured rate means nothing.
+    """
+    from saferag.data.obliqa import build_passage_corpus, load_corpus_documents
+
+    corpus_dir = ROOT / "data" / "raw" / "adgm"
+    if corpus_dir.exists() and any(corpus_dir.rglob("*.json")):
+        corpus = load_corpus_documents(corpus_dir)
+        print(f"  corpus: {len(corpus)} passages from the full ADGM documents")
+        return corpus
+
+    corpus = build_passage_corpus(questions)
+    print(
+        f"  corpus: {len(corpus)} passages from cited gold passages only.\n"
+        "  WARNING: no true distractors -- smoke testing only, not valid for results.\n"
+        "  Unzip StructuredRegulatoryDocuments.zip into data/raw/adgm/ for a real run."
+    )
+    return corpus
+
+
 def paths(cfg) -> dict[str, Path]:  # noqa: ANN001
     p = cfg.paths
     out = {

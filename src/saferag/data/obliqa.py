@@ -130,6 +130,43 @@ def load_questions(path: str | Path, limit: int | None = None) -> Iterator[Quest
         yield adapt_record(record)
 
 
+def load_corpus_documents(directory: str | Path) -> dict[str, str]:
+    """Load the full ADGM corpus from StructuredRegulatoryDocuments.
+
+    Records are flat: ``{"ID", "DocumentID", "PassageID", "Passage"}``.
+
+    Prefer this over build_passage_corpus. Indexing only the passages that some
+    question cites makes retrieval artificially easy -- every passage in the index
+    is somebody's gold answer, so there are no true distractors and the measured
+    deceptive-grounding rate is not meaningful.
+    """
+    directory = Path(directory)
+    files = sorted(directory.rglob("*.json"))
+    if not files:
+        raise FileNotFoundError(
+            f"No structured document JSON under {directory}.\n"
+            "Download StructuredRegulatoryDocuments.zip from "
+            "https://github.com/RegNLP/ObliQADataset and unzip it there."
+        )
+    corpus: dict[str, str] = {}
+    for path in files:
+        records = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(records, dict):
+            records = [records]
+        for rec in records:
+            doc, pid = _first(rec, _DOCID_KEYS), _first(rec, _PID_KEYS)
+            text = _first(rec, _PTEXT_KEYS)
+            if doc is None or pid is None or not text:
+                continue
+            corpus[f"{doc}::{pid}"] = str(text)
+    if not corpus:
+        raise ObliQAFormatError(
+            f"Found {len(files)} JSON file(s) under {directory} but no record had "
+            "DocumentID + PassageID + Passage. Check the unzipped layout."
+        )
+    return corpus
+
+
 def build_passage_corpus(questions: list[Question]) -> dict[str, str]:
     """Collect the unique passage id -> text map across all questions.
 

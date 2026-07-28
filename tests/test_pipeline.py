@@ -341,3 +341,27 @@ def test_stub_generator_is_batch_ordered():
     outs = StubGenerator().generate(prompts)
     ids = [check_schema(o).parsed["cited_passage_ids"][0] for o in outs]
     assert ids == [f"p{i}" for i in range(5)]
+
+
+def test_load_corpus_documents(tmp_path):
+    """Full-corpus loader over the flat StructuredRegulatoryDocuments shape."""
+    from saferag.data.obliqa import load_corpus_documents
+
+    (tmp_path / "doc11.json").write_text(
+        json.dumps(
+            [
+                {"ID": "x", "DocumentID": 11, "PassageID": "1.1.2", "Passage": "Where a Rule..."},
+                {"ID": "y", "DocumentID": 11, "PassageID": "1.1.3", "Passage": "A Director..."},
+            ]
+        ),
+        encoding="utf-8",
+    )
+    corpus = load_corpus_documents(tmp_path)
+    assert corpus == {"11::1.1.2": "Where a Rule...", "11::1.1.3": "A Director..."}
+
+
+def test_load_corpus_documents_missing_dir(tmp_path):
+    from saferag.data.obliqa import load_corpus_documents
+
+    with pytest.raises(FileNotFoundError):
+        load_corpus_documents(tmp_path / "nope")
