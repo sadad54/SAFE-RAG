@@ -184,16 +184,22 @@ class HFGenerator(Generator):
             self.tok.pad_token = self.tok.eos_token
         self.tok.padding_side = "left"
 
-        torch_dtype = (
+        resolved_dtype = (
             torch.float16 if dtype == "auto" and torch.cuda.is_available()
             else torch.float32 if dtype == "auto"
             else getattr(torch, dtype)
         )
-        self.model = AutoModelForCausalLM.from_pretrained(
-            model,
-            torch_dtype=torch_dtype,
-            device_map="auto" if torch.cuda.is_available() else None,
-        ).eval()
+        # transformers renamed torch_dtype -> dtype in v5. Try the new name, fall
+        # back to the old one, so the same code runs on 4.x and 5.x.
+        kwargs = {"device_map": "auto"} if torch.cuda.is_available() else {}
+        try:
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model, dtype=resolved_dtype, **kwargs
+            ).eval()
+        except TypeError:
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model, torch_dtype=resolved_dtype, **kwargs
+            ).eval()
         if not torch.cuda.is_available():
             self.model.to("cpu")
         self.max_new_tokens = max_new_tokens

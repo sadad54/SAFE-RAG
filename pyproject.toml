@@ -29,6 +29,9 @@ models = [
     "torch>=2.2",
     "sentence-transformers>=2.7",
     "transformers>=4.40",
+    # Required by device_map="auto" in HFGenerator. Without it transformers
+    # raises at load time, not at install time, which is a nasty place to find out.
+    "accelerate>=0.30",
 ]
 # Fast batched local generation. Linux/GPU only -- do NOT install on Windows.
 serve = [

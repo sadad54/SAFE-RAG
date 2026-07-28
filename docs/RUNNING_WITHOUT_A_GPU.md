@@ -52,9 +52,31 @@ Only step 02 needs to run there. The plan:
 !cp /tmp/obliqa/StructuredRegulatoryDocuments/*.json data/raw/adgm/
 
 !python scripts/02_run_rag.py --preflight
-!python scripts/02_run_rag.py --selftest --limit 10
-!python scripts/02_run_rag.py --batch-size 8
 ```
+
+Read the preflight VRAM figure, then pick a model. On a free T4 (16 GB) a 7B model
+in fp16 is ~15 GB of weights before any KV cache, so it will OOM at a useful batch
+size. Either drop to 3B, or keep 7B at `--batch-size 2` and accept it is slower.
+
+```python
+MODEL = "Qwen/Qwen2.5-3B-Instruct"   # 7B needs --batch-size 2 on a 16 GB card
+
+!python scripts/02_run_rag.py --selftest --limit 10 --model $MODEL
+!python scripts/02_run_rag.py --model $MODEL --batch-size 8
+```
+
+Run the self-test first and do not skip it. It generates four prompts singly and
+then as a batch and checks they match; a left-padding fault produces fluent,
+plausible, wrong output that you would not catch by eye.
+
+Then retrieve the one file you need:
+
+```python
+!ls -lh data/interim/answers.jsonl
+```
+
+It will be roughly 20 MB (each record carries the ten retrieved passages in full).
+Download it and put it at `data/interim/answers.jsonl` locally.
 
 3. Download `data/interim/answers.jsonl` and drop it into the same path locally.
 4. Continue on your laptop from step 03 — the NLI model for S2 is small enough for
