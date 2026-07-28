@@ -58,8 +58,14 @@ checks:
     jaccard_threshold: 0.0             # [REGISTERED] 0 overlap -> candidate pool
 
 sampling:
-  n_candidate: 100                # [REGISTERED]
-  n_control: 50                   # [REGISTERED]
+  # [REGISTERED, amended 2026-07-28 -- see PREREGISTRATION.md Section 11]
+  # Three strata. The candidate pool is split by whether a gold passage was in
+  # the retrieved context: if it was not, the model could not have cited
+  # correctly and the item is a retrieval failure by construction.
+  allocation:
+    candidate_recoverable: 80
+    candidate_unrecoverable: 20
+    control: 50
   n_double_annotated: 50          # [REGISTERED]
 
 analysis:

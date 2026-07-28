@@ -1,87 +1,112 @@
-"""Stratified sampling for annotation (PREREGISTRATION.md Section 6).
+"""Stratified sampling for annotation (PREREGISTRATION.md Section 6, as amended).
 
-100 items from the candidate pool, 50 from the control pool, seed 20260728.
-Records are shuffled after sampling so the annotator cannot infer an item's pool
-from its position in the batch -- pool membership is a strong hint about the
-expected label and would bias annotation.
+80 items from candidate_recoverable, 20 from candidate_unrecoverable, 50 from
+control. Seed 20260728.
+
+Records are shuffled after sampling so the annotator cannot infer an item's
+stratum from its position in the batch -- stratum membership is a strong hint
+about the expected label and would bias annotation.
 """
 
 from __future__ import annotations
 
 import random
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from typing import Any
 
-from saferag.checks.attribution import CANDIDATE, CONTROL
+from saferag.checks.attribution import (
+    CANDIDATE_RECOVERABLE,
+    CANDIDATE_UNRECOVERABLE,
+    CONTROL,
+)
+
+DEFAULT_ALLOCATION: dict[str, int] = {
+    CANDIDATE_RECOVERABLE: 80,
+    CANDIDATE_UNRECOVERABLE: 20,
+    CONTROL: 50,
+}
+
+# Never shown to the annotator: these would give the answer away.
+_HIDDEN = {"pool", "gold_passage_ids", "retrieved_passage_ids", "s3_jaccard", "s3_n_overlap"}
 
 
 def stratified_sample(
-    records: Sequence[dict[str, Any]],
-    n_candidate: int = 100,
-    n_control: int = 50,
+    records: Sequence[Mapping[str, Any]],
+    allocation: Mapping[str, int] | None = None,
     seed: int = 20260728,
     pool_key: str = "pool",
-) -> tuple[list[dict[str, Any]], dict[str, int]]:
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Draw the annotation batch.
 
-    Returns the shuffled batch and a report of pool sizes and any shortfall.
+    Returns the shuffled batch and a report of stratum sizes and any shortfall.
 
-    Shortfall is not an error: if a pool is smaller than its allocation the whole
-    pool is taken and the shortfall recorded, as the pre-registration specifies.
+    Shortfall is not an error: if a stratum is smaller than its allocation the
+    whole stratum is taken and the shortfall recorded, as the pre-registration
+    specifies.
     """
+    allocation = dict(allocation or DEFAULT_ALLOCATION)
     rng = random.Random(seed)
 
-    candidates = [r for r in records if r.get(pool_key) == CANDIDATE]
-    controls = [r for r in records if r.get(pool_key) == CONTROL]
+    by_pool: dict[str, list[Mapping[str, Any]]] = {name: [] for name in allocation}
+    for rec in records:
+        pool = rec.get(pool_key)
+        if pool in by_pool:
+            by_pool[pool].append(rec)
 
-    take_cand = min(n_candidate, len(candidates))
-    take_ctrl = min(n_control, len(controls))
+    picked: list[Mapping[str, Any]] = []
+    report: dict[str, Any] = {"allocation": allocation, "strata": {}}
+    for name, want in allocation.items():
+        available = by_pool[name]
+        take = min(want, len(available))
+        picked.extend(rng.sample(available, take))
+        report["strata"][name] = {
+            "available": len(available),
+            "sampled": take,
+            "shortfall": want - take,
+        }
 
-    picked = rng.sample(candidates, take_cand) + rng.sample(controls, take_ctrl)
-
-    # Blind the annotator: strip pool and gold-set fields, then shuffle.
     batch: list[dict[str, Any]] = []
     for rec in picked:
-        item = {k: v for k, v in rec.items() if k not in {pool_key, "gold_passage_ids"}}
-        item["_pool"] = rec[pool_key]  # retained for analysis, ignored by the CLI
+        item = {k: v for k, v in rec.items() if k not in _HIDDEN}
+        item["_pool"] = rec[pool_key]  # kept for analysis, stripped before annotation
         batch.append(item)
     rng.shuffle(batch)
 
-    report = {
-        "pool_candidate_available": len(candidates),
-        "pool_control_available": len(controls),
-        "sampled_candidate": take_cand,
-        "sampled_control": take_ctrl,
-        "shortfall_candidate": n_candidate - take_cand,
-        "shortfall_control": n_control - take_ctrl,
-        "total": len(batch),
-    }
+    report["total"] = len(batch)
+    report["any_shortfall"] = any(s["shortfall"] for s in report["strata"].values())
     return batch, report
 
 
 def double_annotation_subset(
-    batch: Sequence[dict[str, Any]],
+    batch: Sequence[Mapping[str, Any]],
     n: int = 50,
     seed: int = 20260728,
 ) -> list[dict[str, Any]]:
-    """Draw the subset for the second annotator, proportional across pools.
+    """Draw the subset for the second annotator, proportional across strata.
 
-    Proportional allocation keeps kappa from being dominated by one pool.
+    Proportional allocation keeps kappa from being dominated by one stratum.
     """
     rng = random.Random(seed)
-    cands = [r for r in batch if r.get("_pool") == CANDIDATE]
-    ctrls = [r for r in batch if r.get("_pool") == CONTROL]
-    total = len(cands) + len(ctrls)
+    by_pool: dict[str, list[Mapping[str, Any]]] = {}
+    for rec in batch:
+        by_pool.setdefault(rec.get("_pool", "?"), []).append(rec)
+
+    total = len(batch)
     if total == 0:
         return []
-
     n = min(n, total)
-    take_cand = min(len(cands), round(n * len(cands) / total))
-    take_ctrl = min(len(ctrls), n - take_cand)
-    # Repair any rounding shortfall from whichever pool still has items.
-    while take_cand + take_ctrl < n and take_cand < len(cands):
-        take_cand += 1
 
-    subset = rng.sample(cands, take_cand) + rng.sample(ctrls, take_ctrl)
+    take = {name: min(len(items), round(n * len(items) / total)) for name, items in by_pool.items()}
+    # Repair rounding drift against whichever stratum still has items.
+    while sum(take.values()) != n:
+        delta = 1 if sum(take.values()) < n else -1
+        for name, items in by_pool.items():
+            if 0 <= take[name] + delta <= len(items):
+                take[name] += delta
+                break
+        else:
+            break
+
+    subset = [r for name, items in by_pool.items() for r in rng.sample(items, take[name])]
     rng.shuffle(subset)
-    return subset
+    return [dict(r) for r in subset]

@@ -37,23 +37,28 @@ Read, in order:
   [S2] is every claim entailed by what it cites?  -- automatic
         |
         v
-  [S3] does it cite the gold passage?             -- automatic screen
+  [S3] three-way screen                           -- automatic
         |
-        +--> no  --> candidate pool --> sample 100 --.
-        |                                             |
-        +--> yes --> control pool   --> sample 50  ---+
-                                                      |
-                                                      v
-                                          label A / B / C by hand
-                                          (2nd annotator on 50 -> Cohen's kappa)
-                                                      |
-                                                      v
-                                   rate of B = the deceptive grounding rate
+        +-- cites a gold passage ............ control ............. 50 --.
+        +-- no gold cited, gold WAS in context  candidate_recoverable  80 -+
+        +-- no gold cited, gold NOT retrieved   candidate_unrecoverable 20 -+
+                                                                           |
+                                                                           v
+                                                        label A / B / C by hand
+                                              (2nd annotator on 50 -> Cohen's kappa)
+                                                                           |
+                                                                           v
+                                            r = sum of w_s * b_s = the rate
 ```
 
 **A** = cited passage governs what the question asked about.
 **B** = topically adjacent, but a different entity / category / clause. *This is the phenomenon.*
 **C** = plainly irrelevant passage. Ordinary retrieval failure, not interesting.
+
+`candidate_recoverable` is where deceptive grounding lives: the model had the right
+passage in front of it and cited a neighbour anyway. On ObliQA, BM25 top-10 recall
+is ~0.82, so ~16% of questions never see their gold passage at all — those land in
+`candidate_unrecoverable` and are label C by construction.
 
 ## Install
 
@@ -139,8 +144,8 @@ data/          gitignored except annotation labels
 | Stratified sampler | Done, tested |
 | Annotation CLI | Done |
 | Provenance logging | Done |
-| BM25 retrieval | Done |
-| ObliQA loader | **Adapter needs field-name verification against the real download** |
+| BM25 retrieval | Done. recall@10 = 0.82 on the full ADGM corpus |
+| ObliQA loader | Verified against the real download (2,786 test questions, 13,016 passages) |
 | Dense retrieval | Scaffolded, needs GPU run |
 | Generator | Scaffolded, needs model choice + GPU run |
 | S2 faithfulness (claim decomposition + NLI) | Scaffolded, needs model choice |

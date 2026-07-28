@@ -69,7 +69,15 @@ Both thresholds are fixed here and will not be tuned. If they are later found to
 
 ### S3 — Attribution mismatch *(automatic screen, not a criterion)*
 
-The set `cited_passage_ids` is compared against the ObliQA gold relevant-passage set for that question. The item enters the **candidate pool** if the Jaccard overlap between the two sets is **0.0** (no cited passage appears in the gold set). Otherwise it enters the **control pool**.
+*Amended 2026-07-28, before any generation was run. See Section 11, Amendment 1.*
+
+The set `cited_passage_ids` is compared against the ObliQA gold relevant-passage set for that question, and against the set of passages the retriever actually placed in the model's context. Items are partitioned into three strata:
+
+| Stratum | Condition |
+|---|---|
+| **control** | Jaccard overlap between cited and gold sets exceeds 0.0 — the answer cites at least one gold passage. |
+| **candidate_recoverable** | No overlap, **but a gold passage was present in the retrieved context.** The model had the correct passage available and cited a neighbour instead. |
+| **candidate_unrecoverable** | No overlap, **and no gold passage was retrieved at all.** The model could not have cited correctly. |
 
 **S3 is a sampling device, not part of the definition of the phenomenon.** The rate of S3 alone is a retrieval-error statistic and will not be reported as the headline result. Reporting it as such would be measuring ordinary retrieval failure and renaming it.
 
@@ -99,14 +107,19 @@ All model identifiers, revisions, prompts, sampling parameters, seeds and the gi
 
 1. Run the pipeline over **2,000** ObliQA test questions. If the test split contains fewer than 2,000, use all of it and record the actual number.
 2. Apply S1 and S2 automatically. Record the pass rate at each stage; these are reported as descriptive statistics.
-3. Partition the S1 ∧ S2 survivors by S3 into a candidate pool and a control pool.
+3. Partition the S1 ∧ S2 survivors by S3 into the three strata defined above, and record each stratum's share `w_s` of the full survivor set.
 4. Draw a stratified sample for annotation, using the fixed seed **20260728**:
-   - **100** items sampled uniformly at random without replacement from the candidate pool.
-   - **50** items sampled uniformly at random without replacement from the control pool.
+   - **80** items from **candidate_recoverable**
+   - **20** items from **candidate_unrecoverable**
+   - **50** items from **control**
+
+   all sampled uniformly at random without replacement. Total 150, unchanged.
 
 The 50 control items are **not optional**. Without them the study estimates a precision conditional on S3 and cannot estimate a base rate, because deceptive grounding can occur in items whose cited set overlaps the gold set (for example, one correct and one wrong-entity citation).
 
-If either pool contains fewer items than its allocation, take the whole pool and record the shortfall.
+The 20 candidate_unrecoverable items are likewise **not optional**, even though these items are expected to be almost entirely label C. They are what converts "these are retrieval failures by construction" from an assumption into a measurement. Assuming that stratum's B-rate is zero without checking would be exactly the kind of unverified analytic shortcut this document exists to prevent.
+
+If any stratum contains fewer items than its allocation, take the whole stratum and record the shortfall.
 
 ## 7. Analysis plan
 
@@ -114,14 +127,13 @@ Let:
 
 - `p1` = proportion of generated answers passing S1
 - `p2` = proportion of S1-passers also passing S2
-- `q`  = proportion of S1 ∧ S2 survivors falling in the candidate pool (S3 screen)
-- `b_cand` = proportion labelled **B** among annotated candidate-pool items
-- `b_ctrl` = proportion labelled **B** among annotated control-pool items
+- `w_s` = proportion of S1 ∧ S2 survivors falling in stratum `s`, measured on the **full** survivor set, not on the annotated sample
+- `b_s` = proportion labelled **B** among annotated items in stratum `s`
 
 The **conditional rate** (among schema-valid, faithfulness-passing answers) is:
 
 ```
-r = q · b_cand + (1 − q) · b_ctrl
+r = Σ_s  w_s · b_s        over s ∈ {candidate_recoverable, candidate_unrecoverable, control}
 ```
 
 The **unconditional base rate** (among all generated answers) is:
@@ -130,9 +142,11 @@ The **unconditional base rate** (among all generated answers) is:
 R = p1 · p2 · r
 ```
 
+The estimand is unchanged by Amendment 1. Splitting the candidate pool in two adds a term to the sum; it does not alter what `r` measures.
+
 **Headline number is `r`**, the conditional rate, because it is the quantity SAFE-RAG's attribution branch acts on. `R` is reported alongside it.
 
-**Interval estimation.** 95% interval on `r` by non-parametric bootstrap over the annotated items, stratified by pool, 10,000 resamples, percentile method. Wilson score intervals are reported for the component proportions `b_cand` and `b_ctrl` individually. The bootstrap is used for `r` because it is a function of two independent binomials plus an estimated weight, for which no clean closed form exists.
+**Interval estimation.** 95% interval on `r` by non-parametric bootstrap over the annotated items, stratified, 10,000 resamples, percentile method. Wilson score intervals are reported for each `b_s` individually. The bootstrap is used for `r` because it is a function of two independent binomials plus an estimated weight, for which no clean closed form exists.
 
 NA-labelled items are removed from both numerator and denominator of their stratum, and their count is reported.
 
@@ -181,9 +195,27 @@ Written in advance so that a low result is a branch in the plan rather than a pr
 
 Any departure from Sections 2–10 is recorded here with date, description, and reason. This section is append-only.
 
+### Amendment 1 — split the candidate pool by retrievability
+
+**Date.** 2026-07-28
+**Sections affected.** 4 (S3), 6 (sampling), 7 (analysis)
+**Status when made.** Before `scripts/02_run_rag.py` had been run. No generated answer, no annotation label, and no outcome data of any kind existed. Retrieval had been run; the amendment is motivated by retrieval statistics only.
+
+**What changed.** The single candidate pool is split into `candidate_recoverable` (no cited passage in the gold set, but a gold passage *was* in the retrieved context) and `candidate_unrecoverable` (no gold passage retrieved at all). Annotation allocation changes from 100 candidate / 50 control to 80 recoverable / 20 unrecoverable / 50 control. Total annotation burden is unchanged at 150 items.
+
+**Why.** A retrieval check on the ObliQA test split (2,786 questions, 13,016-passage ADGM corpus, BM25 top-10) measured recall@10 at 0.82–0.84. Roughly one question in six therefore has no gold passage anywhere in the model's context. For those items the model *cannot* cite correctly; whatever it cites necessarily lands in the candidate pool and is a retrieval failure — label C — by construction. Under the original design an estimated third of the 100 candidate annotations would have been spent re-confirming a fact already visible in the retrieval logs, leaving the quantity of interest underpowered.
+
+Deceptive grounding, as defined in Section 1, requires that the correct evidence was *available* and the model grounded in something adjacent instead. That is precisely the `candidate_recoverable` stratum. Concentrating annotation there measures the phenomenon the study is about.
+
+**Effect on the estimand.** None. `r` is still the proportion of schema-valid, faithfulness-passing answers that are deceptively grounded. The estimator gains a third term in an already-stratified weighted sum.
+
+**Effect on power.** Expected to increase substantially for the quantity of interest, because annotation moves from a stratum where the outcome is near-certain to one where it is uncertain.
+
+**Who decided.** Proposed on the basis of the retrieval statistics above and approved by the PI before generation was run.
+
 | Date | Section | Deviation | Reason |
 |---|---|---|---|
-| — | — | None to date. | — |
+| 2026-07-28 | 4, 6, 7 | Amendment 1 (above) | Retrieval recall@10 ≈ 0.82 implies ~16% of questions are unanswerable from context; splitting the candidate pool concentrates annotation on the stratum where deceptive grounding can actually occur. Made before any outcome data existed. |
 
 ## 12. Availability
 

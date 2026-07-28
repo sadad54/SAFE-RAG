@@ -13,7 +13,7 @@ import sys
 from _common import base_parser, paths  # noqa: E402
 from tqdm import tqdm  # noqa: E402
 
-from saferag.checks.attribution import CANDIDATE, screen  # noqa: E402
+from saferag.checks.attribution import STRATA, screen  # noqa: E402
 from saferag.checks.faithfulness import (  # noqa: E402
     HFNLIScorer,
     RuleDecomposer,
@@ -58,13 +58,15 @@ def main() -> int:
     }
 
     out_records = []
-    n_s1 = n_s2 = n_candidate = 0
+    n_s1 = n_s2 = 0
+    pool_counts = dict.fromkeys(STRATA, 0)
 
     for rec in tqdm(records, desc="filter"):
         row = {
             "item_id": rec["item_id"],
             "question": rec["question"],
             "gold_passage_ids": rec.get("gold_passage_ids", []),
+            "retrieved_passage_ids": rec.get("retrieved_passage_ids", []),
         }
 
         # --- S1 -------------------------------------------------------------
@@ -105,20 +107,24 @@ def main() -> int:
         n_s2 += 1
 
         # --- S3 (screen, not a criterion) -----------------------------------
-        sc = screen(cited_ids, row["gold_passage_ids"],
-                    threshold=cfg.checks.attribution.jaccard_threshold)
+        sc = screen(
+            cited_ids,
+            row["gold_passage_ids"],
+            row["retrieved_passage_ids"],
+            threshold=cfg.checks.attribution.jaccard_threshold,
+        )
         row["pool"] = sc.pool
         row["s3_jaccard"] = sc.jaccard
         row["s3_n_overlap"] = sc.n_overlap
+        row["gold_in_context"] = sc.gold_in_context
         row["stage"] = "survivor"
-        if sc.pool == CANDIDATE:
-            n_candidate += 1
+        pool_counts[sc.pool] += 1
         out_records.append(row)
 
     total = len(records)
     p1 = n_s1 / total if total else 0.0
     p2 = n_s2 / n_s1 if n_s1 else 0.0
-    q = n_candidate / n_s2 if n_s2 else 0.0
+    weights = {k: (v / n_s2 if n_s2 else 0.0) for k, v in pool_counts.items()}
 
     out = p["interim"] / "filtered.jsonl"
     prov = stamp(
@@ -131,11 +137,10 @@ def main() -> int:
             "n_total": total,
             "n_s1_pass": n_s1,
             "n_s2_pass": n_s2,
-            "n_candidate": n_candidate,
-            "n_control": n_s2 - n_candidate,
+            "pool_counts": pool_counts,
             "p_schema_valid": p1,
             "p_faithful_given_schema": p2,
-            "q_candidate_share": q,
+            "stratum_weights": weights,
         },
     )
     write_jsonl(out, out_records, provenance=prov)
@@ -144,8 +149,8 @@ def main() -> int:
     print(f"    generated answers            {total:>6}")
     print(f"    S1 schema-valid              {n_s1:>6}   ({p1:.1%})")
     print(f"    S2 faithfulness-passing      {n_s2:>6}   ({p2:.1%} of S1)")
-    print(f"      -> candidate pool          {n_candidate:>6}   (q = {q:.4f})")
-    print(f"      -> control pool            {n_s2 - n_candidate:>6}")
+    for name in STRATA:
+        print(f"      -> {name:<24} {pool_counts[name]:>6}   (w = {weights[name]:.4f})")
     print(f"\n  Wrote {out}")
     print("  Next: python scripts/04_make_annotation_batch.py\n")
 

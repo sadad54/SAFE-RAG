@@ -56,23 +56,27 @@ def main() -> int:
     if missing:
         log.warning("%d item(s) unlabelled; they are excluded.", len(missing))
 
-    cand = [labels[i] for i in pools if pools[i] == "candidate" and i in labels]
-    ctrl = [labels[i] for i in pools if pools[i] == "control" and i in labels]
-
     prov = read_provenance(p["interim"] / "filtered.jsonl") or {}
     funnel = prov.get("extra", {}).get("funnel", {})
-    q = funnel.get("q_candidate_share")
-    if q is None:
+    weights = funnel.get("stratum_weights")
+    if not weights:
         log.error(
-            "Could not read q_candidate_share from the step-03 provenance header. "
-            "Rerun step 03 rather than supplying q by hand."
+            "Could not read stratum_weights from the step-03 provenance header. "
+            "Rerun step 03 rather than supplying weights by hand."
         )
         return 1
 
+    strata = {
+        name: [labels[i] for i in pools if pools[i] == name and i in labels]
+        for name in weights
+    }
+    empty = [n for n, labs in strata.items() if not labs]
+    if empty:
+        log.warning("No annotated items in stratum/strata: %s", ", ".join(empty))
+
     result = estimate_base_rate(
-        candidate_labels=cand,
-        control_labels=ctrl,
-        q_candidate_share=q,
+        strata=strata,
+        weights=weights,
         p_schema_valid=funnel.get("p_schema_valid"),
         p_faithful=funnel.get("p_faithful_given_schema"),
         n_resamples=cfg.analysis.bootstrap_resamples,
@@ -129,11 +133,9 @@ def main() -> int:
                         "high": result.unconditional_rate.high,
                     }
                 ),
-                "b_candidate": result.b_candidate.point,
-                "b_control": result.b_control.point,
-                "q_candidate_share": result.q_candidate_share,
-                "n_candidate": result.n_candidate,
-                "n_control": result.n_control,
+                "per_stratum": {k: v.point for k, v in result.per_stratum.items()},
+                "stratum_weights": result.weights,
+                "n_annotated": result.n_annotated,
                 "n_excluded_na": result.n_excluded_na,
                 "cohens_kappa": None if kappa != kappa else kappa,
                 "verdict": verdict,

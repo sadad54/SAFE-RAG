@@ -42,10 +42,7 @@ def main() -> int:
         return 1
 
     batch, report = stratified_sample(
-        survivors,
-        n_candidate=cfg.sampling.n_candidate,
-        n_control=cfg.sampling.n_control,
-        seed=cfg.seed,
+        survivors, allocation=dict(cfg.sampling.allocation), seed=cfg.seed
     )
     double = double_annotation_subset(batch, n=cfg.sampling.n_double_annotated, seed=cfg.seed)
 
@@ -71,9 +68,11 @@ def main() -> int:
     write_jsonl(p["annotation"] / "batch_01_key.jsonl", key, provenance=prov)
 
     print("\n  SAMPLING")
-    for k, v in report.items():
-        print(f"    {k:<28} {v}")
-    if report["shortfall_candidate"] or report["shortfall_control"]:
+    for name, st in report["strata"].items():
+        print(f"    {name:<26} available={st['available']:<6} "
+              f"sampled={st['sampled']:<5} shortfall={st['shortfall']}")
+    print(f"    {'total':<26} {report['total']}")
+    if report["any_shortfall"]:
         print("\n    NOTE: a pool was smaller than its registered allocation.")
         print("    This is permitted; record it in PREREGISTRATION.md Section 11.")
 

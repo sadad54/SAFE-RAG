@@ -6,7 +6,13 @@ import json
 
 import pytest
 
-from saferag.checks.attribution import CANDIDATE, CONTROL, jaccard, screen
+from saferag.checks.attribution import (
+    CANDIDATE_RECOVERABLE,
+    CANDIDATE_UNRECOVERABLE,
+    CONTROL,
+    jaccard,
+    screen,
+)
 from saferag.checks.faithfulness import RuleDecomposer, StubNLIScorer, check_faithfulness
 from saferag.data.obliqa import ObliQAFormatError, adapt_record, build_passage_corpus
 from saferag.generation.generator import StubGenerator, render_prompt
@@ -84,25 +90,38 @@ def test_jaccard_empty_both_is_one():
     assert jaccard([], []) == 1.0
 
 
-def test_screen_no_overlap_is_candidate():
-    s = screen(["p9"], ["p1", "p2"])
-    assert s.pool == CANDIDATE
-    assert s.n_overlap == 0
-
-
-def test_screen_any_overlap_is_control():
-    s = screen(["p1", "p9"], ["p1", "p2"])
+def test_screen_cited_gold_is_control():
+    s = screen(["p1", "p9"], ["p1", "p2"], ["p1", "p9"])
     assert s.pool == CONTROL
     assert s.n_overlap == 1
 
 
+def test_screen_gold_available_but_not_cited_is_recoverable():
+    """The interesting stratum: the model HAD the right passage and cited a neighbour."""
+    s = screen(["p9"], ["p1"], ["p1", "p9"])
+    assert s.pool == CANDIDATE_RECOVERABLE
+    assert s.gold_in_context is True
+    assert s.n_overlap == 0
+
+
+def test_screen_gold_never_retrieved_is_unrecoverable():
+    """The model could not have cited correctly -- retrieval failure by construction."""
+    s = screen(["p9"], ["p1"], ["p8", "p9"])
+    assert s.pool == CANDIDATE_UNRECOVERABLE
+    assert s.gold_in_context is False
+
+
+def test_screen_without_retrieved_defaults_to_unrecoverable():
+    """No retrieval context supplied -> cannot claim the gold was available."""
+    assert screen(["p9"], ["p1"]).pool == CANDIDATE_UNRECOVERABLE
+
+
 def test_screen_ignores_empty_ids():
-    assert screen(["", "p1"], ["p1"]).n_cited == 1
+    assert screen(["", "p1"], ["p1"], ["p1"]).n_cited == 1
 
 
-def test_screen_with_no_gold_is_candidate():
-    """No gold passages -> jaccard 0 -> candidate pool."""
-    assert screen(["p1"], []).pool == CANDIDATE
+def test_screen_with_no_gold_is_unrecoverable():
+    assert screen(["p1"], [], ["p1"]).pool == CANDIDATE_UNRECOVERABLE
 
 
 # --------------------------------------------------------------------------
@@ -143,60 +162,73 @@ def test_faithfulness_passes_on_high_overlap():
 # --------------------------------------------------------------------------
 
 
-def _survivors(n_cand: int, n_ctrl: int) -> list[dict]:
+ALLOC = {CANDIDATE_RECOVERABLE: 80, CANDIDATE_UNRECOVERABLE: 20, CONTROL: 50}
+
+
+def _survivors(n_rec: int, n_unrec: int, n_ctrl: int) -> list[dict]:
     out = []
-    for i in range(n_cand):
-        out.append({"item_id": f"c{i}", "pool": CANDIDATE, "gold_passage_ids": ["g"], "q": i})
-    for i in range(n_ctrl):
-        out.append({"item_id": f"t{i}", "pool": CONTROL, "gold_passage_ids": ["g"], "q": i})
+    for pool, n, tag in (
+        (CANDIDATE_RECOVERABLE, n_rec, "r"),
+        (CANDIDATE_UNRECOVERABLE, n_unrec, "u"),
+        (CONTROL, n_ctrl, "c"),
+    ):
+        for i in range(n):
+            out.append(
+                {"item_id": f"{tag}{i}", "pool": pool, "gold_passage_ids": ["g"],
+                 "retrieved_passage_ids": ["g"], "question": "q", "answer": "a"}
+            )
     return out
 
 
 def test_sampling_respects_allocation():
-    batch, report = stratified_sample(_survivors(500, 500), 100, 50)
-    assert report["sampled_candidate"] == 100
-    assert report["sampled_control"] == 50
+    batch, report = stratified_sample(_survivors(300, 300, 300), ALLOC)
+    assert report["strata"][CANDIDATE_RECOVERABLE]["sampled"] == 80
+    assert report["strata"][CANDIDATE_UNRECOVERABLE]["sampled"] == 20
+    assert report["strata"][CONTROL]["sampled"] == 50
     assert len(batch) == 150
+    assert report["any_shortfall"] is False
 
 
 def test_sampling_is_deterministic():
-    a, _ = stratified_sample(_survivors(500, 500), 100, 50, seed=20260728)
-    b, _ = stratified_sample(_survivors(500, 500), 100, 50, seed=20260728)
+    a, _ = stratified_sample(_survivors(300, 300, 300), ALLOC, seed=20260728)
+    b, _ = stratified_sample(_survivors(300, 300, 300), ALLOC, seed=20260728)
     assert [x["item_id"] for x in a] == [x["item_id"] for x in b]
 
 
 def test_sampling_records_shortfall():
-    _, report = stratified_sample(_survivors(30, 10), 100, 50)
-    assert report["shortfall_candidate"] == 70
-    assert report["shortfall_control"] == 40
+    _, report = stratified_sample(_survivors(30, 5, 10), ALLOC)
+    assert report["strata"][CANDIDATE_RECOVERABLE]["shortfall"] == 50
+    assert report["strata"][CANDIDATE_UNRECOVERABLE]["shortfall"] == 15
+    assert report["strata"][CONTROL]["shortfall"] == 40
+    assert report["any_shortfall"] is True
 
 
-def test_sampling_strips_gold_ids_from_batch():
-    """The annotator must not see the gold set -- it would give the answer away."""
-    batch, _ = stratified_sample(_survivors(20, 20), 10, 5)
-    assert all("gold_passage_ids" not in item for item in batch)
-    assert all("pool" not in item for item in batch)
+def test_sampling_hides_answer_revealing_fields():
+    """The annotator must not see the gold set or the screen output."""
+    batch, _ = stratified_sample(_survivors(90, 30, 60), ALLOC)
+    for item in batch:
+        for hidden in ("gold_passage_ids", "pool", "retrieved_passage_ids", "s3_jaccard"):
+            assert hidden not in item
 
 
-def test_sampling_shuffles_pools_together():
-    """If pools were not shuffled, position would leak pool membership."""
-    batch, _ = stratified_sample(_survivors(100, 100), 50, 50)
-    first_half = [i["_pool"] for i in batch[:50]]
-    assert len(set(first_half)) == 2
+def test_sampling_shuffles_strata_together():
+    """If strata were not shuffled, position would leak stratum membership."""
+    batch, _ = stratified_sample(_survivors(300, 300, 300), ALLOC)
+    assert len(set(i["_pool"] for i in batch[:40])) > 1
 
 
 def test_double_subset_size_and_membership():
-    batch, _ = stratified_sample(_survivors(200, 200), 100, 50)
+    batch, _ = stratified_sample(_survivors(300, 300, 300), ALLOC)
     sub = double_annotation_subset(batch, n=50)
     ids = {i["item_id"] for i in batch}
     assert len(sub) == 50
     assert all(i["item_id"] in ids for i in sub)
 
 
-def test_double_subset_spans_both_pools():
-    batch, _ = stratified_sample(_survivors(200, 200), 100, 50)
+def test_double_subset_spans_all_strata():
+    batch, _ = stratified_sample(_survivors(300, 300, 300), ALLOC)
     sub = double_annotation_subset(batch, n=50)
-    assert {i["_pool"] for i in sub} == {CANDIDATE, CONTROL}
+    assert len({i["_pool"] for i in sub}) == 3
 
 
 # --------------------------------------------------------------------------

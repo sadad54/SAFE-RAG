@@ -151,32 +151,29 @@ class BaseRateResult:
 
     conditional_rate: Interval  # r -- among schema-valid, faithfulness-passing answers
     unconditional_rate: Interval | None  # R -- among all generated answers
-    b_candidate: Interval
-    b_control: Interval
-    q_candidate_share: float
-    n_candidate: int
-    n_control: int
+    per_stratum: dict[str, Interval]
+    weights: dict[str, float]
+    n_annotated: dict[str, int]
     n_excluded_na: int
 
     def summary(self) -> str:
-        lines = [
-            f"  Conditional rate  r = {self.conditional_rate.as_percent()}",
-        ]
+        lines = [f"  Conditional rate  r = {self.conditional_rate.as_percent()}"]
         if self.unconditional_rate is not None:
             lines.append(f"  Unconditional     R = {self.unconditional_rate.as_percent()}")
-        lines += [
-            f"  B | candidate pool  = {self.b_candidate.as_percent()}  (n={self.n_candidate})",
-            f"  B | control pool    = {self.b_control.as_percent()}  (n={self.n_control})",
-            f"  Candidate share q   = {self.q_candidate_share:.4f}",
-            f"  Excluded as NA      = {self.n_excluded_na}",
-        ]
+        lines.append("")
+        width = max(len(s) for s in self.per_stratum) if self.per_stratum else 10
+        for name, interval in self.per_stratum.items():
+            lines.append(
+                f"    B | {name:<{width}}  {interval.as_percent():<26} "
+                f"n={self.n_annotated[name]:<4} weight={self.weights[name]:.4f}"
+            )
+        lines.append(f"\n  Excluded as NA      = {self.n_excluded_na}")
         return "\n".join(lines)
 
 
 def estimate_base_rate(
-    candidate_labels: Sequence[str],
-    control_labels: Sequence[str],
-    q_candidate_share: float,
+    strata: dict[str, Sequence[str]],
+    weights: dict[str, float],
     p_schema_valid: float | None = None,
     p_faithful: float | None = None,
     n_resamples: int = 10_000,
@@ -185,17 +182,16 @@ def estimate_base_rate(
 ) -> BaseRateResult:
     """Stratified estimate of the deceptive-grounding rate.
 
-    Implements PREREGISTRATION.md Section 7::
+    Implements PREREGISTRATION.md Section 7, generalised to any number of strata::
 
-        r = q * b_cand + (1 - q) * b_ctrl
+        r = sum over strata of  w_s * b_s
         R = p1 * p2 * r
 
     Args:
-        candidate_labels: A/B/C/NA labels for items sampled from the candidate pool
-            (those whose cited passages did not overlap the gold set).
-        control_labels: A/B/C/NA labels for items sampled from the control pool.
-        q_candidate_share: Proportion of all S1-and-S2 survivors that fell in the
-            candidate pool. Measured on the full survivor set, not the sample.
+        strata: stratum name -> A/B/C/NA labels for the items annotated in it.
+        weights: stratum name -> that stratum's share of all S1-and-S2 survivors.
+            Measured on the full survivor set, not on the annotated sample. Must
+            cover the same names as ``strata`` and sum to 1.
         p_schema_valid: Optional S1 pass rate, for the unconditional rate.
         p_faithful: Optional S2 pass rate given S1, for the unconditional rate.
         n_resamples: Bootstrap resamples. Pre-registered at 10,000.
@@ -203,37 +199,46 @@ def estimate_base_rate(
         seed: Pre-registered at 20260728.
 
     The interval on ``r`` comes from a stratified non-parametric bootstrap: each
-    stratum is resampled with replacement at its own observed size, and ``q`` is
-    held fixed (it is estimated on the full survivor set, where n is large enough
-    that its contribution to the variance of r is negligible relative to the
-    150 annotated items).
+    stratum is resampled with replacement at its own observed size, and the
+    weights are held fixed (they are estimated on the full survivor set, where n
+    is large enough that their contribution to the variance of r is negligible
+    relative to the 150 annotated items).
     """
-    if not 0.0 <= q_candidate_share <= 1.0:
-        raise ValueError(f"q_candidate_share must lie in [0, 1], got {q_candidate_share}")
+    if set(strata) != set(weights):
+        raise ValueError(
+            f"strata and weights must cover the same names: "
+            f"{sorted(strata)} vs {sorted(weights)}"
+        )
+    if any(w < 0 for w in weights.values()):
+        raise ValueError(f"weights must be non-negative, got {weights}")
+    total = sum(weights.values())
+    if not math.isclose(total, 1.0, abs_tol=1e-6):
+        raise ValueError(f"weights must sum to 1, got {total}")
 
-    cand = [lab for lab in candidate_labels if lab != "NA"]
-    ctrl = [lab for lab in control_labels if lab != "NA"]
-    n_na = (len(candidate_labels) - len(cand)) + (len(control_labels) - len(ctrl))
-
-    if not cand and not ctrl:
+    clean = {name: [lab for lab in labs if lab != "NA"] for name, labs in strata.items()}
+    n_na = sum(len(strata[name]) - len(clean[name]) for name in strata)
+    if not any(clean.values()):
         raise ValueError("No annotated items remain after excluding NA.")
 
-    cand_arr = np.array([1 if lab == "B" else 0 for lab in cand], dtype=np.int8)
-    ctrl_arr = np.array([1 if lab == "B" else 0 for lab in ctrl], dtype=np.int8)
-
-    b_cand = wilson_interval(int(cand_arr.sum()), len(cand_arr), confidence)
-    b_ctrl = wilson_interval(int(ctrl_arr.sum()), len(ctrl_arr), confidence)
-
-    p_cand = float(cand_arr.mean()) if len(cand_arr) else 0.0
-    p_ctrl = float(ctrl_arr.mean()) if len(ctrl_arr) else 0.0
-    r_point = q_candidate_share * p_cand + (1.0 - q_candidate_share) * p_ctrl
+    arrays = {
+        name: np.array([1 if lab == "B" else 0 for lab in labs], dtype=np.int8)
+        for name, labs in clean.items()
+    }
+    per_stratum = {
+        name: wilson_interval(int(arr.sum()), len(arr), confidence)
+        for name, arr in arrays.items()
+    }
+    means = {name: (float(arr.mean()) if len(arr) else 0.0) for name, arr in arrays.items()}
+    r_point = sum(weights[name] * means[name] for name in arrays)
 
     rng = np.random.default_rng(seed)
     draws = np.empty(n_resamples, dtype=np.float64)
     for i in range(n_resamples):
-        bc = rng.choice(cand_arr, size=len(cand_arr), replace=True).mean() if len(cand_arr) else 0.0
-        bt = rng.choice(ctrl_arr, size=len(ctrl_arr), replace=True).mean() if len(ctrl_arr) else 0.0
-        draws[i] = q_candidate_share * bc + (1.0 - q_candidate_share) * bt
+        draws[i] = sum(
+            weights[name]
+            * (rng.choice(arr, size=len(arr), replace=True).mean() if len(arr) else 0.0)
+            for name, arr in arrays.items()
+        )
 
     alpha = 1.0 - confidence
     lo, hi = np.quantile(draws, [alpha / 2, 1.0 - alpha / 2])
@@ -242,18 +247,14 @@ def estimate_base_rate(
     uncond = None
     if p_schema_valid is not None and p_faithful is not None:
         scale = p_schema_valid * p_faithful
-        uncond = Interval(
-            r_point * scale, float(lo) * scale, float(hi) * scale, confidence
-        )
+        uncond = Interval(r_point * scale, float(lo) * scale, float(hi) * scale, confidence)
 
     return BaseRateResult(
         conditional_rate=r_interval,
         unconditional_rate=uncond,
-        b_candidate=b_cand,
-        b_control=b_ctrl,
-        q_candidate_share=q_candidate_share,
-        n_candidate=len(cand),
-        n_control=len(ctrl),
+        per_stratum=per_stratum,
+        weights=dict(weights),
+        n_annotated={name: len(arr) for name, arr in arrays.items()},
         n_excluded_na=n_na,
     )
 
