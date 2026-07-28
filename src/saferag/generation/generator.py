@@ -62,12 +62,26 @@ def gpu_report() -> dict[str, object]:
         return {"torch": False, "cuda": False, "advice": "torch not installed: pip install -e '.[models]'"}
 
     if not torch.cuda.is_available():
+        # Distinguish "no GPU present" from "CPU-only wheel installed". Same
+        # symptom, completely different fix, and `pip install torch` on Windows
+        # silently gives you the CPU wheel.
+        cpu_only_build = torch.version.cuda is None
         return {
             "torch": True,
+            "torch_version": torch.__version__,
+            "torch_cuda_build": torch.version.cuda or "NONE (CPU-only wheel)",
             "cuda": False,
-            "advice": "No CUDA device. A 7B model on CPU is impractically slow "
-                      "(hours for a few hundred items). Use --limit for a smoke run, "
-                      "or move generation to the cluster.",
+            "advice": (
+                "You installed the CPU-ONLY torch wheel. If this machine has an "
+                "NVIDIA GPU, run `nvidia-smi` to confirm, then reinstall:\n"
+                "    pip uninstall -y torch\n"
+                "    pip install torch --index-url https://download.pytorch.org/whl/cu124\n"
+                "If `nvidia-smi` is not found, there is no usable GPU here -- see "
+                "docs/RUNNING_WITHOUT_A_GPU.md."
+                if cpu_only_build else
+                "torch has CUDA support but no device is visible. Check the driver, "
+                "and that no other process is holding the GPU."
+            ),
         }
 
     props = torch.cuda.get_device_properties(0)
