@@ -437,3 +437,18 @@ def test_prompt_hash_detects_cap_change():
 def test_prompt_hash_stable_for_identical_input():
     p = [("p1", "same text")]
     assert prompt_hash(render_prompt("q?", p)) == prompt_hash(render_prompt("q?", p))
+
+
+def test_logger_is_namespaced_so_info_is_not_swallowed(capfd):
+    """Regression: get_logger('x') returned an unparented logger, so its INFO
+    records fell through to the root logger and were dropped at WARNING level.
+
+    Checked at file-descriptor level because the saferag logger sets
+    propagate=False and holds its own stderr handler, so caplog cannot see it.
+    """
+    from saferag.utils.logging import get_logger
+
+    log = get_logger("some_script")
+    assert log.name == "saferag.some_script"
+    log.info("canary message")
+    assert "canary message" in capfd.readouterr().err

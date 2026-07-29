@@ -192,19 +192,38 @@ def main() -> int:
     # disconnect or a crash costs the current batch, not the whole run.
     cache_path = p["interim"] / "_generations.jsonl"
     hashes = {q.question_id: prompt_hash(pr) for q, pr in zip(questions, prompts, strict=True)}
+    # Entries written before prompt hashing existed carry no hash. They cannot be
+    # trusted blindly: the length caps were introduced after them, so any prompt
+    # the caps would change was produced under a different construction. For those
+    # we compare against the uncapped render -- if capping makes no difference to
+    # that prompt, the two constructions are byte-identical and the entry stands.
+    uncapped = {
+        q.question_id: prompt_hash(render_prompt(q.question, ctx, 10**9, 10**9))
+        for q, ctx in zip(questions, contexts, strict=True)
+    }
+
     cached: dict[str, str] = {}
     if cache_path.exists():
-        stale = 0
+        stale = legacy_ok = 0
         for r in read_jsonl(cache_path):
             qid = r["item_id"]
-            # A cached generation is only reusable if the prompt that produced it
-            # is byte-identical to the prompt we would send now. Anything else
-            # silently mixes conditions across the dataset.
-            if r.get("prompt_hash") and r["prompt_hash"] != hashes.get(qid):
+            want = hashes.get(qid)
+            got = r.get("prompt_hash")
+            if got is None:
+                # Legacy entry: keep only where capping is a no-op for this prompt.
+                if uncapped.get(qid) == want:
+                    legacy_ok += 1
+                else:
+                    stale += 1
+                    continue
+            elif got != want:
                 stale += 1
                 continue
             cached[qid] = r["raw_output"]
-        log.info("Resuming: %d cached, %d invalidated by prompt change", len(cached), stale)
+        log.info(
+            "Resuming: %d cached (%d legacy verified identical), %d invalidated "
+            "by prompt change", len(cached), legacy_ok, stale
+        )
 
     todo = [i for i, q in enumerate(questions) if q.question_id not in cached]
     # Sort by prompt length. Everything in a batch pads up to the longest member,
