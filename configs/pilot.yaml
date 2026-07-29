@@ -38,6 +38,13 @@ generation:
   model: Qwen/Qwen2.5-7B-Instruct
   backend: hf                     # vllm (Linux+CUDA) | hf (anywhere) | stub
   max_new_tokens: 256            # the target JSON is small; 512 just burns time
+  # Prompt length caps. The ADGM corpus contains a 152,000-char "passage" (the
+  # defined-terms glossary) against a median of 262, which alone produces a
+  # ~38k-token prompt that will not fit on a 16 GB card. No ObliQA question has a
+  # passage over 8k chars in its gold set, so capping cannot break answerability.
+  # Changing either value invalidates cached generations automatically.
+  max_passage_chars: 4000
+  max_total_prompt_chars: 32000
   temperature: 0.0                # [REGISTERED] deterministic
   seed: 20260728
   prompt_version: v1              # prompts/answer_v1.txt

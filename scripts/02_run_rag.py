@@ -28,6 +28,7 @@ from saferag.generation.generator import (  # noqa: E402
     build_generator,
     gpu_report,
     prompt_fingerprint,
+    prompt_hash,
     render_prompt,
     write_prompt_template,
 )
@@ -175,7 +176,14 @@ def main() -> int:
         hits = retriever.search(q.question, top_k=cfg.retrieval.top_k)
         contexts.append([(h.passage_id, corpus.get(h.passage_id, "")) for h in hits])
 
-    prompts = [render_prompt(q.question, ctx) for q, ctx in zip(questions, contexts, strict=True)]
+    prompts = [
+        render_prompt(
+            q.question, ctx,
+            max_passage_chars=cfg.generation.max_passage_chars,
+            max_total_chars=cfg.generation.max_total_prompt_chars,
+        )
+        for q, ctx in zip(questions, contexts, strict=True)
+    ]
 
     if args.selftest:
         return _selftest(generator, prompts[:4])
@@ -183,10 +191,20 @@ def main() -> int:
     # Resume: generations are cached by question id as they complete, so a
     # disconnect or a crash costs the current batch, not the whole run.
     cache_path = p["interim"] / "_generations.jsonl"
+    hashes = {q.question_id: prompt_hash(pr) for q, pr in zip(questions, prompts, strict=True)}
     cached: dict[str, str] = {}
     if cache_path.exists():
-        cached = {r["item_id"]: r["raw_output"] for r in read_jsonl(cache_path)}
-        log.info("Resuming: %d generation(s) already cached", len(cached))
+        stale = 0
+        for r in read_jsonl(cache_path):
+            qid = r["item_id"]
+            # A cached generation is only reusable if the prompt that produced it
+            # is byte-identical to the prompt we would send now. Anything else
+            # silently mixes conditions across the dataset.
+            if r.get("prompt_hash") and r["prompt_hash"] != hashes.get(qid):
+                stale += 1
+                continue
+            cached[qid] = r["raw_output"]
+        log.info("Resuming: %d cached, %d invalidated by prompt change", len(cached), stale)
 
     todo = [i for i, q in enumerate(questions) if q.question_id not in cached]
     # Sort by prompt length. Everything in a batch pads up to the longest member,
@@ -203,7 +221,11 @@ def main() -> int:
                 qid = questions[i].question_id
                 cached[qid] = out_text
                 cache_fh.write(
-                    json.dumps({"item_id": qid, "raw_output": out_text}, ensure_ascii=False) + "\n"
+                    json.dumps(
+                        {"item_id": qid, "prompt_hash": hashes[qid], "raw_output": out_text},
+                        ensure_ascii=False,
+                    )
+                    + "\n"
                 )
             cache_fh.flush()
 

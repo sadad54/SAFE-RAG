@@ -15,7 +15,7 @@ from saferag.checks.attribution import (
 )
 from saferag.checks.faithfulness import RuleDecomposer, StubNLIScorer, check_faithfulness
 from saferag.data.obliqa import ObliQAFormatError, adapt_record, build_passage_corpus
-from saferag.generation.generator import StubGenerator, render_prompt
+from saferag.generation.generator import StubGenerator, prompt_hash, render_prompt
 from saferag.generation.schema import check_schema, extract_json_block
 from saferag.pilot.sample import double_annotation_subset, stratified_sample
 from saferag.retrieval.hybrid import BM25Retriever, Hit, reciprocal_rank_fusion, tokenize
@@ -397,3 +397,43 @@ def test_load_corpus_documents_missing_dir(tmp_path):
 
     with pytest.raises(FileNotFoundError):
         load_corpus_documents(tmp_path / "nope")
+
+
+# --------------------------------------------------------------------------
+# Prompt length caps
+# --------------------------------------------------------------------------
+
+
+def test_oversized_passage_is_truncated_and_marked():
+    """The ADGM corpus has a 152k-char glossary against a median of 262."""
+    prompt = render_prompt("q?", [("p1", "x" * 50_000)], max_passage_chars=4000)
+    assert "...[truncated]" in prompt
+    assert len(prompt) < 6_000
+
+
+def test_total_budget_drops_lowest_ranked_passages():
+    """Passages arrive in rank order, so anything dropped is what ranked last."""
+    passages = [(f"p{i}", "y" * 3000) for i in range(10)]
+    prompt = render_prompt("q?", passages, max_passage_chars=4000, max_total_chars=10_000)
+    assert "[id: p0]" in prompt
+    assert "[id: p9]" not in prompt
+
+
+def test_short_passages_are_untouched():
+    passages = [("p1", "short one"), ("p2", "short two")]
+    prompt = render_prompt("q?", passages)
+    assert "truncated" not in prompt
+    assert "short one" in prompt and "short two" in prompt
+
+
+def test_prompt_hash_detects_cap_change():
+    """This is what invalidates stale cached generations."""
+    big = [("p1", "z" * 20_000)]
+    a = prompt_hash(render_prompt("q?", big, max_passage_chars=4000))
+    b = prompt_hash(render_prompt("q?", big, max_passage_chars=8000))
+    assert a != b
+
+
+def test_prompt_hash_stable_for_identical_input():
+    p = [("p1", "same text")]
+    assert prompt_hash(render_prompt("q?", p)) == prompt_hash(render_prompt("q?", p))

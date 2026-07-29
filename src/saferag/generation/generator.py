@@ -39,10 +39,47 @@ QUESTION
 JSON:"""
 
 
-def render_prompt(question: str, passages: Sequence[tuple[str, str]]) -> str:
-    """Build the generation prompt from (passage_id, text) pairs."""
-    block = "\n\n".join(f"[id: {pid}]\n{text}" for pid, text in passages)
-    return PROMPT_V1.format(passages=block, question=question)
+def render_prompt(
+    question: str,
+    passages: Sequence[tuple[str, str]],
+    max_passage_chars: int = 4000,
+    max_total_chars: int = 32000,
+) -> str:
+    """Build the generation prompt from (passage_id, text) pairs.
+
+    Two length caps, both needed for different failure modes.
+
+    ``max_passage_chars`` handles single monstrous records: the ADGM corpus has a
+    152,000-character "passage" that is really the defined-terms glossary, against
+    a median of 262. Uncapped it produces a ~38k-token prompt whose attention
+    matrix will not fit on a 16 GB card. No question in ObliQA has a passage over
+    8k characters in its gold set, so these giants are never the right answer and
+    truncating them cannot make a question unanswerable.
+
+    ``max_total_chars`` handles the other direction: ten individually-legal
+    passages that together overflow. Passages are kept in rank order, so anything
+    dropped is what the retriever ranked last.
+
+    Truncation is marked in the text so it is visible to a human reading the
+    prompt, and so it cannot be mistaken for the passage ending there.
+    """
+    kept: list[str] = []
+    used = 0
+    for pid, text in passages:
+        if len(text) > max_passage_chars:
+            text = text[:max_passage_chars] + " ...[truncated]"
+        entry = f"[id: {pid}]\n{text}"
+        if used + len(entry) > max_total_chars:
+            break
+        kept.append(entry)
+        used += len(entry)
+    return PROMPT_V1.format(passages="\n\n".join(kept), question=question)
+
+
+def prompt_hash(prompt: str) -> str:
+    """Short content hash, used to invalidate cached generations when the prompt
+    that produced them no longer matches the prompt we would send today."""
+    return hashlib.sha256(prompt.encode()).hexdigest()[:16]
 
 
 def prompt_fingerprint() -> str:
