@@ -14,6 +14,8 @@ Output: data/interim/answers.jsonl, with a provenance header.
 
 from __future__ import annotations
 
+import json
+import os
 import sys
 from pathlib import Path
 
@@ -31,9 +33,13 @@ from saferag.generation.generator import (  # noqa: E402
 )
 from saferag.generation.schema import check_schema  # noqa: E402
 from saferag.retrieval.hybrid import HybridRetriever  # noqa: E402
-from saferag.utils.io import write_jsonl  # noqa: E402
+from saferag.utils.io import read_jsonl, write_jsonl  # noqa: E402
 from saferag.utils.logging import get_logger  # noqa: E402
 from saferag.utils.provenance import stamp  # noqa: E402
+
+# Set before CUDA initialises. Reduces the fragmentation that turns a
+# survivable allocation into an OOM on a nearly-full card.
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 log = get_logger("run_rag")
 
@@ -174,10 +180,34 @@ def main() -> int:
     if args.selftest:
         return _selftest(generator, prompts[:4])
 
-    log.info("Generating %d answers", len(prompts))
-    raw_outputs: list[str] = []
-    for i in tqdm(range(0, len(prompts), args.batch_size), desc="generate"):
-        raw_outputs.extend(generator.generate(prompts[i : i + args.batch_size]))
+    # Resume: generations are cached by question id as they complete, so a
+    # disconnect or a crash costs the current batch, not the whole run.
+    cache_path = p["interim"] / "_generations.jsonl"
+    cached: dict[str, str] = {}
+    if cache_path.exists():
+        cached = {r["item_id"]: r["raw_output"] for r in read_jsonl(cache_path)}
+        log.info("Resuming: %d generation(s) already cached", len(cached))
+
+    todo = [i for i, q in enumerate(questions) if q.question_id not in cached]
+    # Sort by prompt length. Everything in a batch pads up to the longest member,
+    # so mixing a 1.8k-token prompt with an 8k one wastes most of the compute and
+    # drives the peak attention allocation. Sorting makes batches near-uniform.
+    todo.sort(key=lambda i: len(prompts[i]))
+
+    log.info("Generating %d answers (%d cached)", len(todo), len(cached))
+    with cache_path.open("a", encoding="utf-8") as cache_fh:
+        for start in tqdm(range(0, len(todo), args.batch_size), desc="generate"):
+            idx = todo[start : start + args.batch_size]
+            outs = generator.generate([prompts[i] for i in idx])
+            for i, out_text in zip(idx, outs, strict=True):
+                qid = questions[i].question_id
+                cached[qid] = out_text
+                cache_fh.write(
+                    json.dumps({"item_id": qid, "raw_output": out_text}, ensure_ascii=False) + "\n"
+                )
+            cache_fh.flush()
+
+    raw_outputs = [cached[q.question_id] for q in questions]
 
     records = []
     for q, ctx, raw in zip(questions, contexts, raw_outputs, strict=True):

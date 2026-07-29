@@ -213,35 +213,47 @@ class HFGenerator(Generator):
             )
         return prompt
 
-    def generate(self, prompts: Sequence[str]) -> list[str]:
-        if not prompts:
-            return []
+    def _generate_once(self, prompts: Sequence[str]) -> list[str]:
         texts = [self._apply_template(p) for p in prompts]
         enc = self.tok(texts, return_tensors="pt", padding=True, truncation=False).to(
             self.model.device
         )
-        try:
-            with self._torch.no_grad():
-                ids = self.model.generate(
-                    **enc,
-                    max_new_tokens=self.max_new_tokens,
-                    do_sample=False,
-                    pad_token_id=self.tok.pad_token_id,
-                )
-        except RuntimeError as exc:  # pragma: no cover - hardware dependent
-            if "out of memory" in str(exc).lower():
-                raise RuntimeError(
-                    f"CUDA out of memory generating a batch of {len(prompts)}.\n"
-                    "  Reduce --batch-size (try 4, then 2), or switch to a smaller "
-                    "model such as Qwen/Qwen2.5-3B-Instruct.\n"
-                    "  Run `python scripts/02_run_rag.py --preflight` to see your VRAM."
-                ) from exc
-            raise
-
+        with self._torch.no_grad():
+            ids = self.model.generate(
+                **enc,
+                max_new_tokens=self.max_new_tokens,
+                do_sample=False,
+                pad_token_id=self.tok.pad_token_id,
+            )
         prompt_len = enc["input_ids"].shape[1]
-        return [
-            self.tok.decode(seq[prompt_len:], skip_special_tokens=True) for seq in ids
-        ]
+        return [self.tok.decode(seq[prompt_len:], skip_special_tokens=True) for seq in ids]
+
+    def generate(self, prompts: Sequence[str]) -> list[str]:
+        """Generate, halving the batch on CUDA OOM rather than losing the run.
+
+        Peak memory is driven by the LONGEST prompt in the batch, since everything
+        pads up to it. Splitting on OOM is what keeps one outlier prompt from
+        destroying hours of completed work.
+        """
+        if not prompts:
+            return []
+        try:
+            return self._generate_once(prompts)
+        except (RuntimeError, self._torch.cuda.OutOfMemoryError) as exc:
+            if "out of memory" not in str(exc).lower():
+                raise
+            if len(prompts) == 1:
+                raise RuntimeError(
+                    "CUDA out of memory on a SINGLE prompt -- the batch size is not "
+                    "the problem. This prompt is too long for the model on this GPU.\n"
+                    "  Lower retrieval.top_k in the config, or use a smaller model."
+                ) from exc
+            self._torch.cuda.empty_cache()
+            half = len(prompts) // 2
+            # ponytail: recursive halving, so worst case is len(prompts) forward
+            # passes at batch 1. Fine here because OOM is rare once prompts are
+            # length-sorted; if it stops being rare, bucket by token count instead.
+            return self.generate(prompts[:half]) + self.generate(prompts[half:])
 
 
 class VLLMGenerator(Generator):
