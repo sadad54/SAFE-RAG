@@ -30,6 +30,7 @@ log = get_logger("filters")
 
 
 def main() -> int:
+    """Apply S1 (schema), S2 (faithfulness) and S3 (attribution screen)."""
     ap = base_parser("Apply the S1/S2/S3 filters.")
     ap.add_argument("--stub-nli", action="store_true", help="Fake NLI scorer (testing only)")
     args = ap.parse_args()
@@ -59,7 +60,7 @@ def main() -> int:
 
     out_records = []
     n_s1 = n_s2 = 0
-    pool_counts = dict.fromkeys(STRATA, 0)
+    pool_counts: dict[str, int] = dict.fromkeys(STRATA, 0)
 
     for rec in tqdm(records, desc="filter"):
         row = {

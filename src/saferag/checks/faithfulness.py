@@ -15,6 +15,7 @@ Two constraints from the pre-registration, both load-bearing:
 
 from __future__ import annotations
 
+import logging
 import re
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
@@ -134,9 +135,24 @@ class HFNLIScorer(NLIScorer):
         except ImportError as exc:  # pragma: no cover
             raise ImportError("pip install -e '.[models]'") from exc
         self.tok = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_name).eval()
+        # Without an explicit device the model stays on CPU, and DeBERTa-large over
+        # thousands of 512-token pairs then takes hours with no visible symptom.
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        want_dtype = torch.float16 if self.device == "cuda" else torch.float32
+        try:
+            model = AutoModelForSequenceClassification.from_pretrained(
+                model_name, dtype=want_dtype
+            )
+        except TypeError:  # transformers < 5 spells it torch_dtype
+            model = AutoModelForSequenceClassification.from_pretrained(
+                model_name, torch_dtype=want_dtype
+            )
+        self.model = model.to(self.device).eval()
         self.batch_size = batch_size
         self._torch = torch
+        logging.getLogger("saferag.nli").info(
+            "NLI model %s on %s (%s)", model_name, self.device, self.model.dtype
+        )
 
         id2label = {int(k): v.lower() for k, v in self.model.config.id2label.items()}
         self.idx = {}
@@ -155,7 +171,7 @@ class HFNLIScorer(NLIScorer):
             enc = self.tok(
                 [premise] * len(chunk), chunk,
                 return_tensors="pt", padding=True, truncation=True, max_length=512,
-            )
+            ).to(self.device)
             with self._torch.no_grad():
                 probs = self.model(**enc).logits.softmax(dim=-1)
             for h, row in zip(chunk, probs, strict=True):
