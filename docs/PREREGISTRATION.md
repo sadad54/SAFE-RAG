@@ -244,6 +244,23 @@ rather than a passage and stay unresolved. Ids that normalise onto two offered
 ids are refused rather than guessed. Genuinely invented ids stay unresolved and
 are reported as such.
 
+**Measured effect of the correction.** Re-running S1-S3 on the same generations,
+with no regeneration:
+
+| | before | after |
+|---|---|---|
+| S2 passing | 597 (31.7% of S1) | 750 (39.9% of S1) |
+| answers citing nothing resolvable | 522 | 126 |
+| candidate_recoverable / unrecoverable / control | 110 / 27 / 460 | 142 / 40 / 568 |
+| stratum weights | .1843 / .0452 / .7705 | .1893 / .0533 / .7573 |
+
+Of 3,343 cited ids: 63.6% exact, 28.0% normalised, 8.3% unresolved, **0 ambiguous**
+— every recovery mapped onto exactly one offered passage, so none required a
+guess. Stratum weights moved by under one percentage point, indicating the
+correction recovered items roughly uniformly rather than reshaping the sample.
+S2 still rejects 60% of schema-valid answers, so the majority of faithfulness
+failures are genuine unsupported claims rather than artefacts of id matching.
+
 **Reported as a result.** Citation resolution outcomes are now a funnel stage in
 their own right. The residual unresolvable rate is a finding about structured-output
 regulatory RAG, and the composite `DocumentID::PassageID` format used in the prompt
