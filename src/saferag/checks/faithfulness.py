@@ -138,21 +138,19 @@ class HFNLIScorer(NLIScorer):
         # Without an explicit device the model stays on CPU, and DeBERTa-large over
         # thousands of 512-token pairs then takes hours with no visible symptom.
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        want_dtype = torch.float16 if self.device == "cuda" else torch.float32
-        try:
-            model = AutoModelForSequenceClassification.from_pretrained(
-                model_name, dtype=want_dtype
-            )
-        except TypeError:  # transformers < 5 spells it torch_dtype
-            model = AutoModelForSequenceClassification.from_pretrained(
-                model_name, torch_dtype=want_dtype
-            )
-        self.model = model.to(self.device).eval()
+        # fp32 deliberately. DeBERTa v1's disentangled attention mixes fp32
+        # buffers with activations, so fp16 dies with "expected scalar type Float
+        # but found Half". fp32 on GPU is still orders of magnitude faster than
+        # the CPU path this replaced, and NLI is not the bottleneck.
+        self.model = (
+            AutoModelForSequenceClassification.from_pretrained(model_name)
+            .to(self.device)
+            .eval()
+        )
         self.batch_size = batch_size
         self._torch = torch
-        logging.getLogger("saferag.nli").info(
-            "NLI model %s on %s (%s)", model_name, self.device, self.model.dtype
-        )
+        log = logging.getLogger("saferag.nli")
+        log.info("NLI model %s on %s (%s)", model_name, self.device, self.model.dtype)
 
         id2label = {int(k): v.lower() for k, v in self.model.config.id2label.items()}
         self.idx = {}
@@ -163,6 +161,39 @@ class HFNLIScorer(NLIScorer):
                     f"NLI model {model_name} has no '{want}' label. Labels: {id2label}"
                 )
             self.idx[want] = match[0]
+
+        self._self_check(log)
+
+    def _self_check(self, log: logging.Logger) -> None:
+        """Score one obvious entailment and one obvious contradiction at load time.
+
+        Catches two failures in about a second, both of which otherwise surface
+        only after a long run or not at all:
+
+        * dtype/device mismatches, which raise on the first real forward pass;
+        * an inverted label mapping, which raises nothing at all and silently
+          turns the faithfulness filter upside down.
+        """
+        premise = "An Authorised Person must retain transaction records for six years."
+        entailed, contradicted = self.score(
+            premise,
+            [
+                "Records must be kept for six years.",
+                "Records may be destroyed immediately.",
+            ],
+        )
+        log.info(
+            "self-check: entailed=%.3f contradicted-hypothesis-entailment=%.3f",
+            entailed.entailment, contradicted.entailment,
+        )
+        if entailed.entailment <= contradicted.entailment:
+            raise RuntimeError(
+                "NLI self-check failed: an obvious entailment did not score higher "
+                f"than an obvious contradiction ({entailed.entailment:.3f} vs "
+                f"{contradicted.entailment:.3f}). The entailment/contradiction "
+                f"label indices are probably inverted. Resolved mapping: {self.idx}. "
+                "Every faithfulness score downstream would be meaningless."
+            )
 
     def score(self, premise: str, hypotheses: Sequence[str]) -> list[ClaimScore]:
         results: list[ClaimScore] = []
