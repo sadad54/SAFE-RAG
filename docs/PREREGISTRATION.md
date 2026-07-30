@@ -213,8 +213,46 @@ Deceptive grounding, as defined in Section 1, requires that the correct evidence
 
 **Who decided.** Proposed on the basis of the retrieval statistics above and approved by the PI before generation was run.
 
+### Correction 1 — resolve cited passage ids by normalised match
+
+**Date.** 2026-07-30
+**Sections affected.** None. This is an implementation correction, not a design change.
+**Status when made.** After generation, before any annotation. No label existed.
+
+**What was wrong.** S2 and S3 both depend on looking up the passages named in
+`cited_passage_ids`. That lookup was an exact string match against the ids offered
+in the prompt. ObliQA PassageIDs carry trailing punctuation (`19::100)`,
+`13::4.13.3.Guidance.5.`) which models routinely drop when copying, so citations
+that named the correct passage failed to resolve.
+
+**Measured impact on the first run.** Of 3,343 cited ids: 2,127 (63.6%) matched
+exactly, 937 (28.0%) matched only after normalising trailing punctuation, 279
+(8.3%) did not resolve at all. 683 of 1,881 schema-valid answers (36.3%) contained
+at least one unresolvable id. Where *all* ids failed, S2 recorded `no_cited_text`
+(522 answers). Where only *some* failed, the premise was silently truncated and
+the answer then scored as unsupported — so the corruption reached beyond the
+visible failure count.
+
+**Why this is a correction and not an amendment.** `19::100` and `19::100)`
+denote the same passage. Resolving the citation the model plainly made is correct
+implementation of the registered definition, not a change to it. The estimand,
+the thresholds, the strata and the allocation are all untouched.
+
+**What is deliberately NOT resolved.** A citation resolves only if normalisation
+maps it onto exactly one offered id. Bare DocumentIDs (`17`) name a document
+rather than a passage and stay unresolved. Ids that normalise onto two offered
+ids are refused rather than guessed. Genuinely invented ids stay unresolved and
+are reported as such.
+
+**Reported as a result.** Citation resolution outcomes are now a funnel stage in
+their own right. The residual unresolvable rate is a finding about structured-output
+regulatory RAG, and the composite `DocumentID::PassageID` format used in the prompt
+is a contributing cause that belongs in the limitations rather than being presented
+as pure model hallucination.
+
 | Date | Section | Deviation | Reason |
 |---|---|---|---|
+| 2026-07-30 | none | Correction 1 (above) | Citation ids resolved by normalised match. Implementation fix to the registered definition; estimand unchanged. |
 | 2026-07-28 | 4, 6, 7 | Amendment 1 (above) | Retrieval recall@10 ≈ 0.82 implies ~16% of questions are unanswerable from context; splitting the candidate pool concentrates annotation on the stratum where deceptive grounding can actually occur. Made before any outcome data existed. |
 
 ## 12. Availability

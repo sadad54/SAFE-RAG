@@ -49,6 +49,68 @@ def extract_json_block(text: str) -> str:
     return match.group(1) if match else text.strip()
 
 
+def _normalise_id(passage_id: str) -> str:
+    """Fold away the trailing punctuation models drop when copying an id.
+
+    ObliQA PassageIDs end in ')' or '.' -- '19::100)', '13::4.13.3.Guidance.5.'.
+    Models reproduce the digits and lose the punctuation, so a literal string
+    match rejects a citation that is unambiguously correct.
+    """
+    return re.sub(r"[\s.)\]]+$", "", passage_id.strip()).lower()
+
+
+class CitationResolution(BaseModel):
+    """Outcome of matching model-emitted ids against the ids actually offered."""
+
+    resolved: list[str] = []
+    unresolved: list[str] = []
+    n_exact: int = 0
+    n_normalised: int = 0
+    n_ambiguous: int = 0
+
+
+def resolve_citation_ids(cited: list[str], offered: list[str]) -> CitationResolution:
+    """Match cited ids onto offered ids, tolerating dropped trailing punctuation.
+
+    Exact matches win. Otherwise a citation resolves only if normalisation maps it
+    onto exactly ONE offered id -- if it maps onto several, the model's intent is
+    genuinely ambiguous and we refuse rather than guess. A bare DocumentID such as
+    '17' matches nothing and stays unresolved, which is correct: it names a
+    document, not a passage.
+
+    >>> r = resolve_citation_ids(["19::100"], ["19::100)", "19::25)"])
+    >>> r.resolved, r.n_normalised
+    (['19::100)'], 1)
+    >>> resolve_citation_ids(["17"], ["17::Part 2.5A.(1)"]).unresolved
+    ['17']
+    """
+    exact = set(offered)
+    by_norm: dict[str, list[str]] = {}
+    for o in offered:
+        by_norm.setdefault(_normalise_id(o), []).append(o)
+
+    out = CitationResolution()
+    seen: set[str] = set()
+    for c in cited:
+        if c in exact:
+            hit, kind = c, "exact"
+        else:
+            candidates = by_norm.get(_normalise_id(c), [])
+            if len(candidates) == 1:
+                hit, kind = candidates[0], "normalised"
+            else:
+                out.unresolved.append(c)
+                if len(candidates) > 1:
+                    out.n_ambiguous += 1
+                continue
+        if hit not in seen:
+            seen.add(hit)
+            out.resolved.append(hit)
+        out.n_exact += kind == "exact"
+        out.n_normalised += kind == "normalised"
+    return out
+
+
 class SchemaCheckResult(BaseModel):
     """Outcome of the S1 check."""
 

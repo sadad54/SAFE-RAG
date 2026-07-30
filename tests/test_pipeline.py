@@ -16,7 +16,7 @@ from saferag.checks.attribution import (
 from saferag.checks.faithfulness import RuleDecomposer, StubNLIScorer, check_faithfulness
 from saferag.data.obliqa import ObliQAFormatError, adapt_record, build_passage_corpus
 from saferag.generation.generator import StubGenerator, prompt_hash, render_prompt
-from saferag.generation.schema import check_schema, extract_json_block
+from saferag.generation.schema import check_schema, extract_json_block, resolve_citation_ids
 from saferag.pilot.sample import double_annotation_subset, stratified_sample
 from saferag.retrieval.hybrid import BM25Retriever, Hit, reciprocal_rank_fusion, tokenize
 
@@ -452,3 +452,50 @@ def test_logger_is_namespaced_so_info_is_not_swallowed(capfd):
     assert log.name == "saferag.some_script"
     log.info("canary message")
     assert "canary message" in capfd.readouterr().err
+
+
+# --------------------------------------------------------------------------
+# Citation resolution
+# --------------------------------------------------------------------------
+
+
+def test_citation_exact_match():
+    r = resolve_citation_ids(["19::100)"], ["19::100)", "19::25)"])
+    assert r.resolved == ["19::100)"] and r.n_exact == 1 and r.n_normalised == 0
+
+
+def test_citation_recovers_dropped_paren():
+    """Observed 28% of the time: the model writes 19::100 for 19::100)."""
+    r = resolve_citation_ids(["19::100"], ["19::100)", "19::25)"])
+    assert r.resolved == ["19::100)"] and r.n_normalised == 1 and not r.unresolved
+
+
+def test_citation_recovers_dropped_period():
+    r = resolve_citation_ids(
+        ["13::4.13.3.Guidance.5"], ["13::4.13.3.Guidance.5.", "13::4.13.1.Guidance"]
+    )
+    assert r.resolved == ["13::4.13.3.Guidance.5."]
+
+
+def test_bare_document_id_stays_unresolved():
+    """'17' names a document, not a passage. Refusing is correct."""
+    r = resolve_citation_ids(["17"], ["17::Part 2.Chapter 1.5A.(1)", "3::17."])
+    assert r.resolved == [] and r.unresolved == ["17"]
+
+
+def test_ambiguous_normalisation_is_refused_not_guessed():
+    """If normalising maps onto two offered ids, intent is genuinely unclear."""
+    r = resolve_citation_ids(["19::100"], ["19::100)", "19::100."])
+    assert r.resolved == []
+    assert r.unresolved == ["19::100"]
+    assert r.n_ambiguous == 1
+
+
+def test_invented_id_stays_unresolved():
+    r = resolve_citation_ids(["31::81"], ["11::11.10.1", "11::12.13.1"])
+    assert r.unresolved == ["31::81"]
+
+
+def test_resolution_deduplicates_but_keeps_order():
+    r = resolve_citation_ids(["19::25", "19::100)", "19::25)"], ["19::100)", "19::25)"])
+    assert r.resolved == ["19::25)", "19::100)"]

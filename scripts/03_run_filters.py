@@ -21,7 +21,7 @@ from saferag.checks.faithfulness import (  # noqa: E402
     check_faithfulness,
 )
 from saferag.config import load_config  # noqa: E402
-from saferag.generation.schema import check_schema  # noqa: E402
+from saferag.generation.schema import check_schema, resolve_citation_ids  # noqa: E402
 from saferag.utils.io import read_jsonl, write_jsonl  # noqa: E402
 from saferag.utils.logging import get_logger  # noqa: E402
 from saferag.utils.provenance import stamp  # noqa: E402
@@ -61,6 +61,8 @@ def main() -> int:
     out_records = []
     n_s1 = n_s2 = 0
     pool_counts: dict[str, int] = dict.fromkeys(STRATA, 0)
+    cite = {"exact": 0, "normalised": 0, "unresolved": 0, "ambiguous": 0}
+    n_no_resolvable_citation = 0
 
     for rec in tqdm(records, desc="filter"):
         row = {
@@ -81,9 +83,22 @@ def main() -> int:
         n_s1 += 1
 
         parsed = s1.parsed or {}
-        cited_ids = parsed.get("cited_passage_ids", [])
+        # Models drop the trailing punctuation in ObliQA passage ids, so match
+        # what they meant rather than what they typed. See resolve_citation_ids.
+        raw_cited = parsed.get("cited_passage_ids", [])
+        res = resolve_citation_ids(raw_cited, row["retrieved_passage_ids"])
+        cited_ids = res.resolved
+        cite["exact"] += res.n_exact
+        cite["normalised"] += res.n_normalised
+        cite["unresolved"] += len(res.unresolved)
+        cite["ambiguous"] += res.n_ambiguous
+        if not cited_ids:
+            n_no_resolvable_citation += 1
+
         row["answer"] = parsed.get("answer", "")
+        row["cited_passage_ids_raw"] = raw_cited
         row["cited_passage_ids"] = cited_ids
+        row["cited_unresolved"] = res.unresolved
         row["obligations"] = parsed.get("obligations", [])
         row["cited_passages"] = [
             {"id": pid, "text": passage_text.get(pid, "")} for pid in cited_ids
@@ -142,9 +157,19 @@ def main() -> int:
             "p_schema_valid": p1,
             "p_faithful_given_schema": p2,
             "stratum_weights": weights,
+            "citation_resolution": cite,
+            "n_no_resolvable_citation": n_no_resolvable_citation,
         },
     )
     write_jsonl(out, out_records, provenance=prov)
+
+    tot_cited = sum(cite[k] for k in ("exact", "normalised", "unresolved"))
+    print("\n  CITATION RESOLUTION")
+    print(f"    cited ids                    {tot_cited:>6}")
+    for k in ("exact", "normalised", "unresolved", "ambiguous"):
+        share = f"({cite[k] / tot_cited:.1%})" if tot_cited else ""
+        print(f"      {k:<26} {cite[k]:>6}   {share}")
+    print(f"    answers citing nothing resolvable {n_no_resolvable_citation:>6}")
 
     print("\n  FUNNEL")
     print(f"    generated answers            {total:>6}")
