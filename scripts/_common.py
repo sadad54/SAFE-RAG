@@ -61,4 +61,8 @@ def paths(cfg) -> dict[str, Path]:  # noqa: ANN001
     }
     for value in out.values():
         value.mkdir(parents=True, exist_ok=True)
+    # Print the resolved root. A nested clone (SAFE-RAG/SAFE-RAG) makes one script
+    # write where another cannot find it, and the only visible symptom is a
+    # "not found" two steps later.
+    print(f"  repo root: {ROOT}")
     return out
