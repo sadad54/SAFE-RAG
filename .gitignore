@@ -9,6 +9,12 @@ data/index/
 # Only the working scratch files are ignored.
 data/annotation/*.tmp
 data/annotation/*.lock
+# Batches are derived from filtered.jsonl + the registered seed, and they embed
+# full ADGM passage text. Regenerate them; do not redistribute them.
+data/annotation/batch_*.jsonl
+# ...except the key, which is a tiny item_id -> stratum map with no corpus text
+# and is required to interpret the labels.
+!data/annotation/batch_*_key.jsonl
 
 # Runs
 runs/
