@@ -17,7 +17,10 @@ The SAFE-RAG framework devotes an entire repair branch to this failure. If it is
 
 **The pilot measures it.** The framework comes after.
 
-Read, in order:
+**Picking this up cold? Start with [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md)** —
+current status, results so far, next actions, and the decisions already made.
+
+Then, in order:
 
 1. [`docs/PREREGISTRATION.md`](docs/PREREGISTRATION.md) — the study design, fixed in advance. Operational definitions, sampling plan, estimator, and the pre-committed decision rule and pivots.
 2. [`docs/ANNOTATION_GUIDELINES.md`](docs/ANNOTATION_GUIDELINES.md) — how items are labelled A / B / C, with worked examples.
