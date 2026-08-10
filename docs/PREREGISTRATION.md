@@ -213,6 +213,45 @@ Deceptive grounding, as defined in Section 1, requires that the correct evidence
 
 **Who decided.** Proposed on the basis of the retrieval statistics above and approved by the PI before generation was run.
 
+### Deviation 1 — annotation halted at kappa 0.37; base rate demoted to secondary
+
+**Date.** 2026-08-03
+**Sections affected.** 8 (inter-annotator agreement), 9 (decision rule)
+**Status when made.** After both annotation passes were complete and kappa computed.
+
+**What happened.** 150 items annotated by the PI; 50 double-annotated by a second
+annotator. Cohen's kappa = 0.3663, below the 0.50 threshold in Section 8. The
+registered response is to stop, revise the guidelines once, and re-annotate 30
+fresh items.
+
+**What was decided instead.** The revision round is NOT being run. The base rate
+is therefore demoted from primary outcome to a **preliminary, low-reliability
+secondary result**, reported with kappa stated in the abstract and the failed
+threshold narrated in full. The paper's primary contributions become the
+automated funnel measurements, which do not depend on human labels.
+
+**Why this is a deviation and is reported as one.** The registered rule was not
+followed. Stating that plainly is the alternative to quietly reporting kappa
+without its consequence.
+
+**Diagnostic detail, reported in the paper.** Observed agreement 40/50 = 0.80;
+expected agreement 0.684; PABAK 0.60. The low kappa is partly the skewed-marginal
+artefact, but not only that: disagreements are systematic and directional. Seven
+items were A for the PI and B for the second annotator, two the reverse, one B/C.
+The second annotator's notes on all seven A-to-B flips cite scope mismatch
+(different regulated entity, licence category, or time period), which is the B
+definition. Two of the PI's B labels appear to penalise incompleteness, which
+Section 7 of the guidelines assigns to A.
+
+**Direction of the bias.** The second annotator flagged B on 11 of 50 items
+against the PI's 7. If the stricter reading is correct, the reported 5.9% is an
+UNDER-estimate. The paper states this rather than presenting 5.9% as unbiased.
+
+**What would resolve it.** One guideline revision sharpening (a) incompleteness is
+A, (b) an explicit scope test against the passage's application clause, and (c)
+the general-provision-covering-a-specific-case rule; then 30 fresh double-annotated
+items. Left as future work.
+
 ### Correction 1 — resolve cited passage ids by normalised match
 
 **Date.** 2026-07-30
@@ -269,6 +308,7 @@ as pure model hallucination.
 
 | Date | Section | Deviation | Reason |
 |---|---|---|---|
+| 2026-08-03 | 8, 9 | Deviation 1 (above) | kappa 0.3663 below the registered 0.50 threshold. Revision round not run; base rate demoted to preliminary secondary result with kappa and direction of bias reported. |
 | 2026-07-30 | none | Correction 1 (above) | Citation ids resolved by normalised match. Implementation fix to the registered definition; estimand unchanged. |
 | 2026-07-28 | 4, 6, 7 | Amendment 1 (above) | Retrieval recall@10 ≈ 0.82 implies ~16% of questions are unanswerable from context; splitting the candidate pool concentrates annotation on the stratum where deceptive grounding can actually occur. Made before any outcome data existed. |
 

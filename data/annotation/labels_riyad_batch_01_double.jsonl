@@ -1,0 +1,50 @@
+{"item_id": "2b5fa2bd-c169-476d-bc8d-850f2a0a06f3", "label": "B", "note": "The question asked about the Spot Commodity action platfroms specifically but the answer MTFs, and OTFs trading spot commodities.", "annotator": "riyad", "labelled_utc": "2026-08-05T14:25:39+00:00"}
+{"item_id": "0175a778-59d5-467a-a74a-899fde4f6b2f", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-05T14:38:59+00:00"}
+{"item_id": "a2bbafbd-3eeb-49de-89fa-ef6f5ba42dbc", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-05T14:45:02+00:00"}
+{"item_id": "955f47d6-8eef-4d2c-8bc1-ca79274dcc63", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T12:10:23+00:00"}
+{"item_id": "c4bfe7be-360b-47e7-ad79-8284378ac445", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T12:17:26+00:00"}
+{"item_id": "3ee92fe7-70c8-45a9-bd0c-f373d39ec05d", "label": "B", "note": "The question asks about \"compliance training\" in general , a broad term but the cited passage only talks about AML/TFS training (anti-money laundering / sanctions training), a specific, narrower subcategory. The question never mentions money laundering at all.", "annotator": "riyad", "labelled_utc": "2026-08-07T12:23:26+00:00"}
+{"item_id": "43b7cfd9-b1b2-422a-b525-8817961f5754", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T12:24:09+00:00"}
+{"item_id": "474731e0-1ba9-4090-a5e2-41af24e694a0", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T12:44:25+00:00"}
+{"item_id": "ae5a3561-31e9-4072-bcdd-d9f1a9c49abb", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T12:47:41+00:00"}
+{"item_id": "67967e71-0f5b-4930-a02b-13436c80be56", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T12:53:14+00:00"}
+{"item_id": "8ab55fe6-3411-496f-92cb-aa92d6746c8f", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T12:55:50+00:00"}
+{"item_id": "52f873f0-6ca9-46d3-98a3-2424e62784c2", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T12:56:43+00:00"}
+{"item_id": "96c3349e-0c95-43d1-8997-72bbf12717f0", "label": "B", "note": "Six-month rule cited applies only to \"Reporting Entity in relation to Shares\" — question asks about Reporting Entity generally, qualifier dropped in the answer.", "annotator": "riyad", "labelled_utc": "2026-08-07T13:11:20+00:00"}
+{"item_id": "a6abc600-7b04-4fc6-9f94-ace016593cb4", "label": "B", "note": "Passage [1] entity is Reporting Entity of a Listed Fund, not Authorised Person and passage [2] is unrelated new-product risk review, not financial promotions.", "annotator": "riyad", "labelled_utc": "2026-08-07T13:28:30+00:00"}
+{"item_id": "2c4b1abc-c0ae-4e45-8951-102715fbd0e5", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T13:31:36+00:00"}
+{"item_id": "6d9b978a-7ac0-49f4-9df3-fa796a6646f6", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T13:35:47+00:00"}
+{"item_id": "29e6a396-e6be-42c7-9ba7-ecd8309533aa", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T13:49:32+00:00"}
+{"item_id": "250e81d9-1059-42d6-a1e0-7490ccd56b02", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-07T13:50:44+00:00"}
+{"item_id": "6b2f7a24-0933-42a2-889c-cc26df85dfa0", "label": "C", "note": "Passage covers senior management's oversight of Liquidity Risk systems/controls which is unrelated to setting thresholds/tolerances for inherent and residual risk exposure. Wrong topic, not just wrong scope.", "annotator": "riyad", "labelled_utc": "2026-08-07T13:53:08+00:00"}
+{"item_id": "6a6da967-e209-4b0d-8e33-33ecf0b7eca7", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T11:47:24+00:00"}
+{"item_id": "6273cd40-3584-4573-a75b-cab9bc58fa41", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T11:49:24+00:00"}
+{"item_id": "2d171541-b5c0-4323-a179-d73c2a2c3433", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T11:57:32+00:00"}
+{"item_id": "c22e0fe0-eb6c-4fbd-813e-138094e7a45f", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T12:00:20+00:00"}
+{"item_id": "d583a2d9-96bb-45d6-9746-cc8856b5b7ef", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T12:03:35+00:00"}
+{"item_id": "18422b0f-0980-48ef-981e-5c6f8041012b", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T12:08:26+00:00"}
+{"item_id": "47cc7b18-62f7-4595-b020-c57198c05409", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T12:12:02+00:00"}
+{"item_id": "ca7841ab-337d-4ca2-aaed-a61bca70c0de", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T12:16:18+00:00"}
+{"item_id": "0a29dd63-4722-4ab7-a26d-84f1c2d12a3b", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T12:17:52+00:00"}
+{"item_id": "b39747b9-f365-4f3c-b6e5-7824c7bbc3c7", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T12:28:19+00:00"}
+{"item_id": "af044e33-c67b-49c3-90b7-2c9081fccef8", "label": "B", "note": "Passage covers routine risk-based CDD review frequency, not the specific post-acquisition sampling/deficiency-remediation timeframe the question asks about. On-topic (CDD timing) but wrong specific process.", "annotator": "riyad", "labelled_utc": "2026-08-08T12:36:06+00:00"}
+{"item_id": "201931ff-8e7d-4683-a54c-d266805f02cf", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-08T12:54:22+00:00"}
+{"item_id": "ff0f2357-5a2f-4907-b914-9439080dd7e5", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T06:47:47+00:00"}
+{"item_id": "51e7f1a7-7587-40ee-8814-e2df0b312221", "label": "B", "note": "\"Once a year\" applies specifically to internal audit of own-estimate-haircut risk models (Rule A4.3.23), not general compliance audits of ADGM reporting/monitoring rules as asked.", "annotator": "riyad", "labelled_utc": "2026-08-09T06:51:42+00:00"}
+{"item_id": "4989f970-1975-4c5c-8fc8-fbf0df2c6802", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T06:52:36+00:00"}
+{"item_id": "74e02722-6588-417b-af79-ff5175f73074", "label": "B", "note": "Passage lists winding-up as requiring majority shareholder approval but never addresses the one-vote-per-share voting mechanism the question specifically asks about.", "annotator": "riyad", "labelled_utc": "2026-08-09T07:26:03+00:00"}
+{"item_id": "fa13348f-91f9-4326-9ece-61580a86e1e9", "label": "B", "note": "Rule 7.8.4 covers a Client overriding the Intermediary's advice, not a policy failing to meet the Client's requirements — and it binds only the Intermediary, not the Insurer.", "annotator": "riyad", "labelled_utc": "2026-08-09T07:30:03+00:00"}
+{"item_id": "fbeec390-9047-483f-8a3a-ddf2f1033bdf", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T07:45:47+00:00"}
+{"item_id": "d5830e3e-7fa4-4220-8eca-c8e4b3b37a87", "label": "B", "note": "Passage covers what a Client Money Auditor's Report must contain, not the qualifications/credentials needed to be recognized as one. Same general subject, different specific question.", "annotator": "riyad", "labelled_utc": "2026-08-09T08:05:17+00:00"}
+{"item_id": "17fd28ee-e0d0-4256-9648-235174fbff8a", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T08:06:06+00:00"}
+{"item_id": "65fde3e1-8d47-47a9-9163-c0fe9681d5bb", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T08:07:09+00:00"}
+{"item_id": "2573b129-0534-464d-a8c6-efb36f1ec81b", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T08:29:40+00:00"}
+{"item_id": "2d5ee303-6b54-4622-a4eb-96b9a58d61eb", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T08:31:23+00:00"}
+{"item_id": "645dd292-f7bc-44b4-b48d-99b32ea14e05", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T08:38:42+00:00"}
+{"item_id": "375da8e8-80cf-43b5-a9d7-0ce8b76f76da", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T08:42:25+00:00"}
+{"item_id": "15efa5af-ffd7-45d1-bef8-9fb3f8c879a8", "label": "B", "note": "Passage gives a general proportionality/frequency principle under Principle 5 but doesn't address the specific granularity of detail expected or how findings should be communicated to regulators — the two things actually asked.", "annotator": "riyad", "labelled_utc": "2026-08-09T08:50:04+00:00"}
+{"item_id": "a0708781-0993-4558-8b03-f82d36634440", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T09:38:35+00:00"}
+{"item_id": "9ae33751-18a9-4aa5-8a1b-4f4478ef6214", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T09:41:53+00:00"}
+{"item_id": "e11f6f5f-627a-45db-ab7c-cee40a120b7b", "label": "B", "note": "Rule 5.2.7 is about a Reporting Entity ensuring its compliance adviser cooperates — not the company's own general cooperation duty during an investigation as the question asks.", "annotator": "riyad", "labelled_utc": "2026-08-09T09:54:34+00:00"}
+{"item_id": "173dd323-edbb-40ef-9e52-a1664db052e6", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T09:57:27+00:00"}
+{"item_id": "30724531-29cd-4157-8394-5ff9d1a241b6", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-09T10:08:47+00:00"}
