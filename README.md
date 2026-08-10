@@ -136,7 +136,16 @@ tests/         pytest suite
 data/          gitignored except annotation labels
 ```
 
-## Status
+## Status — PATH B, ablation pending
+
+Pilot complete. kappa 0.3663 fell below the registered threshold, so the base rate
+is reported as a preliminary secondary result (Deviation 1) and the paper's primary
+contribution becomes the automated funnel — above all a **36.3% citation-ID
+resolution failure rate**. Next task is a GPU-cluster ablation isolating whether
+that failure is caused by the composite `DocumentID::PassageID` prompt format or by
+the model. See [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
+
+## Component status
 
 | Component | State |
 |---|---|
