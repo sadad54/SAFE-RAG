@@ -136,14 +136,18 @@ tests/         pytest suite
 data/          gitignored except annotation labels
 ```
 
-## Status — PATH B, ablation pending
+## Status — base rate reinstated as primary, ablation pending
 
-Pilot complete. kappa 0.3663 fell below the registered threshold, so the base rate
-is reported as a preliminary secondary result (Deviation 1) and the paper's primary
-contribution becomes the automated funnel — above all a **36.3% citation-ID
-resolution failure rate**. Next task is a GPU-cluster ablation isolating whether
-that failure is caused by the composite `DocumentID::PassageID` prompt format or by
-the model. See [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
+Pilot complete. The first double-annotation round scored kappa 0.3663, below the
+registered threshold (Deviation 1) — but that round was **superseded** by a
+registered revision round (Deviation 2, 2026-08-10/12): guidelines sharpened,
+30 fresh items double-annotated, kappa 0.7860 ("reliable" band). The base rate
+(`r = 5.9% [2.2%, 10.7%]`) is the **operative, current primary result**; 0.3663
+is retained only as superseded history. The paper also leads with the automated
+funnel findings — above all a **36.3% citation-ID resolution failure rate**.
+Next task is a GPU-cluster ablation isolating whether that failure is caused by
+the composite `DocumentID::PassageID` prompt format or by the model. See
+[`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md) for the full, current status.
 
 ## Component status
 

@@ -408,8 +408,53 @@ base rate was labelled under guidelines v1.0; the reliability figure reported
 alongside it (κ = 0.7860) was measured under v1.1.** If a reviewer requires it,
 the targeted audit remains available and is documented above with its cost.
 
+### Amendment 2 — operational definition for RQ-a's question-type breakdown
+
+**Date.** 2026-08-12
+**Sections affected.** 2 (RQ-a), none of 4-9 (does not touch S1-S4, the
+sampling plan, the estimator, or the decision rule).
+**Status when made.** After `r` and κ were both known (the primary base rate
+and the revision-round reliability are already computed). **Before** the RQ-a
+breakdown itself has been computed — this declares the split rule first, so the
+category boundary cannot be chosen by looking at which split makes the
+subgroup rates come out favourably. That ordering is what makes this an
+amendment rather than post-hoc slicing, even though it comes later than
+Amendment 1 did.
+
+**Why this was needed.** RQ-a (Section 2) asks whether cross-reference and
+multi-obligation questions are affected more than single-obligation ones, but
+Section 4 never operationalised "cross-reference" or "multi-obligation" — the
+terms were named, not defined, and `src/saferag/data/obliqa.py` does not even
+retain ObliQA's `Group` field through the pipeline. Verified by inspection
+2026-08-12: this is a genuine gap in the original pre-registration, not an
+oversight found and quietly patched.
+
+**What was chosen.** **Cross-reference = a question with more than one gold
+passage** (`len(gold_passage_ids) > 1`), **single-reference = exactly one**.
+This is a structural property of the question available from the dataset
+before generation, retrieval, or annotation — it does not depend on the model's
+output, the retriever's behaviour, or any human label, so it carries none of
+the circularity risk a definition built from e.g. the model's own `obligations`
+field would. "Multi-obligation" is not separately operationalised: the only
+available proxy (the number of obligations the *system* extracted) is a
+downstream generation artefact, not a property of the question, and conflating
+it with cross-reference would muddy which factor is doing the explaining. RQ-a
+is answered here only for the cross-reference / single-reference split;
+multi-obligation is left as a stated limitation rather than defined badly to
+force an answer.
+
+**Analysis.** Unweighted (not re-stratified by S3 pool) Wilson interval on the
+B-rate within each question-type group, computed over the same 150 primary
+labels used for the headline `r` — a descriptive secondary cut, not a change to
+the primary stratified estimator in Section 7. Re-stratifying by both S3 pool
+and question type would fragment n=150 into cells too small to interpret; kept
+as a limitation of this specific breakdown rather than hidden. `scripts/05c_rqa_breakdown.py`.
+
+**Who decided.** Adnan, 2026-08-12, on the recommendation above.
+
 | Date | Section | Deviation | Reason |
 |---|---|---|---|
+| 2026-08-12 | 2 | Amendment 2 (above) | RQ-a's "cross-reference" was never operationally defined in Section 4. Defined as >1 gold passage, declared before the breakdown was computed. |
 | 2026-08-12 | 8, 9 | Deviation 2 resolution (above) | κ = 0.7860 on the 30-item revision batch, "reliable" band. Base rate reinstated as primary result. v1.0/v1.1 label-consistency gap reported as a limitation, not audited. |
 | 2026-08-10 | 8, 9 | Deviation 2 (above) | Deviation 1 reversed. Registered revision round now executing: guidelines sharpened to v1.1, 30 fresh items double-annotated by both annotators in parallel, κ to be recomputed. |
 | 2026-08-03 | 8, 9 | Deviation 1 (above) | kappa 0.3663 below the registered 0.50 threshold. Revision round not run; base rate demoted to preliminary secondary result with kappa and direction of bias reported. **Superseded by Deviation 2.** |

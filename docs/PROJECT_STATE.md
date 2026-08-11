@@ -122,6 +122,15 @@ history — the reason the revision round ran — not as the current reliability
 figure. See "The revision round result" above for the open v1.0/v1.1 audit
 decision.
 
+**RQ-a (2026-08-12).** Operational definition declared first as Amendment 2
+(`PREREGISTRATION.md` §11): cross-reference = >1 gold passage, single-reference
+= 1. Result over the 150 primary labels: cross-reference **8.6% [3.0%, 22.4%]**
+(n=35), single-reference **9.6% [5.4%, 16.3%]** (n=115). Intervals overlap
+heavily — **no detectable difference by this cut**, and the cross-reference
+group is small enough (n=35) that this doesn't rule much out either way. Report
+honestly as a null secondary result, not a finding. `scripts/05c_rqa_breakdown.py`,
+`runs/pilot_v1/rqa_breakdown.json`.
+
 ## Next task: commit labels, finalize the primary result, decide on the audit
 
 **Revision-round annotation is done** — both `labels_adnan_batch_02.jsonl` and
@@ -265,7 +274,25 @@ Verified from primary sources unless marked.
   August; outcomes from 22 February 2027. UQ's rubric scores *"quality of the
   proposed advisory team"* — the supervisor's engagement is part of your score.
   Melbourne ~31 October (aggregator-sourced, verify).
-- **ALTA 2026: 11 September deadline**, conference in Melbourne 30 Nov – 2 Dec.
+- **ALTA 2026 — verified 2026-08-12 from alta2026.alta.asn.au directly** (not
+  aggregator-sourced): archival submission deadline **Friday 11 September 2026,
+  11:59pm Anywhere-on-Earth**. Short papers: **4 pages + unlimited
+  references/appendices** (appendices not guaranteed to be reviewed), two-column
+  ACL format, LaTeX or Word template from `github.com/acl-org/acl-style-files`.
+  **Double-blind — the submission must be anonymised**: no author identity, no
+  personal-site URLs, and the GitHub repo must be anonymised too if linked (do
+  not link `github.com/sadad54/SAFE-RAG` directly in the anonymised draft —
+  either omit the link and say "code released on acceptance," or use an
+  anonymous mirror). Preprints ARE allowed to be public during review (post-2024
+  ARR policy, no anonymity period), so posting to arXiv is fine even while the
+  ALTA copy stays anonymous. Submission via OpenReview
+  (`openreview.net/group?id=ALTA.asn.au/2026/Archival`) — **create the
+  OpenReview profile now with an MJIIT/UTM institutional email**; profiles made
+  with a non-institutional email face up to a two-week moderation delay, which
+  would eat a meaningful chunk of the runway to 11 September. ALTA is CORE 2026
+  rank **Australasian C** — a real, respectable regional venue, appropriately
+  scoped for a rigorous pilot study rather than requiring a flagship-conference
+  level result.
 - **Supervisor targets.** Guido Zuccon (UQ, ielab) is the closest topical match —
   2025 work on RAG hallucination detection and source attribution in RAG, noting
   existing approaches link only at document level. Damiano Spina and Falk Scholer
@@ -282,8 +309,19 @@ Skill-RAG (arXiv:2604.15771) did it during 2026; arXiv:2606.29377 added a
 budget-matched evaluation; the EACL 2026 RAG error taxonomy (arXiv:2510.13975)
 supplies a diagnosis vocabulary; RefWalk (arXiv:2605.29742) couples schema and
 attribution in regulatory QA. Both revised proposals are in `docs/proposals/`.
-**All arXiv ids above came from search results and must be re-verified before
-submission.**
+
+**Re-verified 2026-08-12 — all five confirmed real, independently of the
+original search that surfaced them.** Cross-checked via a second search plus
+direct arXiv fetch: Doctor-RAG (HIT + Macquarie + UNSW + CSIRO Data61, trajectory-
+level failure diagnosis + tool-conditioned repair), Skill-RAG (hidden-state
+probing + skill routing, four repair skills), arXiv:2606.29377 (budget-
+constrained diagnose-and-repair), the EACL 2026 taxonomy paper
+(`github.com/layer6ai-labs/rag-error-classification`, real and well-formed),
+and RefWalk (Korea University, `RegOps-Bench`, cross-document citation
+traversal + per-rule attribution). None are placeholders or misremembered ids.
+The withdrawal of the original novelty claim stands — these are genuinely
+close prior art and the paper needs to position against them, not merely cite
+them — but the citations themselves are now safe to use.
 
 ## Standing constraint on annotation
 
