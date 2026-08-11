@@ -15,9 +15,14 @@ from saferag.checks.attribution import (
 )
 from saferag.checks.faithfulness import RuleDecomposer, StubNLIScorer, check_faithfulness
 from saferag.data.obliqa import ObliQAFormatError, adapt_record, build_passage_corpus
-from saferag.generation.generator import StubGenerator, prompt_hash, render_prompt
+from saferag.generation.generator import (
+    StubGenerator,
+    ordinal_id_map,
+    prompt_hash,
+    render_prompt,
+)
 from saferag.generation.schema import check_schema, extract_json_block, resolve_citation_ids
-from saferag.pilot.sample import double_annotation_subset, stratified_sample
+from saferag.pilot.sample import double_annotation_subset, scale_allocation, stratified_sample
 from saferag.retrieval.hybrid import BM25Retriever, Hit, reciprocal_rank_fusion, tokenize
 
 # --------------------------------------------------------------------------
@@ -229,6 +234,44 @@ def test_double_subset_spans_all_strata():
     batch, _ = stratified_sample(_survivors(300, 300, 300), ALLOC)
     sub = double_annotation_subset(batch, n=50)
     assert len({i["_pool"] for i in sub}) == 3
+
+
+# --------------------------------------------------------------------------
+# Revision-round allocation scaling
+# --------------------------------------------------------------------------
+
+
+def test_scale_allocation_matches_registered_revision_size():
+    """30/150 of 80/20/50 -- the exact numbers PREREGISTRATION.md Section 8's
+    revision round uses."""
+    assert scale_allocation(ALLOC, 30) == {
+        CANDIDATE_RECOVERABLE: 16,
+        CANDIDATE_UNRECOVERABLE: 4,
+        CONTROL: 10,
+    }
+
+
+def test_scale_allocation_sums_exactly_to_n():
+    """Proportional rounding can drift off n; the repair loop must always land
+    on exactly n, whatever n is."""
+    for n in range(0, 40):
+        scaled = scale_allocation(ALLOC, n)
+        assert sum(scaled.values()) == n
+        assert all(v >= 0 for v in scaled.values())
+
+
+def test_scale_allocation_preserves_original_at_full_size():
+    assert scale_allocation(ALLOC, 150) == ALLOC
+
+
+def test_scale_allocation_rejects_zero_total():
+    with pytest.raises(ValueError):
+        scale_allocation({"a": 0, "b": 0}, 10)
+
+
+def test_scale_allocation_rejects_negative_n():
+    with pytest.raises(ValueError):
+        scale_allocation(ALLOC, -1)
 
 
 # --------------------------------------------------------------------------
@@ -499,3 +542,94 @@ def test_invented_id_stays_unresolved():
 def test_resolution_deduplicates_but_keeps_order():
     r = resolve_citation_ids(["19::25", "19::100)", "19::25)"], ["19::100)", "19::25)"])
     assert r.resolved == ["19::25)", "19::100)"]
+
+
+# --------------------------------------------------------------------------
+# ID-format ablation -- ordinal id_style
+# --------------------------------------------------------------------------
+
+
+def test_render_prompt_ordinal_uses_rank_labels_not_real_ids():
+    prompt = render_prompt(
+        "What is X?", [("19::100)", "text one"), ("13::4.1", "text two")], id_style="ordinal"
+    )
+    assert "[id: 1]" in prompt and "[id: 2]" in prompt
+    assert "19::100)" not in prompt and "13::4.1" not in prompt
+
+
+def test_render_prompt_composite_is_the_default():
+    """Backward compatibility: existing callers with no id_style get the old behaviour."""
+    prompt = render_prompt("q?", [("p1", "text")])
+    assert "[id: p1]" in prompt
+
+
+def test_render_prompt_rejects_unknown_id_style():
+    with pytest.raises(ValueError):
+        render_prompt("q?", [("p1", "text")], id_style="banana")
+
+
+def test_ordinal_id_map_recovers_real_ids():
+    passages = [("19::100)", "a"), ("13::4.1", "b")]
+    assert ordinal_id_map(passages) == {"1": "19::100)", "2": "13::4.1"}
+
+
+def test_ordinal_id_map_agrees_with_render_prompt_under_truncation():
+    """The map must reflect exactly which passages the budget cap kept."""
+    passages = [(f"p{i}", "y" * 3000) for i in range(10)]
+    prompt = render_prompt(
+        "q?", passages, max_passage_chars=4000, max_total_chars=10_000, id_style="ordinal"
+    )
+    id_map = ordinal_id_map(passages, max_passage_chars=4000, max_total_chars=10_000)
+    assert "[id: 1]" in prompt
+    assert f"[id: {len(id_map)}]" in prompt
+    assert f"[id: {len(id_map) + 1}]" not in prompt
+    assert id_map["1"] == "p0"
+
+
+def test_ordinal_prompt_hash_differs_from_composite():
+    """Different id_style must invalidate the generation cache -- see 02_run_rag.py."""
+    passages = [("p1", "text")]
+    a = prompt_hash(render_prompt("q?", passages, id_style="composite"))
+    b = prompt_hash(render_prompt("q?", passages, id_style="ordinal"))
+    assert a != b
+
+
+def test_resolve_citation_ids_translates_ordinal_label():
+    r = resolve_citation_ids(["1"], ["19::100)", "19::25)"], id_map={"1": "19::100)"})
+    assert r.resolved == ["19::100)"] and r.n_ordinal == 1 and not r.unresolved
+
+
+def test_resolve_citation_ids_ordinal_tolerates_decoration():
+    """Models decorate ordinal labels the same way they decorate composite ones:
+    '[1]', '(1)', '1.' all mean the same passage."""
+    id_map = {"1": "19::100)"}
+    for decorated in ("[1]", "(1)", "1.", " 1 "):
+        r = resolve_citation_ids([decorated], ["19::100)"], id_map=id_map)
+        assert r.resolved == ["19::100)"], decorated
+
+
+def test_resolve_citation_ids_ordinal_out_of_range_is_unresolved():
+    """A citation to an ordinal label the prompt never offered (e.g. '11' when
+    only 10 passages were shown) does not silently match anything."""
+    r = resolve_citation_ids(["11"], ["19::100)"], id_map={"1": "19::100)"})
+    assert r.resolved == [] and r.unresolved == ["11"]
+
+
+def test_resolve_citation_ids_empty_id_map_is_composite_behaviour():
+    """id_map={} (what composite runs record) must behave identically to
+    omitting id_map altogether."""
+    with_empty = resolve_citation_ids(["19::100"], ["19::100)", "19::25)"], id_map={})
+    without = resolve_citation_ids(["19::100"], ["19::100)", "19::25)"])
+    assert with_empty.resolved == without.resolved == ["19::100)"]
+    assert with_empty.n_normalised == without.n_normalised == 1
+
+
+def test_resolve_citation_ids_ordinal_and_composite_can_coexist_in_one_call():
+    """Not expected in production (one id_style per run), but the resolver
+    should not fall over if it happens: ordinal lookup first, exact/normalised
+    fallback still available for anything the map does not cover."""
+    r = resolve_citation_ids(
+        ["1", "19::25"], ["19::100)", "19::25)"], id_map={"1": "19::100)"}
+    )
+    assert set(r.resolved) == {"19::100)", "19::25)"}
+    assert r.n_ordinal == 1 and r.n_normalised == 1

@@ -39,11 +39,47 @@ QUESTION
 JSON:"""
 
 
+ID_STYLES = ("composite", "ordinal")
+
+
+def _render_entries(
+    passages: Sequence[tuple[str, str]],
+    max_passage_chars: int,
+    max_total_chars: int,
+    id_style: str,
+) -> list[tuple[str, str, str]]:
+    """Shared truncation/budget logic behind ``render_prompt`` and
+    ``ordinal_id_map``. One implementation, so the two can never disagree about
+    which passages survive the caps.
+
+    Returns ``(label, real_id, entry_text)`` tuples for the passages kept within
+    budget, in rank order. ``label`` is what appears in the prompt as ``[id:
+    label]`` -- the real passage id for ``composite``, a 1-based rank for
+    ``ordinal``.
+    """
+    if id_style not in ID_STYLES:
+        raise ValueError(f"Unknown id_style {id_style!r}. Use one of {ID_STYLES}.")
+
+    kept: list[tuple[str, str, str]] = []
+    used = 0
+    for i, (pid, text) in enumerate(passages, start=1):
+        if len(text) > max_passage_chars:
+            text = text[:max_passage_chars] + " ...[truncated]"
+        label = str(i) if id_style == "ordinal" else pid
+        entry = f"[id: {label}]\n{text}"
+        if used + len(entry) > max_total_chars:
+            break
+        kept.append((label, pid, entry))
+        used += len(entry)
+    return kept
+
+
 def render_prompt(
     question: str,
     passages: Sequence[tuple[str, str]],
     max_passage_chars: int = 4000,
     max_total_chars: int = 32000,
+    id_style: str = "composite",
 ) -> str:
     """Build the generation prompt from (passage_id, text) pairs.
 
@@ -62,18 +98,36 @@ def render_prompt(
 
     Truncation is marked in the text so it is visible to a human reading the
     prompt, and so it cannot be mistaken for the passage ending there.
+
+    ``id_style`` is the ID-format ablation knob (docs/PROJECT_STATE.md, "Next
+    task"). ``"composite"`` (default) is the registered ``DocumentID::PassageID``
+    form. ``"ordinal"`` labels passages ``1``..``N`` in rank order instead --
+    use ``ordinal_id_map`` on the SAME arguments to recover the real ids a model's
+    ordinal citations refer to.
     """
-    kept: list[str] = []
-    used = 0
-    for pid, text in passages:
-        if len(text) > max_passage_chars:
-            text = text[:max_passage_chars] + " ...[truncated]"
-        entry = f"[id: {pid}]\n{text}"
-        if used + len(entry) > max_total_chars:
-            break
-        kept.append(entry)
-        used += len(entry)
-    return PROMPT_V1.format(passages="\n\n".join(kept), question=question)
+    entries = _render_entries(passages, max_passage_chars, max_total_chars, id_style)
+    return PROMPT_V1.format(
+        passages="\n\n".join(e[2] for e in entries), question=question
+    )
+
+
+def ordinal_id_map(
+    passages: Sequence[tuple[str, str]],
+    max_passage_chars: int = 4000,
+    max_total_chars: int = 32000,
+) -> dict[str, str]:
+    """Map ordinal labels ('1', '2', ...) back to the real passage ids they stood
+    for in an ``id_style="ordinal"`` prompt.
+
+    Must be called with the SAME ``passages``, ``max_passage_chars`` and
+    ``max_total_chars`` used to render the prompt, since which passages survive
+    the length caps determines the numbering.
+
+    >>> ordinal_id_map([("19::100)", "a"), ("13::4.1", "b")])
+    {'1': '19::100)', '2': '13::4.1'}
+    """
+    entries = _render_entries(passages, max_passage_chars, max_total_chars, "ordinal")
+    return {label: pid for label, pid, _ in entries}
 
 
 def prompt_hash(prompt: str) -> str:

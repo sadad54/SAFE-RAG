@@ -19,14 +19,15 @@ import os
 import sys
 from pathlib import Path
 
-from _common import ROOT, base_parser, get_corpus, paths  # noqa: E402
+from _common import ROOT, base_parser, get_corpus, load_cfg, paths  # noqa: E402
 from tqdm import tqdm  # noqa: E402
 
-from saferag.config import load_config  # noqa: E402
 from saferag.data.obliqa import load_questions  # noqa: E402
 from saferag.generation.generator import (  # noqa: E402
+    ID_STYLES,
     build_generator,
     gpu_report,
+    ordinal_id_map,
     prompt_fingerprint,
     prompt_hash,
     render_prompt,
@@ -103,6 +104,14 @@ def main() -> int:
     ap.add_argument("--batch-size", type=int, default=8, help="Generation batch size")
     ap.add_argument("--model", default=None, help="Override the generation model")
     ap.add_argument(
+        "--id-style", default=None, choices=ID_STYLES,
+        help=(
+            "Override generation.id_style -- 'composite' (DocumentID::PassageID, "
+            "registered) or 'ordinal' ([1]..[10]). See docs/PROJECT_STATE.md, "
+            "'Next task: the ID-format ablation'."
+        ),
+    )
+    ap.add_argument(
         "--preflight", action="store_true",
         help="Report GPU/VRAM and the recommended model size, then exit",
     )
@@ -119,12 +128,14 @@ def main() -> int:
         print()
         return 0
 
-    cfg = load_config(args.config)
+    cfg = load_cfg(args)
     p = paths(cfg)
 
     backend = args.backend or cfg.generation.backend
     model_name = args.model or cfg.generation.model
     limit = args.limit or cfg.data.n_questions
+    id_style = args.id_style or cfg.generation.get("id_style", "composite")
+    log.info("id_style=%s run_name=%s", id_style, cfg.get("run_name", "default"))
 
     files = sorted(list(p["raw"].glob("*.json")) + list(p["raw"].glob("*.jsonl")))
     if not files:
@@ -181,8 +192,21 @@ def main() -> int:
             q.question, ctx,
             max_passage_chars=cfg.generation.max_passage_chars,
             max_total_chars=cfg.generation.max_total_prompt_chars,
+            id_style=id_style,
         )
         for q, ctx in zip(questions, contexts, strict=True)
+    ]
+    # Real passage id each ordinal label stood for, per question. Empty for
+    # composite runs -- resolve_citation_ids treats an empty id_map as a no-op,
+    # so 03_run_filters.py does not need to branch on id_style at all.
+    id_maps = [
+        ordinal_id_map(
+            ctx,
+            max_passage_chars=cfg.generation.max_passage_chars,
+            max_total_chars=cfg.generation.max_total_prompt_chars,
+        )
+        if id_style == "ordinal" else {}
+        for ctx in contexts
     ]
 
     if args.selftest:
@@ -198,7 +222,9 @@ def main() -> int:
     # we compare against the uncapped render -- if capping makes no difference to
     # that prompt, the two constructions are byte-identical and the entry stands.
     uncapped = {
-        q.question_id: prompt_hash(render_prompt(q.question, ctx, 10**9, 10**9))
+        q.question_id: prompt_hash(
+            render_prompt(q.question, ctx, 10**9, 10**9, id_style=id_style)
+        )
         for q, ctx in zip(questions, contexts, strict=True)
     }
 
@@ -251,7 +277,7 @@ def main() -> int:
     raw_outputs = [cached[q.question_id] for q in questions]
 
     records = []
-    for q, ctx, raw in zip(questions, contexts, raw_outputs, strict=True):
+    for q, ctx, raw, id_map in zip(questions, contexts, raw_outputs, id_maps, strict=True):
         records.append(
             {
                 "item_id": q.question_id,
@@ -260,6 +286,8 @@ def main() -> int:
                 "retrieved_passage_ids": [pid for pid, _ in ctx],
                 "retrieved_passages": [{"id": pid, "text": txt} for pid, txt in ctx],
                 "raw_output": raw,
+                "id_style": id_style,
+                "id_map": id_map,
             }
         )
 
@@ -277,12 +305,15 @@ def main() -> int:
         n_questions=len(questions),
         top_k=cfg.retrieval.top_k,
         prompt_fingerprint=prompt_fingerprint(),
+        id_style=id_style,
+        run_name=cfg.get("run_name", "default"),
     )
     n = write_jsonl(out, records, provenance=prov)
     write_prompt_template(ROOT / "prompts" / "answer_v1.txt")
 
     log.info("Wrote %d records to %s", n, out)
-    log.info("Next: python scripts/03_run_filters.py")
+    run_flag = f" --run-name {cfg.run_name}" if args.run_name else ""
+    log.info("Next: python scripts/03_run_filters.py --config %s%s", args.config, run_flag)
     return 0
 
 

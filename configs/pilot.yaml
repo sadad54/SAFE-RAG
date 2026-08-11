@@ -48,6 +48,10 @@ generation:
   temperature: 0.0                # [REGISTERED] deterministic
   seed: 20260728
   prompt_version: v1              # prompts/answer_v1.txt
+  # composite (registered, used for this run) | ordinal. The ID-format ablation
+  # (docs/PROJECT_STATE.md) overrides this per invocation with --id-style; see
+  # configs/ablation.yaml. Additive key, not a change to a registered value.
+  id_style: composite
 
 checks:
   # S1 -- schema validity

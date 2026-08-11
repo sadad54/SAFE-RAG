@@ -1,7 +1,9 @@
 # Project state — read this first
 
-**Last updated:** 2026-08-03
-**Current plan: PATH B.** No further annotation. See "The decision" below.
+**Last updated:** 2026-08-12
+**Current plan: base rate reinstated as a primary result.** The revision round
+succeeded — κ = 0.7860, "reliable" band. See "The revision round result
+(2026-08-12)" below.
 
 A handoff document. If you are picking this project up cold — a new conversation,
 a collaborator, or yourself in three weeks — read this, then `PREREGISTRATION.md`.
@@ -11,21 +13,86 @@ a collaborator, or yourself in three weeks — read this, then `PREREGISTRATION.
 ## Where things stand in one paragraph
 
 The pilot ran end to end and produced a result. 2,000 ObliQA questions through a
-plain RAG pipeline, 150 items annotated by the PI, 50 double-annotated. Cohen's
-kappa came in at **0.3663**, below the registered 0.50 threshold. Rather than run
-the registered revision round, the project has moved to **Path B**: the base rate
-becomes a preliminary secondary result reported with its kappa, and the paper's
-primary contributions become the automated funnel measurements — above all the
-**citation-ID resolution failure**, which needs no human labels. The immediate
-next task is a GPU-cluster ablation isolating the cause of that failure.
+plain RAG pipeline, 150 items annotated by the PI. The first double-annotation
+round (50 items) scored kappa 0.3663 — below threshold — which on 2026-08-03 led
+to Path B (demote the base rate, lead with the automated funnel findings
+instead). **Reversed 2026-08-10:** Riyad asked for another attempt at the B/C
+boundary. The one registered revision round (Section 8) was run — guidelines
+sharpened to v1.1, 30 fresh items double-annotated by both Adnan and Riyad in
+parallel — and **cleared the threshold convincingly: κ = 0.7860, "reliable,"
+27/30 exact agreement.** The base rate `r = 5.9% [2.2%, 10.7%]` is a primary
+result again. The ID-format ablation is still fully built and still a good
+secondary result; it's queued behind writing up the revision-round outcome and
+one open scope decision (below).
 
-## The decision (2026-08-03)
+## The revision round result (2026-08-12)
+
+**κ = 0.7860** on the 30-item revision batch (observed agreement 0.9000, 27/30).
+Clears not just the 0.50 "usable" bar but the 0.70 "reliable" bar. Full detail:
+`runs/pilot_v1/revision_kappa.json`, recorded in `PREREGISTRATION.md` §11 as the
+resolution of Deviation 2.
+
+Three disagreements, no longer one-directional the way the original 9/50 were:
+one NA/C (a bare-heading passage, genuinely ambiguous), one A/B (the PI missed a
+scope mismatch the second annotator caught — same direction as the original
+bias, but 1 case in 30 vs. 7 in 50), one B/C (both agreed it was wrongly
+grounded, disagreed only on how obviously). Reduced, not eliminated, which is
+the honest reading, not zero.
+
+**Open decision — not yet made, needs your and Riyad's call, not just mine.**
+The original 150 primary labels were made under guidelines v1.0; the revision
+batch that just passed was labelled under v1.1. A passing κ under v1.1
+establishes the construct is reliably distinguishable *under v1.1* — it doesn't
+by construction certify the specific v1.0-era labels sitting in the primary
+sample. The evidence is reassuring (PI's A/B error rate dropped from 14% to
+~3.3% under the same guidelines fix) but 30 items is too few to bound that
+tightly, and the primary sample is 150. Two live options:
+
+1. **Report as-is, caveat it.** Cheapest. State plainly in limitations that the
+   primary 150 predate the v1.1 clarification, cite the error-rate evidence
+   above as reassurance, move on.
+2. **Targeted audit.** Re-check just the PI's own **A**-labelled items in
+   `candidate_recoverable` + `candidate_unrecoverable` (86 of the 150 — the
+   strata deceptive grounding actually lives in; see `docs/PREREGISTRATION.md`
+   §4 S3) against the v1.1 scope-clause test. Not blind re-annotation — you
+   already know what you called it, you're checking whether the sharpened Step
+   3 changes any of the 86 calls. Rough budget: 1–2 minutes each, well under the
+   3–5 min/item cold-annotation rate, so 1.5–3 hours, once, by the PI alone
+   (this isn't a kappa exercise, no second annotator needed).
+
+Neither is registered — either is now a further §11 entry regardless of which
+you pick. This is flagged rather than decided because it trades rigor against
+the time budget you were explicit about, and that's your and Riyad's call.
+
+## The 2026-08-10 decision — Path B reversed
+
+Recorded as **Deviation 2** in `PREREGISTRATION.md` §11, which supersedes
+Deviation 1 without deleting it (the pre-registration is append-only).
+
+**What's happening:** `docs/ANNOTATION_GUIDELINES.md` moves to v1.1, fixing the
+three things the Deviation-1 disagreement analysis actually found (incompleteness
+read as B, no explicit scope-clause test, thin worked examples on that failure
+mode). 30 fresh items — disjoint from the original 150 — get drawn and **both
+annotators label all 30, independently, in parallel.** `scripts/04b_make_revision_batch.py`
+builds the batch; `scripts/05b_compute_revision_kappa.py` recomputes kappa once
+both label files exist. See "Next task" below for the exact commands.
+
+**What does NOT get redone:** the original 150-item primary labels stand as-is if
+kappa clears this time — Section 8 commits to re-annotating 30 fresh items, not
+to re-labelling the primary sample. Caveat carried into the pre-registration: the
+original 150 were labelled under v1.0 guidelines, so a passing kappa on the
+revision batch establishes reliability under v1.1, not strictly under the wording
+the primary labels were made with. Small gap, not zero. Worth a sentence in
+limitations if the base rate goes back to being the headline.
+
+## The 2026-08-03 decision (superseded)
 
 Three options were weighed: (A) run the registered revision round, ~15 more hours
 of annotation; (B) reframe around the automated findings, ~4 hours; (C) abandon.
 **B was chosen** because the annotation burden was the binding constraint and the
 automated findings stand on their own. Recorded as **Deviation 1** in
-`PREREGISTRATION.md` §11 with the full diagnostic.
+`PREREGISTRATION.md` §11 with the full diagnostic. **Reversed 2026-08-10 — see
+above.**
 
 ## Results so far
 
@@ -46,18 +113,42 @@ Generation ran on Colab; retrieval and filtering are CPU-reproducible.
 ambiguous.** 36.3% of schema-valid answers contain at least one unresolvable id.
 126 answers cite nothing resolvable.
 
-**Deceptive grounding (preliminary, low reliability).**
+**Deceptive grounding — primary result, revision round complete.**
 `r = 5.9% [2.2%, 10.7%]`, unconditional `R = 2.2% [0.8%, 4.0%]`.
 Per stratum: recoverable 13.8%, unrecoverable 5.0%, control 4.0%.
-**kappa = 0.3663** on 50 double-annotated items. Observed agreement 0.80, expected
-0.684, PABAK 0.60. Disagreements are directional: 7 items A(PI)/B(second), 2 the
-reverse, 1 B/C. The second annotator's notes on all seven flips cite scope
-mismatch. **5.9% is therefore likely an under-estimate.**
+**Operative kappa = 0.7860** (30-item revision batch, 2026-08-12, "reliable"
+band). The original round's kappa = 0.3663 (50 items, 2026-08-03) is retained as
+history — the reason the revision round ran — not as the current reliability
+figure. See "The revision round result" above for the open v1.0/v1.1 audit
+decision.
 
-## Next task: the ID-format ablation
+## Next task: commit labels, finalize the primary result, decide on the audit
 
-**Not yet built.** This is the immediate priority and the thing that makes Path B
-a good paper rather than a thin one.
+**Revision-round annotation is done** — both `labels_adnan_batch_02.jsonl` and
+`labels_riyad_batch_02.jsonl` exist and κ = 0.7860 has been computed. What's
+left:
+
+1. Commit and push both label files (they ARE meant to be committed — labels
+   are the research output; only batches with corpus text are excluded):
+   ```
+   git add data/annotation/labels_adnan_batch_02.jsonl data/annotation/labels_riyad_batch_02.jsonl data/annotation/batch_02_key.jsonl
+   git commit -m "Revision round: 30-item double annotation, kappa 0.786"
+   git push
+   ```
+2. Run `python scripts/05_compute_results.py --annotator adnan --second riyad`
+   to regenerate `runs/pilot_v1/results.json` with the operative kappa folded
+   in (the script now prefers `revision_kappa.json` when present — see the
+   fix below, already applied).
+3. **Decide on the audit** (the open decision above) with Riyad — 45 minutes of
+   discussion, not more, to pick option 1 or 2 and record whichever in
+   `PREREGISTRATION.md` §11.
+4. Then: write up the revision round in the paper (structure below), and only
+   after that circle back to the ID-format ablation.
+
+## Then: the ID-format ablation (secondary, already built)
+
+Not the current priority, but fully built and ready whenever there's cluster
+time — see `docs/CLUSTER_SETUP.md`. Kept here so it isn't lost track of.
 
 The 36.3% resolution failure cannot currently be attributed. Passage ids in the
 prompt use the composite form `DocumentID::PassageID` (`19::100)`,
@@ -66,7 +157,8 @@ drop trailing punctuation, and sometimes emit a bare DocumentID. That format was
 an implementation choice, not a finding about models.
 
 **The experiment**, run on the university GPU cluster (access obtained 2026-08-03,
-via AnyDesk), no annotation required:
+via AnyDesk; repo not yet cloned there -- see `docs/CLUSTER_SETUP.md`), no
+annotation required:
 
 | | composite ids | ordinal ids `[1]`…`[10]` |
 |---|---|---|
@@ -78,40 +170,65 @@ structured-output RAG is largely an artefact of identifier design — a concrete
 actionable result. If it does not collapse, the 8.3% residual is genuine model
 behaviour. Either outcome is publishable; that is what makes it worth running.
 
-**What needs building first:**
+**What needs building first — done 2026-08-10:**
 
-1. `render_prompt` gains `id_style: composite | ordinal`. Ordinal mode labels
-   passages `[1]`…`[10]` and keeps a per-item map back to real passage ids.
-2. `resolve_citation_ids` handles ordinal citations.
-3. Config knob under `generation:`; provenance records the style.
-4. Tests for both paths. The prompt hash changes automatically, so the generation
-   cache invalidates cleanly — no stale mixing.
-5. Per-run output directories so the four runs do not overwrite each other.
+1. ~~`render_prompt` gains `id_style: composite | ordinal`.~~ Done. Ordinal mode
+   labels passages `[1]`…`[10]`; `ordinal_id_map` (same args) recovers the
+   per-item map back to real passage ids.
+2. ~~`resolve_citation_ids` handles ordinal citations.~~ Done — takes an
+   optional `id_map`, tolerates `[1]`/`(1)`/`1.` decoration the way it already
+   tolerated composite punctuation. No-op (identical to before) when `id_map`
+   is empty/omitted.
+3. ~~Config knob under `generation:`~~. Done — `generation.id_style`, overridable
+   with `--id-style`; `configs/ablation.yaml` added. Provenance records
+   `id_style` and `run_name`.
+4. ~~Tests for both paths.~~ Done — 12 new tests in `tests/test_pipeline.py`,
+   all 107 tests pass. Verified end-to-end with the stub backend that ordinal
+   citations resolve through the whole 02→03 pipeline.
+5. ~~Per-run output directories~~. Done — `interim/` and `runs/` nest under
+   `run_name` (`scripts/_common.py paths()`); existing pilot_v1 artefacts
+   migrated into `data/interim/pilot_v1/` and `runs/pilot_v1/` (gitignored,
+   no history impact).
 
-## Then
+**Not yet run.** The repo isn't cloned onto the cluster yet — see
+`docs/CLUSTER_SETUP.md` for that, then the run commands in
+`configs/ablation.yaml`'s header comment. Not urgent while the revision round is
+the priority.
 
-1. Run all four configurations. vLLM on the cluster (`backend: vllm`) — roughly
-   10× the Colab transformers path; the full 2,786 questions in minutes.
+**Once the ablation has run:**
+
+1. Run all four ablation configurations. vLLM on the cluster (`backend: vllm`) —
+   roughly 10× the Colab transformers path; the full 2,786 questions in minutes.
 2. `scripts/03_run_filters.py` on each; build the comparison table.
 3. Write. **ALTA 2026, deadline 11 September**, archival, ACL Anthology.
 
-**Paper structure (short paper):**
+**Paper structure (short paper) — settled 2026-08-12, kappa cleared:**
+
 1. Funnel evaluation of structured-output RAG on ObliQA
-2. **Citation-ID resolution failure and its dependence on identifier format** ← headline
-3. Preliminary deceptive-grounding estimate, kappa = 0.37, honestly caveated
+2. Deceptive-grounding base rate (`r = 5.9%`), κ = 0.7860 after the one
+   permitted revision round, both rounds narrated honestly (0.37 → guideline
+   fix → 0.79, not just the final number)
+3. **Citation-ID resolution failure and its dependence on identifier format**
+   (from the ablation, once run)
 4. Released pipeline and pre-registration
 
 ## Optional, cheap, high value
 
-Adjudicating the 10 annotator disagreements with Riyad is ~45 minutes of
-discussion, not annotation. It would yield three or four worked examples of what
-deceptive grounding looks like in ADGM text — the qualitative material that makes
-the results section readable. Not required for Path B.
+Adjudicating the original 10 annotator disagreements (from the 50-item double
+batch) with Riyad is still ~45 minutes of discussion, not annotation, and still
+yields three or four worked examples for the results section. It does not
+substitute for the revision round above — the pre-registration commits to fresh
+items, not re-litigating old ones — but it's good qualitative material either
+way and can happen any time, before or after the revision batch.
 
 ## Decisions already made and why
 
-- **Deviation 1** (§11): kappa 0.37 below threshold; revision round not run; base
-  rate demoted to preliminary secondary, direction of bias reported.
+- **Deviation 2** (§11): Deviation 1 reversed, 2026-08-10; resolved 2026-08-12.
+  Guidelines to v1.1, 30 fresh items double-annotated by both annotators, κ =
+  0.7860 ("reliable"). Base rate reinstated as primary. See "Next task" above.
+- **Deviation 1** (§11, superseded by Deviation 2): kappa 0.37 below threshold;
+  revision round not run; base rate demoted to preliminary secondary, direction
+  of bias reported.
 - **Amendment 1** (§11): candidate pool split by whether a gold passage was
   retrieved. Made before generation, because recall@10 = 0.82 means ~16% of
   questions are unanswerable from context.
@@ -130,7 +247,14 @@ the results section readable. Not required for Path B.
   compound legal sentences. Permissive, which is the safe direction.
 - **S2 disproportionately removes the unrecoverable stratum** — 18% of questions
   lack gold in context but only 5.3% of survivors do.
-- **The annotation reliability failure**, reported in full rather than smoothed.
+- **The annotation reliability history**, reported in full: κ = 0.3663 (original
+  50), revision round run, κ = 0.7860 (revision 30). Not smoothed into a single
+  final number.
+- **v1.0/v1.1 label consistency**, decided 2026-08-12: the primary 150 stand as
+  labelled under guidelines v1.0; the passing κ = 0.7860 was measured under
+  v1.1. Reported as a limitation rather than closed by audit — see
+  `PREREGISTRATION.md` §11 for the reasoning and the audit's cost if a reviewer
+  asks for it.
 - Generation ran on Colab, not the cluster. Provenance records it.
 
 ## Publication and scholarship strategy

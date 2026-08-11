@@ -306,9 +306,113 @@ regulatory RAG, and the composite `DocumentID::PassageID` format used in the pro
 is a contributing cause that belongs in the limitations rather than being presented
 as pure model hallucination.
 
+### Deviation 2 — Deviation 1 reversed; the registered revision round is now being run
+
+**Date.** 2026-08-10
+**Sections affected.** 8 (inter-annotator agreement), 9 (decision rule)
+**Status when made.** After Deviation 1. No new outcome data existed at the point
+this was decided — this reverses a *process* decision, not a measurement.
+
+**What changed.** Deviation 1 (2026-08-03) chose not to run the revision round
+Section 8 permits and demoted the base rate to a secondary result. That choice
+is reversed. The second annotator (Riyad) asked to make another attempt at the
+B/C boundary before the base rate is given up on as primary. The registered
+revision round — Section 8's "sharpen the guidelines once, re-annotate 30 fresh
+items, recompute κ" — is now being executed. This is the one revision the
+pre-registration permits; if κ remains below 0.50 after it, Section 8's
+original instruction stands: the natural-occurrence measurement is abandoned
+and the study moves to Pivot A.
+
+**Guideline changes.** `docs/ANNOTATION_GUIDELINES.md` moves to v1.1, making
+explicit the three fixes the Deviation-1 disagreement analysis identified:
+(a) incompleteness is A, stated as its own edge case rather than left implicit
+in the framing paragraph; (b) an explicit scope/application-clause comparison
+procedure, rather than the general "check whether the passage applies to that
+scope" wording in Step 3; (c) worked examples built from the actual failure
+pattern (7 of 7 A→B flips cited scope mismatch; two of the PI's B labels
+penalised incompleteness). No change to the A/B/C/NA definitions themselves —
+Section 4 is untouched. This is a clarification of an already-registered
+distinction, not a new criterion.
+
+**Revision batch.** 30 fresh items, disjoint from the original 150 (drawn from
+`data/interim/pilot_v1/filtered.jsonl` survivors excluding every `item_id` in
+`batch_01_key.jsonl`), stratified proportionally to the registered allocation
+(16 candidate_recoverable / 4 candidate_unrecoverable / 10 control — exactly
+1/5 of 80/20/50), seed 20260728. **Both annotators label all 30, independently
+and in parallel** — this is a full double-annotation of the revision batch, not
+a split; κ requires the same items judged twice. `scripts/04b_make_revision_batch.py`
+and `scripts/05b_compute_revision_kappa.py`.
+
+**What happens to the original 150-item primary labels.** They stand as-is if
+κ on the revision batch clears the threshold. Section 8 commits only to
+re-annotating 30 fresh items and recomputing κ on those — it does not commit to
+re-labelling the primary sample. **Caveat, stated here rather than glossed
+over:** the original 150 were labelled under guidelines v1.0; if κ on the v1.1
+guidelines clears 0.50 on the revision batch, that establishes reliability
+*under v1.1*, not under the v1.0 wording the primary labels were actually made
+with. The gap is judged small — v1.1 clarifies existing Section 4 language, it
+does not change what A/B/C mean — but it is a real gap and belongs in the
+paper's limitations if the primary base rate is reported as-is. Re-labelling
+all 150 under v1.1 would close it properly; that is not being done now, in the
+interest of the time both annotators asked to conserve. Reconsider this
+trade-off explicitly before drafting the results section, not silently at that
+point.
+
+**Who decided.** Adnan and Riyad, jointly, 2026-08-10.
+
+**Resolution — 2026-08-12.** Both annotators labelled all 30 revision items
+independently. Cohen's κ = **0.7860**, observed agreement 27/30 = 0.9000. This
+clears both bands in Section 8: it is not merely "usable" (≥0.50) but
+**"reliable" (≥0.70)**. Per the pre-committed table, the action is *proceed;
+report κ*. The revision round succeeds; only one was permitted and it worked,
+so no further guideline changes are made.
+
+Three disagreements out of 30, no longer one-directional the way the original
+round's were. One NA/C (a genuinely borderline heading-only passage). One A/B —
+the PI called A, the second annotator caught a scope mismatch the PI missed
+(same *direction* as the original bias, but 1 case in 30 rather than 7 in 50 —
+reduced, not eliminated). One B/C — both annotators agreed the passage was
+wrongly grounded, disagreed only on how obviously so, which is a milder
+disagreement than a full A/B flip. Full disagreement detail with both notes:
+`runs/pilot_v1/revision_kappa.json`.
+
+**Decision.** The base rate returns to being reported as a primary result.
+`r = 5.9% [2.2%, 10.7%]` stands, computed from the original 150 PI-only labels,
+now reported alongside **κ = 0.7860 (revision round, 30 items)** as the
+operative reliability figure. κ = 0.3663 (original round, 50 items) is retained
+and reported as history — the reason the revision round was run — not
+presented as the current reliability estimate.
+
+**The v1.0-vs-v1.1 consistency caveat, resolved.** Flagged when Deviation 2 was
+opened: the original 150 were labelled under v1.0, so a passing κ on v1.1 does
+not by itself certify those specific labels. Evidence bearing on this, from the
+revision round: the PI's residual A/B error rate under v1.1 (1/30 ≈ 3.3%) is
+markedly lower than under v1.0 (7/50 = 14%), a rate reduction consistent with
+the guidelines fix working rather than merely being present, though 30 items is
+too few to bound it tightly. The full 150 are not being re-labelled — that
+remains future work if a reviewer requires it — but a targeted check of the PI's
+own A-labelled items in `candidate_recoverable`/`candidate_unrecoverable` (the
+strata deceptive grounding actually occurs in, 86 of the 100 items there) against
+the v1.1 scope-clause test is a live option, cheaper than a full re-annotation.
+Whether to run it is recorded as a decision for the write-up stage, not settled
+here.
+
+**v1.0/v1.1 consistency decision — 2026-08-12.** The primary 150 are reported
+as-is, not re-audited or re-labelled. Decided by Adnan. Basis: the reassurance
+evidence in the resolution above (PI's A/B error rate 14% → ~3.3% under the same
+guidelines fix, same direction of residual bias but an order of magnitude
+smaller) is judged sufficient, and the targeted-audit alternative (1.5–3 hours
+against the PI's 86 A-labelled items in the two candidate strata) was not taken
+up. This is stated here as a limitation for the paper: **the primary 150-item
+base rate was labelled under guidelines v1.0; the reliability figure reported
+alongside it (κ = 0.7860) was measured under v1.1.** If a reviewer requires it,
+the targeted audit remains available and is documented above with its cost.
+
 | Date | Section | Deviation | Reason |
 |---|---|---|---|
-| 2026-08-03 | 8, 9 | Deviation 1 (above) | kappa 0.3663 below the registered 0.50 threshold. Revision round not run; base rate demoted to preliminary secondary result with kappa and direction of bias reported. |
+| 2026-08-12 | 8, 9 | Deviation 2 resolution (above) | κ = 0.7860 on the 30-item revision batch, "reliable" band. Base rate reinstated as primary result. v1.0/v1.1 label-consistency gap reported as a limitation, not audited. |
+| 2026-08-10 | 8, 9 | Deviation 2 (above) | Deviation 1 reversed. Registered revision round now executing: guidelines sharpened to v1.1, 30 fresh items double-annotated by both annotators in parallel, κ to be recomputed. |
+| 2026-08-03 | 8, 9 | Deviation 1 (above) | kappa 0.3663 below the registered 0.50 threshold. Revision round not run; base rate demoted to preliminary secondary result with kappa and direction of bias reported. **Superseded by Deviation 2.** |
 | 2026-07-30 | none | Correction 1 (above) | Citation ids resolved by normalised match. Implementation fix to the registered definition; estimand unchanged. |
 | 2026-07-28 | 4, 6, 7 | Amendment 1 (above) | Retrieval recall@10 ≈ 0.82 implies ~16% of questions are unanswerable from context; splitting the candidate pool concentrates annotation on the stratum where deceptive grounding can actually occur. Made before any outcome data existed. |
 

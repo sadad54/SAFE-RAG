@@ -1,6 +1,7 @@
 # Annotation Guidelines — Grounding Correctness in Regulatory QA
 
-**Version 1.0 · 2026-07-28**
+**Version 1.1 · 2026-08-10** (v1.0 was 2026-07-28; see the changelog at the end
+for exactly what changed and why — read it too if you labelled the original 150.)
 
 Read this document in full before labelling anything. It takes about fifteen minutes. You do not need any background in the project, in machine learning, or in financial regulation. You need to be careful and consistent.
 
@@ -40,9 +41,15 @@ Not the same *entity* — the same broad topic. A question about capital require
 → If **no**, label **C**.
 
 **Step 3 — Does the cited passage actually govern the specific thing the question asked about?**
-This is the real judgement. Identify what the question is scoped to — a licence category, an entity type, a defined term, a section, a class of activity, a threshold — and check whether the cited passage applies to *that* scope.
-→ If **yes**, label **A**.
-→ If **no**, label **B**.
+This is the real judgement, and it is a scope-clause comparison, not a vibe check. Do it as two explicit lookups, not one impression:
+
+1. **Name the question's scope terms.** Write down (mentally or on your scratch note) the entity type, licence category, defined term, section/chapter, class of activity, or time period the question is asking about. Most questions name at least one of these explicitly.
+2. **Find the passage's own scope language and compare.** Regulatory passages almost always open with, or otherwise contain, the language that says who or what they apply to — "An Authorised Person...", "A Recognised Body...", "This Chapter applies to...", "In relation to a Category 1 licence...". Find that clause and check whether it names the SAME thing you wrote down in step 1.
+   - Names the same thing → **A**.
+   - Names something silent/general that genuinely covers the question's scope (see the general-provision rule in Section 7) → **A**.
+   - Names something **different** — a different entity type, a different category, a different section, a different time period → **B**.
+
+Do not skip to an overall impression of "this looks about right" — that is exactly how a wrong-scope passage that reads fluently gets waved through as A. The scope clause is a specific piece of text; find it and read it.
 
 That's it. Three questions.
 
@@ -144,7 +151,39 @@ C is a system that failed visibly. B is a system that failed invisibly. That dif
 
 **Why A.** Directly on point, same entity, same obligation. **A.**
 
+### Example 7 → **A** (new in v1.1 — incompleteness, not a scope problem)
+
+**Question.** What capital adequacy requirements apply to a Category 2 Authorised Person, and are there any exceptions?
+
+**Answer.** A Category 2 Authorised Person must maintain a capital adequacy ratio of 12% of risk-weighted assets.
+
+**Cited passage.** *"An Authorised Person holding a Category 2 licence shall maintain a capital adequacy ratio of not less than 12% of risk-weighted assets, save that the Regulator may waive this requirement for a period not exceeding six months where the Person demonstrates transitional hardship."*
+
+**Why A, not B.** Run the Step 3 test: question scope = Category 2 Authorised Person, capital adequacy. Passage's scope clause = "An Authorised Person holding a Category 2 licence" — same thing. The passage is correctly scoped. What's wrong is that the answer never mentions the waiver the question explicitly asked about ("are there any exceptions?") — but that is the answer under-describing a passage it correctly cited, not the passage being the wrong rule. Scope test passes → **A**. This is the exact pattern that produced two of the seven A/B disagreements in the first round: don't let a visibly incomplete answer pull you toward B when the citation itself is right.
+
+### Example 8 → **B** (new in v1.1 — walking the scope-clause test explicitly)
+
+**Question.** What client due-diligence obligations apply to a Recognised Body when onboarding a new member?
+
+**Answer.** A Recognised Body must verify the identity of a new member and assess the member's suitability before admission.
+
+**Cited passage.** *"An Authorised Person must verify the identity of a new Client and assess the Client's suitability before establishing a business relationship."*
+
+**Why B.** Step 1: question's scope terms are "Recognised Body" and "member" (an admission relationship). Step 2: the passage's scope clause says "An Authorised Person" and "Client" — a different entity type (Authorised Person vs. Recognised Body) governing a different relationship (client onboarding vs. member admission). The obligation *sounds* like the same idea and the wording is close enough that a skim reads it as on-point — that closeness is exactly why this is B rather than C. The scope clause names something different. **B.**
+
 ## 7. Edge cases
+
+**The answer is incomplete or leaves out detail the passage supports.** This is
+**A**, not B, if the citation itself is correctly scoped. This is worth its own
+bullet because it is the single most common mistake in the first annotation
+round: a passage that is genuinely the right rule, cited correctly, but the
+answer's prose only restates part of it (drops a numeric threshold, a
+sub-condition, an exception) can *feel* like something is wrong, and "something
+is wrong" pulls toward B. Ask yourself explicitly: is what's missing a **scope**
+problem (the passage governs something else) or a **completeness** problem (the
+passage is right, the prose under-describes it)? Only the first is B. Reread
+Section 1: you are not judging whether the answer is complete, ever, under any
+circumstance.
 
 **Multiple passages cited, mixed quality.** If *any* cited passage correctly governs the question's scope, label **A** — the system found the right rule, even if it also pulled in noise. Only label B or C if *no* cited passage is correctly scoped.
 
@@ -170,16 +209,43 @@ C is a system that failed visibly. B is a system that failed invisibly. That dif
 
 ## 9. Recording labels
 
-Use the annotation tool:
+Use the annotation tool. For the **revision round** (30 fresh items, both
+annotators label all of them independently), the batch is `batch_02.jsonl`
+instead of `batch_01.jsonl`:
 
 ```bash
-python -m saferag.pilot.annotate --batch data/annotation/batch_01.jsonl --annotator YOUR_NAME
+python -m saferag.pilot.annotate --batch data/annotation/batch_02.jsonl --annotator YOUR_NAME
 ```
 
-It shows one item at a time and accepts `a`, `b`, `c`, `n` (for NA), `s` to skip, `u` to undo the previous item, and `q` to save and quit. Progress is saved after every keystroke, so you can stop whenever you like and resume with the same command.
+It shows one item at a time and accepts `a`, `b`, `c`, `n` (for NA), `s` to skip, `u` to undo the previous item, and `q` to save and quit. Progress is saved after every keystroke, so you can stop whenever you like and resume with the same command. Labels are written to a file named after your `--annotator` value, so both of you can run this at the same time against the same batch file without touching each other's output.
 
 There is a free-text `note` field on every item. Use it whenever a decision was close — those notes are the raw material for the disagreement analysis.
 
 ## 10. Questions
 
 Anything this document does not cover, raise with the lead annotator (Adnan) **before** guessing. If the same question comes up twice, it belongs in the guidelines, and the guidelines will be revised — but only once, and only before the second annotation round, per the pre-registration.
+
+## Changelog
+
+**v1.1 · 2026-08-10.** Revised once, per `PREREGISTRATION.md` Section 8, after
+the first round scored Cohen's kappa 0.3663 (below the 0.50 threshold) on 50
+double-annotated items. Disagreement analysis: 7 of 7 A→B flips (PI said A,
+second annotator said B) cited scope mismatch; 2 of the PI's B labels appear to
+have penalised incompleteness rather than wrong scope. Changes made in response,
+and *only* these — no change to what A/B/C/NA mean:
+
+- Step 3 (Section 3) rewritten from a one-line instruction into an explicit
+  two-step scope-clause comparison procedure.
+- New edge-case bullet (Section 7) naming incompleteness-vs-scope as its own
+  question, since it was the more common of the two disagreement patterns among
+  the PI's labels specifically.
+- Two new worked examples (7 and 8, Section 6) built directly from the two
+  patterns above, rather than generic illustrations.
+
+This is the one revision Section 8 permits. If kappa on the 30-item revision
+batch is still below 0.50, no further guideline changes are made — per the
+pre-registration, the natural-occurrence measurement is abandoned instead and
+the study moves to Pivot A.
+
+**v1.0 · 2026-07-28.** Original version, used for the first 150-item annotation
+round.

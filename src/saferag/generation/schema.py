@@ -66,48 +66,91 @@ class CitationResolution(BaseModel):
     unresolved: list[str] = []
     n_exact: int = 0
     n_normalised: int = 0
+    n_ordinal: int = 0
     n_ambiguous: int = 0
 
 
-def resolve_citation_ids(cited: list[str], offered: list[str]) -> CitationResolution:
+def _ordinal_digits(citation: str) -> str | None:
+    """Pull the digits out of a model-emitted ordinal citation.
+
+    Ordinal prompts label passages ``1``..``N``, but models wrap that label in
+    the same kind of decoration they apply to composite ids -- ``[1]``, ``(1)``,
+    ``1.`` -- so match on digits alone rather than requiring an exact string.
+
+    >>> _ordinal_digits("[3]")
+    '3'
+    >>> _ordinal_digits("10.")
+    '10'
+    >>> _ordinal_digits("")
+    """
+    digits = re.sub(r"\D", "", citation)
+    return digits or None
+
+
+def resolve_citation_ids(
+    cited: list[str],
+    offered: list[str],
+    id_map: dict[str, str] | None = None,
+) -> CitationResolution:
     """Match cited ids onto offered ids, tolerating dropped trailing punctuation.
 
-    Exact matches win. Otherwise a citation resolves only if normalisation maps it
-    onto exactly ONE offered id -- if it maps onto several, the model's intent is
-    genuinely ambiguous and we refuse rather than guess. A bare DocumentID such as
-    '17' matches nothing and stays unresolved, which is correct: it names a
-    document, not a passage.
+    ``id_map``, if given, maps ordinal labels ('1', '2', ...) emitted under
+    ``id_style="ordinal"`` (see ``generation.generator.ordinal_id_map``) back onto
+    the real offered ids -- checked first, since an ordinal label like '1' would
+    otherwise never match a composite ``offered`` entry. It is a no-op for
+    ``id_style="composite"`` runs, where it should be omitted or empty.
+
+    Failing an ordinal lookup, exact matches win. Otherwise a citation resolves
+    only if normalisation maps it onto exactly ONE offered id -- if it maps onto
+    several, the model's intent is genuinely ambiguous and we refuse rather than
+    guess. A bare DocumentID such as '17' matches nothing and stays unresolved,
+    which is correct: it names a document, not a passage.
 
     >>> r = resolve_citation_ids(["19::100"], ["19::100)", "19::25)"])
     >>> r.resolved, r.n_normalised
     (['19::100)'], 1)
     >>> resolve_citation_ids(["17"], ["17::Part 2.5A.(1)"]).unresolved
     ['17']
+    >>> r = resolve_citation_ids(["[1]"], ["19::100)", "19::25)"], id_map={"1": "19::100)"})
+    >>> r.resolved, r.n_ordinal
+    (['19::100)'], 1)
     """
     exact = set(offered)
     by_norm: dict[str, list[str]] = {}
     for o in offered:
         by_norm.setdefault(_normalise_id(o), []).append(o)
+    id_map = id_map or {}
 
     out = CitationResolution()
     seen: set[str] = set()
     for c in cited:
-        if c in exact:
-            hit, kind = c, "exact"
-        else:
-            candidates = by_norm.get(_normalise_id(c), [])
-            if len(candidates) == 1:
-                hit, kind = candidates[0], "normalised"
+        hit: str | None = None
+        kind: str | None = None
+
+        if id_map:
+            digits = _ordinal_digits(c)
+            if digits is not None and digits in id_map:
+                hit, kind = id_map[digits], "ordinal"
+
+        if hit is None:
+            if c in exact:
+                hit, kind = c, "exact"
             else:
-                out.unresolved.append(c)
-                if len(candidates) > 1:
-                    out.n_ambiguous += 1
-                continue
+                candidates = by_norm.get(_normalise_id(c), [])
+                if len(candidates) == 1:
+                    hit, kind = candidates[0], "normalised"
+                else:
+                    out.unresolved.append(c)
+                    if len(candidates) > 1:
+                        out.n_ambiguous += 1
+                    continue
+
         if hit not in seen:
             seen.add(hit)
             out.resolved.append(hit)
         out.n_exact += kind == "exact"
         out.n_normalised += kind == "normalised"
+        out.n_ordinal += kind == "ordinal"
     return out
 
 

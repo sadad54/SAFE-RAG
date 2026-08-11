@@ -1,0 +1,30 @@
+{"item_id": "25d918a7-2a6b-4590-86e5-6c2fa40dce60", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:01:03+00:00"}
+{"item_id": "f9fd2ca2-3ceb-4044-89c2-aaa2867516cf", "label": "B", "note": "Cited passage is scoped to the VC Manager Framework/VC Fund eligibility criteria, not Private Credit Fund; answer even says \"VC Fund\" throughout — right topic (fund manager eligibility), wrong fund category.", "annotator": "riyad", "labelled_utc": "2026-08-11T13:09:53+00:00"}
+{"item_id": "6f4197ca-4473-43a6-80a7-1146b8720714", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:10:50+00:00"}
+{"item_id": "b177f0ca-61c7-4f6f-a01f-1429e86b6ab3", "label": "C", "note": "Cited passage governs the Regulator's review of an Authorised Person's IRAP/ICAAP (internal risk/capital self-assessment) — an unrelated process to verifying a Public Listed Company's Auditor's Report; wrong topic entirely, not just wrong scope.", "annotator": "riyad", "labelled_utc": "2026-08-11T13:17:01+00:00"}
+{"item_id": "6b0d3f95-5f44-4c91-91c7-6a6a8324c63d", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:20:44+00:00"}
+{"item_id": "8205c2bd-582e-441b-9fce-437ba1c1a845", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:24:12+00:00"}
+{"item_id": "07165c15-63a9-43cb-ac74-9f08f77f7415", "label": "B", "note": "Cited passages cover the Fund Manager's own Fund financial statements and audit. The question asks about a target Fund's audit standards when this Fund invests in another Fund. Same topic but the wrong fund is governed.", "annotator": "riyad", "labelled_utc": "2026-08-11T13:32:19+00:00"}
+{"item_id": "840e5c88-0140-4ca3-a02c-070e9b924bbf", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:34:28+00:00"}
+{"item_id": "7b9df4c8-a5b4-4219-ad2d-7cb2c33350d9", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:36:17+00:00"}
+{"item_id": "239394b9-5b11-460a-908d-3bfef7c1efbf", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:38:30+00:00"}
+{"item_id": "fc5341b1-8494-413d-ad40-a27d20d63f69", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:39:50+00:00"}
+{"item_id": "f68e67c4-834f-4868-9e4d-9251e9332733", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:42:53+00:00"}
+{"item_id": "2d0eff2a-6ae1-4aa3-be9c-1c7c1ea7b9b5", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:57:46+00:00"}
+{"item_id": "25d191ce-183f-4c70-8726-7ad3f380aea8", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T13:59:46+00:00"}
+{"item_id": "bbc6f702-fc57-4519-817a-20db910f0916", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:02:40+00:00"}
+{"item_id": "28824054-0f03-4a32-87ef-9d41cb085d30", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:04:01+00:00"}
+{"item_id": "140a5f13-9f52-465a-98dc-237aef4447b4", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:04:51+00:00"}
+{"item_id": "54e7b543-0dbe-405b-9d9a-1ced55263f33", "label": "C", "note": "Passage is just a heading about contraventions of rules. It never mentions holding or securing items or names any collective term. It does not address what the question asks.", "annotator": "riyad", "labelled_utc": "2026-08-11T14:07:04+00:00"}
+{"item_id": "64ffe606-8491-4601-a361-2aa369b8b5e9", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:11:04+00:00"}
+{"item_id": "5f75fe50-0425-405f-8e60-a1cd6dc22247", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:17:13+00:00"}
+{"item_id": "81971e10-4387-4236-8c02-56d4106dd092", "label": "B", "note": "Passages describe the Framework's general purpose and one sustainability example. None set out a risk categorization scheme tied to due diligence levels, which is what the question specifically asks for.", "annotator": "riyad", "labelled_utc": "2026-08-11T14:19:53+00:00"}
+{"item_id": "c46c77b9-ca98-4aa3-9550-5ddb4c33ae96", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:24:32+00:00"}
+{"item_id": "f6905185-0f69-4ed2-8425-48c73a3ca282", "label": "B", "note": "Passage covers qualitative governance standards for internal models such as the risk control unit and staff competence. It does not state a daily calculation requirement or any exceptions to calculation frequency, which is what the question asks.", "annotator": "riyad", "labelled_utc": "2026-08-11T14:28:46+00:00"}
+{"item_id": "cbb55e00-e3ad-4953-bf46-75388bab5ba5", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:32:04+00:00"}
+{"item_id": "0f87d647-0430-4bf9-9dbc-3c83f24f2dc3", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:35:52+00:00"}
+{"item_id": "64a14856-6909-462a-a7c2-89d3d3491dc6", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:36:29+00:00"}
+{"item_id": "d0c08680-d2b2-4f94-9ed0-14e8f2ab4dad", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:50:33+00:00"}
+{"item_id": "dc0916db-d38c-4a19-9cae-a88e9da5eacf", "label": "C", "note": "Passages cover AML due diligence for a Relevant Person verifying beneficial owner identity. The question asks about an Authorised Person determining Connected or Closely Related parties for Exposures, which none of the passages mention.", "annotator": "riyad", "labelled_utc": "2026-08-11T14:53:32+00:00"}
+{"item_id": "1e35ff9d-bb94-4dbf-aab0-f382dc39dbbe", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:55:35+00:00"}
+{"item_id": "f40b12a3-1681-44b5-b01a-977cf144a7bd", "label": "A", "note": "", "annotator": "riyad", "labelled_utc": "2026-08-11T14:56:13+00:00"}

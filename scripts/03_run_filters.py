@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import sys
 
-from _common import base_parser, paths  # noqa: E402
+from _common import base_parser, load_cfg, paths  # noqa: E402
 from tqdm import tqdm  # noqa: E402
 
 from saferag.checks.attribution import STRATA, screen  # noqa: E402
@@ -20,7 +20,6 @@ from saferag.checks.faithfulness import (  # noqa: E402
     StubNLIScorer,
     check_faithfulness,
 )
-from saferag.config import load_config  # noqa: E402
 from saferag.generation.schema import check_schema, resolve_citation_ids  # noqa: E402
 from saferag.utils.io import read_jsonl, write_jsonl  # noqa: E402
 from saferag.utils.logging import get_logger  # noqa: E402
@@ -35,7 +34,7 @@ def main() -> int:
     ap.add_argument("--stub-nli", action="store_true", help="Fake NLI scorer (testing only)")
     args = ap.parse_args()
 
-    cfg = load_config(args.config)
+    cfg = load_cfg(args)
     p = paths(cfg)
 
     src = p["interim"] / "answers.jsonl"
@@ -61,8 +60,9 @@ def main() -> int:
     out_records = []
     n_s1 = n_s2 = 0
     pool_counts: dict[str, int] = dict.fromkeys(STRATA, 0)
-    cite = {"exact": 0, "normalised": 0, "unresolved": 0, "ambiguous": 0}
+    cite = {"exact": 0, "normalised": 0, "ordinal": 0, "unresolved": 0, "ambiguous": 0}
     n_no_resolvable_citation = 0
+    id_styles_seen: set[str] = set()
 
     for rec in tqdm(records, desc="filter"):
         row = {
@@ -85,11 +85,19 @@ def main() -> int:
         parsed = s1.parsed or {}
         # Models drop the trailing punctuation in ObliQA passage ids, so match
         # what they meant rather than what they typed. See resolve_citation_ids.
+        # id_map is only non-empty for id_style="ordinal" records (see
+        # 02_run_rag.py) -- for "composite" records it is {} and resolve_
+        # citation_ids falls straight through to the original exact/normalised
+        # matching, unchanged.
+        id_styles_seen.add(rec.get("id_style", "composite"))
         raw_cited = parsed.get("cited_passage_ids", [])
-        res = resolve_citation_ids(raw_cited, row["retrieved_passage_ids"])
+        res = resolve_citation_ids(
+            raw_cited, row["retrieved_passage_ids"], id_map=rec.get("id_map")
+        )
         cited_ids = res.resolved
         cite["exact"] += res.n_exact
         cite["normalised"] += res.n_normalised
+        cite["ordinal"] += res.n_ordinal
         cite["unresolved"] += len(res.unresolved)
         cite["ambiguous"] += res.n_ambiguous
         if not cited_ids:
@@ -159,14 +167,16 @@ def main() -> int:
             "stratum_weights": weights,
             "citation_resolution": cite,
             "n_no_resolvable_citation": n_no_resolvable_citation,
+            "id_styles_seen": sorted(id_styles_seen),
         },
     )
     write_jsonl(out, out_records, provenance=prov)
 
-    tot_cited = sum(cite[k] for k in ("exact", "normalised", "unresolved"))
+    tot_cited = sum(cite[k] for k in ("exact", "normalised", "ordinal", "unresolved"))
     print("\n  CITATION RESOLUTION")
+    print(f"    id_style(s)                   {', '.join(sorted(id_styles_seen))}")
     print(f"    cited ids                    {tot_cited:>6}")
-    for k in ("exact", "normalised", "unresolved", "ambiguous"):
+    for k in ("exact", "normalised", "ordinal", "unresolved", "ambiguous"):
         share = f"({cite[k] / tot_cited:.1%})" if tot_cited else ""
         print(f"      {k:<26} {cite[k]:>6}   {share}")
     print(f"    answers citing nothing resolvable {n_no_resolvable_citation:>6}")

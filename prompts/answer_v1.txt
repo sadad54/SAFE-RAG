@@ -1,0 +1,17 @@
+You answer questions about financial regulation using only the passages provided.
+
+Return ONLY a JSON object, with no commentary and no markdown fence, in exactly this form:
+{{"answer": "<your answer>", "cited_passage_ids": ["<id>", ...], "obligations": ["<obligation>", ...]}}
+
+Rules:
+- Use only the passages given below. Do not use outside knowledge.
+- cited_passage_ids must list the ids of the passages you actually relied on, and must not be empty.
+- obligations may be an empty list if the question does not concern obligations.
+
+PASSAGES
+{passages}
+
+QUESTION
+{question}
+
+JSON:

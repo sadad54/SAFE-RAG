@@ -77,6 +77,36 @@ def stratified_sample(
     return batch, report
 
 
+def scale_allocation(allocation: Mapping[str, int], n: int) -> dict[str, int]:
+    """Scale a stratum allocation to a new total, keeping proportions and an
+    exact sum.
+
+    Used to derive the revision-round allocation (30 items) from the registered
+    150-item allocation (80/20/50) without hand-picking numbers: 30/150 of each
+    stratum, rounded, with any rounding drift repaired against whichever stratum
+    still has room -- same technique as ``double_annotation_subset``.
+
+    >>> scale_allocation({"a": 80, "b": 20, "c": 50}, 30)
+    {'a': 16, 'b': 4, 'c': 10}
+    """
+    total = sum(allocation.values())
+    if total <= 0:
+        raise ValueError(f"allocation must sum to a positive number, got {total}")
+    if n < 0:
+        raise ValueError(f"n must be non-negative, got {n}")
+
+    scaled = {name: round(n * count / total) for name, count in allocation.items()}
+    while sum(scaled.values()) != n:
+        delta = 1 if sum(scaled.values()) < n else -1
+        for name in allocation:
+            if scaled[name] + delta >= 0:
+                scaled[name] += delta
+                break
+        else:
+            break
+    return scaled
+
+
 def double_annotation_subset(
     batch: Sequence[Mapping[str, Any]],
     n: int = 50,

@@ -13,9 +13,8 @@ import json
 import sys
 from pathlib import Path
 
-from _common import base_parser, paths  # noqa: E402
+from _common import base_parser, load_cfg, paths  # noqa: E402
 
-from saferag.config import load_config  # noqa: E402
 from saferag.pilot.stats import (  # noqa: E402
     cohens_kappa,
     decision,
@@ -40,7 +39,7 @@ def main() -> int:
     ap.add_argument("--second", default=None, help="Second annotator name (for kappa)")
     args = ap.parse_args()
 
-    cfg = load_config(args.config)
+    cfg = load_cfg(args)
     p = paths(cfg)
 
     key_path = p["annotation"] / "batch_01_key.jsonl"
@@ -89,22 +88,52 @@ def main() -> int:
     print("=" * 74)
     print(result.summary())
 
+    # The operative reliability figure is the revision round if one has been run
+    # (PREREGISTRATION.md Section 8 / Deviation 2) -- NOT the original 50-item
+    # pairing, which is why the revision round existed in the first place.
+    # scripts/05b_compute_revision_kappa.py writes runs/<run>/revision_kappa.json;
+    # prefer it, but still surface the original round's kappa as history rather
+    # than silently dropping it.
     kappa = float("nan")
-    if args.second:
+    kappa_source = "none"
+    original_kappa = None
+
+    revision_path = p["runs"] / "revision_kappa.json"
+    if revision_path.exists():
+        revision = json.loads(revision_path.read_text(encoding="utf-8"))
+        kappa = revision["cohens_kappa"]
+        kappa_source = f"revision round ({revision['n_shared']} items, {revision['batch']})"
+    elif args.second:
         second = load_labels(p["annotation"] / f"labels_{args.second}_batch_01_double.jsonl")
         shared = sorted(set(labels) & set(second))
-        if len(shared) < 2:
-            log.warning("Only %d overlapping item(s); kappa needs more.", len(shared))
-        else:
+        if len(shared) >= 2:
             kappa = cohens_kappa([labels[i] for i in shared], [second[i] for i in shared])
-            print("\n  INTER-ANNOTATOR AGREEMENT")
-            print(f"    overlapping items   {len(shared)}")
-            print(f"    Cohen's kappa       {kappa:.4f}")
-            print(f"    reading             {interpret_kappa(kappa)}")
+            kappa_source = f"original round ({len(shared)} items, batch_01_double)"
+
+    # Original round's kappa, for historical context, whenever it's available --
+    # regardless of which source is operative above.
+    try:
+        second_original = load_labels(
+            p["annotation"] / f"labels_{args.second}_batch_01_double.jsonl"
+        ) if args.second else {}
+        shared_original = sorted(set(labels) & set(second_original))
+        if len(shared_original) >= 2:
+            original_kappa = cohens_kappa(
+                [labels[i] for i in shared_original], [second_original[i] for i in shared_original]
+            )
+    except FileNotFoundError:
+        pass
+
+    print("\n  INTER-ANNOTATOR AGREEMENT")
+    if kappa_source == "none":
+        print("    not computed -- pass --second, and/or run scripts/04b_make_revision_batch.py")
+        print("    + scripts/05b_compute_revision_kappa.py. A result without kappa is not")
+        print("    publishable.")
     else:
-        print("\n  INTER-ANNOTATOR AGREEMENT")
-        print("    not computed -- pass --second to enable.")
-        print("    A result without kappa is not publishable. Get the second annotator done.")
+        print(f"    operative kappa     {kappa:.4f}   ({kappa_source})")
+        print(f"    reading             {interpret_kappa(kappa)}")
+        if original_kappa is not None and "revision" in kappa_source:
+            print(f"    original round      {original_kappa:.4f}   (superseded, kept for history)")
 
     verdict, action = decision(result.conditional_rate.point)
     print("\n" + "=" * 74)
@@ -138,6 +167,8 @@ def main() -> int:
                 "n_annotated": result.n_annotated,
                 "n_excluded_na": result.n_excluded_na,
                 "cohens_kappa": None if kappa != kappa else kappa,
+                "cohens_kappa_source": kappa_source,
+                "cohens_kappa_original_round": original_kappa,
                 "verdict": verdict,
                 "funnel": funnel,
             },
