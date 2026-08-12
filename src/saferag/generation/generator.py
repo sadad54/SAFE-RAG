@@ -358,6 +358,8 @@ class VLLMGenerator(Generator):
         max_new_tokens: int = 512,
         seed: int = 20260728,
         temperature: float = 0.0,
+        max_model_len: int = 8192,
+        cpu_offload_gb: float = 0.0,
     ) -> None:
         try:
             from vllm import LLM, SamplingParams
@@ -365,7 +367,22 @@ class VLLMGenerator(Generator):
             raise ImportError(
                 "vLLM is Linux + CUDA only: pip install -e '.[serve]' on the cluster."
             ) from exc
-        self.llm = LLM(model=model, seed=seed)
+        # vLLM's init profiling pass runs a dummy forward at max_model_len tokens
+        # to size the KV cache. The model's native 32768 makes that dummy batch
+        # alone OOM on this 16GB Turing card once the fp16 weights (~14.2GiB)
+        # are loaded -- there's well under 1GiB left. Our prompts (top_k=10
+        # passages, ~150 tok avg) plus 512 generated tokens fit well inside 8192.
+        # cpu_offload_gb keeps that many GiB of weights in host RAM instead of
+        # VRAM (streamed over PCIe per forward pass) -- needed for the 7B model,
+        # whose fp16 weights alone leave no room for KV cache on this shared card.
+        self.llm = LLM(
+            model=model,
+            seed=seed,
+            dtype="float16",
+            gpu_memory_utilization=0.85,
+            max_model_len=max_model_len,
+            cpu_offload_gb=cpu_offload_gb,
+        )
         self.params = SamplingParams(temperature=temperature, max_tokens=max_new_tokens, seed=seed)
 
     def generate(self, prompts: Sequence[str]) -> list[str]:

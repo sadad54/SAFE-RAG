@@ -104,6 +104,15 @@ def main() -> int:
     ap.add_argument("--batch-size", type=int, default=8, help="Generation batch size")
     ap.add_argument("--model", default=None, help="Override the generation model")
     ap.add_argument(
+        "--cpu-offload-gb", type=float, default=0.0,
+        help=(
+            "vLLM: GiB of model weights to keep in host RAM instead of GPU VRAM. "
+            "Needed for Qwen2.5-7B-Instruct on this lab GPU (16GB Turing card) -- "
+            "the fp16 weights alone (~14.2GiB) leave no room for KV cache once the "
+            "shared desktop session's ~1.3GiB is subtracted. ~4 is a safe start."
+        ),
+    )
+    ap.add_argument(
         "--id-style", default=None, choices=ID_STYLES,
         help=(
             "Override generation.id_style -- 'composite' (DocumentID::PassageID, "
@@ -178,6 +187,8 @@ def main() -> int:
         }
         if backend == "vllm":
             gen_kwargs["temperature"] = cfg.generation.temperature
+            if args.cpu_offload_gb:
+                gen_kwargs["cpu_offload_gb"] = args.cpu_offload_gb
     generator = build_generator(backend, model_name, **gen_kwargs)
 
     # Retrieve first, so generation can be batched.
