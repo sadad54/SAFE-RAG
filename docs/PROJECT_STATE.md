@@ -171,8 +171,25 @@ cluster access obtained 2026-08-03 was never needed in the end -- see
 
 | | composite ids | ordinal ids `[1]`…`[10]` |
 |---|---|---|
-| Qwen2.5-3B-Instruct | done — 36.3% failure | done 2026-08-12 |
-| Qwen2.5-7B-Instruct-AWQ | done 2026-08-13 | running 2026-08-13 |
+| Qwen2.5-3B-Instruct | done — 8.3% of cited ids unresolved (pilot, 2,786 q) | done — 0.0% (1/2,706 cited ids), 2026-08-12 |
+| Qwen2.5-7B-Instruct-AWQ | done — 18.3% of cited ids unresolved (337/1,841), 2026-08-13 | done — 0.0% (0/2,258 cited ids), 2026-08-13 |
+
+All four cells generated and filtered. Headline: unresolved-citation rate
+collapses to ~0% under ordinal ids at both model sizes, while composite ids
+fail substantially at both -- and the 7B rate (18.3%) is *higher* than 3B's
+(8.3%), not lower. That's counterintuitive enough to report as-is rather than
+smooth over; don't assume it's noise without checking. Two things to verify
+before writing this up as the result: (1) the 3B composite figure comes from
+the full 2,786-question registered pilot, the other three cells from the
+2,000-question ablation subset (`configs/ablation.yaml`) -- not the same
+sample, so the 3B-vs-7B composite comparison is suggestive, not a controlled
+comparison; a same-subset 3B×composite rerun would close that gap if it
+matters for the write-up. (2) "8.3%" and "18.3%" here are the
+per-cited-id unresolved rate (`CITATION RESOLUTION` block in
+`03_run_filters.py`'s output); the pilot's separately-reported "36.3%" is a
+different metric, per-answer ("answers containing an unresolved citation"),
+not directly comparable to these -- see `docs/PREREGISTRATION.md` L269 vs
+L296 for both pilot numbers side by side.
 
 **2026-08-13 incident, and the resulting model-id change for the 7B row.**
 An attempt to run the 7B cells locally on the lab desktop used vLLM's
@@ -206,10 +223,10 @@ include the model identifier. Low urgency day-to-day (`run_name` is
 conventionally one model per cell) but worth doing before the next time a
 model gets swapped under an existing `run_name`.
 
-If failure collapses under ordinal ids, apparent citation hallucination in
-structured-output RAG is largely an artefact of identifier design — a concrete,
-actionable result. If it does not collapse, the 8.3% residual is genuine model
-behaviour. Either outcome is publishable; that is what makes it worth running.
+Failure collapses under ordinal ids at both model sizes (see table above) --
+apparent citation-resolution failure in structured-output RAG is largely an
+artefact of identifier design, not a capability limit. That's the concrete,
+actionable result this ablation was built to get either way.
 
 **What needs building first — done 2026-08-10:**
 
@@ -231,20 +248,19 @@ behaviour. Either outcome is publishable; that is what makes it worth running.
    migrated into `data/interim/pilot_v1/` and `runs/pilot_v1/` (gitignored,
    no history impact).
 
-**Status 2026-08-13.** Three of four cells generated (3B×composite, 3B×ordinal,
-7B×composite); 7B×ordinal generating now on the lab desktop, see the incident
-note above. The cluster was never needed in the end.
+**Status 2026-08-13.** All four cells generated and filtered on the lab
+desktop; the cluster was never needed. Result is in the table above. Next:
+build the actual comparison table/figure for the write-up (the numbers exist
+now, just scattered across four `03_run_filters.py` runs), decide on the
+2,786-vs-2,000-question sample-size caveat above, then write.
 
 **Once the ablation has run:**
 
-1. Run all four ablation configurations. Done or in progress -- see the table
-   above.
-2. `scripts/03_run_filters.py` on each; build the comparison table. Done for
-   3B×ordinal already; still needed for both 7B cells once generated. Only
-   loads the NLI model (`RuleDecomposer` is what actually runs regardless of
-   `checks.claim_decomposition.backend: llm` -- see "Known limitations"
-   below), so it's light enough to not strictly need to wait for a
-   `02_run_rag.py` job to finish, but keeping it sequential is simplest.
+1. ~~Run all four ablation configurations.~~ Done -- see the table above.
+2. ~~`scripts/03_run_filters.py` on each.~~ Done for all four. Build the
+   actual comparison table/figure from the four `filtered.jsonl` runs for the
+   write-up -- the per-cell numbers exist (table above) but aren't yet pulled
+   into one artefact.
 3. Write. **ALTA 2026, deadline 11 September**, archival, ACL Anthology.
 
 **Paper structure (short paper) — settled 2026-08-12, kappa cleared:**
