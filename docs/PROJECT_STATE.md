@@ -240,9 +240,11 @@ note above. The cluster was never needed in the end.
 1. Run all four ablation configurations. Done or in progress -- see the table
    above.
 2. `scripts/03_run_filters.py` on each; build the comparison table. Done for
-   3B×ordinal already; still needed for both 7B cells once generated. Run
-   sequentially, not alongside a `02_run_rag.py` generation job -- S2's
-   `LLMDecomposer` loads its own generator onto the same GPU.
+   3B×ordinal already; still needed for both 7B cells once generated. Only
+   loads the NLI model (`RuleDecomposer` is what actually runs regardless of
+   `checks.claim_decomposition.backend: llm` -- see "Known limitations"
+   below), so it's light enough to not strictly need to wait for a
+   `02_run_rag.py` job to finish, but keeping it sequential is simplest.
 3. Write. **ALTA 2026, deadline 11 September**, archival, ACL Anthology.
 
 **Paper structure (short paper) — settled 2026-08-12, kappa cleared:**
