@@ -172,7 +172,25 @@ annotation required:
 | | composite ids | ordinal ids `[1]`…`[10]` |
 |---|---|---|
 | Qwen2.5-3B-Instruct | done — 36.3% failure | to run |
-| Qwen2.5-7B-Instruct | to run | to run |
+| Qwen2.5-7B-Instruct-AWQ | to run | to run |
+
+**2026-08-13 incident, and the resulting model-id change for the 7B row.**
+An attempt to run the 7B cells locally on the lab desktop (16GB Turing, ahead
+of the cluster being ready) used vLLM's `cpu_offload_gb` to make the fp16
+weights fit, and took the whole machine down mid-run — a hard power loss, not
+a CUDA OOM (kernel log shows nothing: no OOM-killer, no thermal event, the
+log just stops). Offloading keeps CPU and GPU both under sustained heavy load
+streaming weights over PCIe every forward pass; the combined draw is the
+likely trigger on this desktop's PSU. The 7B row now runs on
+`Qwen/Qwen2.5-7B-Instruct-AWQ` (Qwen's own 4-bit checkpoint) instead of the
+fp16 identifier — no offload needed, ~5GiB of weights. Same base weights and
+instruction tune as the 3B row's family, just quantized; not a change to
+`PREREGISTRATION.md` (generation model precision was never registered, only
+that one open-weight model is used and its identifier recorded — see §5),
+but the identifier differs from what's named above and in `configs/
+ablation.yaml`'s original header, so record `Qwen2.5-7B-Instruct-AWQ`
+explicitly in the write-up rather than shortening it to "Qwen2.5-7B-Instruct".
+Details: `src/saferag/generation/generator.py`'s `VLLMGenerator` docstring.
 
 If failure collapses under ordinal ids, apparent citation hallucination in
 structured-output RAG is largely an artefact of identifier design — a concrete,

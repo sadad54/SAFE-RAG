@@ -348,7 +348,21 @@ class HFGenerator(Generator):
 
 
 class VLLMGenerator(Generator):
-    """vLLM backend. Linux + CUDA, and the only one fast enough for the full split."""
+    """vLLM backend. Linux + CUDA, and the only one fast enough for the full split.
+
+    ``cpu_offload_gb`` looks like the natural fix when a 7B model's fp16 weights
+    don't leave room for KV cache on a 16GB card, but avoid it on the lab
+    desktop: offloaded layers get streamed back over PCIe every forward pass, so
+    CPU and GPU are both under sustained heavy load for the whole run, unlike
+    plain GPU-only inference. On 2026-08-13 that combined draw took the entire
+    machine down mid-run -- a hard power loss (nothing in the kernel log, no
+    OOM-killer, no thermal event; the machine just stopped), not a CUDA OOM.
+    Use a quantized checkpoint of the same model instead (e.g.
+    ``Qwen/Qwen2.5-7B-Instruct-AWQ``, ~5GiB): no offload, no code change here,
+    vLLM autodetects the quantization from the checkpoint. Prefer AWQ over GPTQ
+    on this card -- vLLM's fast GPTQ (Marlin) kernel needs compute capability
+    8.0+ (Ampere), and this is a Turing (7.5) card.
+    """
 
     name = "vllm"
 
@@ -373,8 +387,9 @@ class VLLMGenerator(Generator):
         # are loaded -- there's well under 1GiB left. Our prompts (top_k=10
         # passages, ~150 tok avg) plus 512 generated tokens fit well inside 8192.
         # cpu_offload_gb keeps that many GiB of weights in host RAM instead of
-        # VRAM (streamed over PCIe per forward pass) -- needed for the 7B model,
-        # whose fp16 weights alone leave no room for KV cache on this shared card.
+        # VRAM, streamed over PCIe per forward pass. Left at 0 by default -- see
+        # the class docstring for why this is not the fix for the 7B model on
+        # this card. Kept as a parameter for backends/models where it's safe.
         self.llm = LLM(
             model=model,
             seed=seed,

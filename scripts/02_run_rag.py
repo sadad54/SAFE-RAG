@@ -107,9 +107,13 @@ def main() -> int:
         "--cpu-offload-gb", type=float, default=0.0,
         help=(
             "vLLM: GiB of model weights to keep in host RAM instead of GPU VRAM. "
-            "Needed for Qwen2.5-7B-Instruct on this lab GPU (16GB Turing card) -- "
-            "the fp16 weights alone (~14.2GiB) leave no room for KV cache once the "
-            "shared desktop session's ~1.3GiB is subtracted. ~4 is a safe start."
+            "AVOID on the lab desktop (16GB Turing, shared) -- it keeps CPU and GPU "
+            "both under sustained load streaming weights over PCIe every forward "
+            "pass, and that combined draw took the whole machine down mid-run on "
+            "2026-08-13 (hard power loss, not a CUDA OOM -- see generator.py's "
+            "VLLMGenerator docstring). For Qwen2.5-7B-Instruct on this card, use "
+            "--model Qwen/Qwen2.5-7B-Instruct-AWQ instead: no offload needed, "
+            "~5GiB of weights, no code change required."
         ),
     )
     ap.add_argument(

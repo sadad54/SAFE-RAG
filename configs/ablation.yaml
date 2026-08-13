@@ -14,11 +14,16 @@
 #       --model Qwen/Qwen2.5-3B-Instruct --id-style ordinal \
 #       --run-name ablation_3b_ordinal
 #   python scripts/02_run_rag.py --config configs/ablation.yaml \
-#       --model Qwen/Qwen2.5-7B-Instruct --id-style composite \
+#       --model Qwen/Qwen2.5-7B-Instruct-AWQ --id-style composite \
 #       --run-name ablation_7b_composite
 #   python scripts/02_run_rag.py --config configs/ablation.yaml \
-#       --model Qwen/Qwen2.5-7B-Instruct --id-style ordinal \
+#       --model Qwen/Qwen2.5-7B-Instruct-AWQ --id-style ordinal \
 #       --run-name ablation_7b_ordinal
+#
+# The 7B cells use Qwen's own AWQ checkpoint, not the fp16 one -- see
+# generator.py's VLLMGenerator docstring for why. Same weights, same
+# instruction tune, 4-bit; record the exact identifier in the write-up since
+# it differs from the 3B cell's.
 #
 # Then for each: python scripts/03_run_filters.py --config configs/ablation.yaml \
 #       --run-name <same --run-name as above>
