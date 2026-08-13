@@ -165,32 +165,46 @@ prompt use the composite form `DocumentID::PassageID` (`19::100)`,
 drop trailing punctuation, and sometimes emit a bare DocumentID. That format was
 an implementation choice, not a finding about models.
 
-**The experiment**, run on the university GPU cluster (access obtained 2026-08-03,
-via AnyDesk; repo not yet cloned there -- see `docs/CLUSTER_SETUP.md`), no
-annotation required:
+**The experiment**, run on the lab desktop (16GB Turing card; the university
+cluster access obtained 2026-08-03 was never needed in the end -- see
+`docs/CLUSTER_SETUP.md`), no annotation required:
 
 | | composite ids | ordinal ids `[1]`…`[10]` |
 |---|---|---|
-| Qwen2.5-3B-Instruct | done — 36.3% failure | to run |
-| Qwen2.5-7B-Instruct-AWQ | to run | to run |
+| Qwen2.5-3B-Instruct | done — 36.3% failure | done 2026-08-12 |
+| Qwen2.5-7B-Instruct-AWQ | done 2026-08-13 | running 2026-08-13 |
 
 **2026-08-13 incident, and the resulting model-id change for the 7B row.**
-An attempt to run the 7B cells locally on the lab desktop (16GB Turing, ahead
-of the cluster being ready) used vLLM's `cpu_offload_gb` to make the fp16
-weights fit, and took the whole machine down mid-run — a hard power loss, not
-a CUDA OOM (kernel log shows nothing: no OOM-killer, no thermal event, the
-log just stops). Offloading keeps CPU and GPU both under sustained heavy load
-streaming weights over PCIe every forward pass; the combined draw is the
-likely trigger on this desktop's PSU. The 7B row now runs on
-`Qwen/Qwen2.5-7B-Instruct-AWQ` (Qwen's own 4-bit checkpoint) instead of the
-fp16 identifier — no offload needed, ~5GiB of weights. Same base weights and
-instruction tune as the 3B row's family, just quantized; not a change to
-`PREREGISTRATION.md` (generation model precision was never registered, only
-that one open-weight model is used and its identifier recorded — see §5),
-but the identifier differs from what's named above and in `configs/
-ablation.yaml`'s original header, so record `Qwen2.5-7B-Instruct-AWQ`
-explicitly in the write-up rather than shortening it to "Qwen2.5-7B-Instruct".
-Details: `src/saferag/generation/generator.py`'s `VLLMGenerator` docstring.
+An attempt to run the 7B cells locally on the lab desktop used vLLM's
+`cpu_offload_gb` to make the fp16 weights fit, and took the whole machine
+down mid-run — a hard power loss, not a CUDA OOM (kernel log shows nothing:
+no OOM-killer, no thermal event, the log just stops). Offloading keeps CPU
+and GPU both under sustained heavy load streaming weights over PCIe every
+forward pass; the combined draw is the likely trigger on this desktop's PSU.
+The 7B row now runs on `Qwen/Qwen2.5-7B-Instruct-AWQ` (Qwen's own 4-bit
+checkpoint) instead of the fp16 identifier — no offload needed, ~5GiB of
+weights. Same base weights and instruction tune as the 3B row's family, just
+quantized; not a change to `PREREGISTRATION.md` (generation model precision
+was never registered, only that one open-weight model is used and its
+identifier recorded — see §5), but the identifier differs from what's named
+above and in `configs/ablation.yaml`'s original header, so record
+`Qwen2.5-7B-Instruct-AWQ` explicitly in the write-up rather than shortening it
+to "Qwen2.5-7B-Instruct". Details: `src/saferag/generation/generator.py`'s
+`VLLMGenerator` docstring.
+
+The crash also surfaced a second, independent bug: `02_run_rag.py`'s resume
+cache (`data/interim/<run_name>/_generations.jsonl`) invalidates entries by
+prompt hash only, not by which model produced them. The pre-incident fp16
+attempt left a cache under `ablation_7b_composite` that the AWQ rerun would
+have silently resumed from — reusing fp16-generated answers inside what's
+supposed to be a pure-AWQ cell — had the file not also been corrupted
+mid-write by the power loss, which is what actually surfaced it (crashed on
+the corrupted line instead of silently mixing models). Worked around by
+moving the stale file aside (`_generations.jsonl.pre-incident-fp16-corrupt.bak`)
+before rerunning. Not fixed at the code level yet: the cache key should
+include the model identifier. Low urgency day-to-day (`run_name` is
+conventionally one model per cell) but worth doing before the next time a
+model gets swapped under an existing `run_name`.
 
 If failure collapses under ordinal ids, apparent citation hallucination in
 structured-output RAG is largely an artefact of identifier design — a concrete,
@@ -217,16 +231,18 @@ behaviour. Either outcome is publishable; that is what makes it worth running.
    migrated into `data/interim/pilot_v1/` and `runs/pilot_v1/` (gitignored,
    no history impact).
 
-**Not yet run.** The repo isn't cloned onto the cluster yet — see
-`docs/CLUSTER_SETUP.md` for that, then the run commands in
-`configs/ablation.yaml`'s header comment. Not urgent while the revision round is
-the priority.
+**Status 2026-08-13.** Three of four cells generated (3B×composite, 3B×ordinal,
+7B×composite); 7B×ordinal generating now on the lab desktop, see the incident
+note above. The cluster was never needed in the end.
 
 **Once the ablation has run:**
 
-1. Run all four ablation configurations. vLLM on the cluster (`backend: vllm`) —
-   roughly 10× the Colab transformers path; the full 2,786 questions in minutes.
-2. `scripts/03_run_filters.py` on each; build the comparison table.
+1. Run all four ablation configurations. Done or in progress -- see the table
+   above.
+2. `scripts/03_run_filters.py` on each; build the comparison table. Done for
+   3B×ordinal already; still needed for both 7B cells once generated. Run
+   sequentially, not alongside a `02_run_rag.py` generation job -- S2's
+   `LLMDecomposer` loads its own generator onto the same GPU.
 3. Write. **ALTA 2026, deadline 11 September**, archival, ACL Anthology.
 
 **Paper structure (short paper) — settled 2026-08-12, kappa cleared:**
