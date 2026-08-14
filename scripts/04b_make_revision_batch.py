@@ -65,6 +65,18 @@ def main() -> int:
             "and should get its own dated entry in Section 11 if you do."
         ),
     )
+    ap.add_argument(
+        "--stem", default="batch_02",
+        help=(
+            "Output filename stem. Default batch_02 (the registered revision "
+            "round). Change this when drawing a FURTHER batch on top of an "
+            "already-completed one -- e.g. --stem batch_03 for a size "
+            "extension -- so the new draw does not overwrite the prior "
+            "batch's files. _already_sampled_ids() excludes every item in "
+            "every existing batch_*_key.jsonl regardless of --stem, so the "
+            "new batch is always disjoint from all of them."
+        ),
+    )
     args = ap.parse_args()
 
     cfg = load_cfg(args)
@@ -112,10 +124,11 @@ def main() -> int:
     blinded = [{k: v for k, v in item.items() if k in visible_keys} for item in batch]
     key = [{"item_id": item["item_id"], "pool": item["_pool"]} for item in batch]
 
-    write_jsonl(p["annotation"] / "batch_02.jsonl", blinded, provenance=prov)
-    write_jsonl(p["annotation"] / "batch_02_key.jsonl", key, provenance=prov)
+    stem = args.stem
+    write_jsonl(p["annotation"] / f"{stem}.jsonl", blinded, provenance=prov)
+    write_jsonl(p["annotation"] / f"{stem}_key.jsonl", key, provenance=prov)
 
-    print("\n  REVISION BATCH (Section 8 -- one revision round, 30 fresh items)")
+    print(f"\n  REVISION BATCH ({stem}, {args.n} fresh items)")
     print(f"    allocation                 {allocation}")
     for name, st in report["strata"].items():
         print(f"    {name:<26} available={st['available']:<6} "
@@ -126,21 +139,22 @@ def main() -> int:
         print("    Record this in PREREGISTRATION.md Section 11.")
 
     print(f"\n  Wrote batches to {p['annotation']}")
-    print("\n  batch_02.jsonl embeds ADGM passage text and is gitignored on purpose --")
+    print(f"\n  {stem}.jsonl embeds ADGM passage text and is gitignored on purpose --")
     print("  same as batch_01.jsonl was. It does NOT go through git. Send it to the")
     print("  second annotator the same way batch_01_double.jsonl got to them the first")
-    print("  time (direct transfer). Only commit batch_02_key.jsonl (ids + pool, no")
+    print(f"  time (direct transfer). Only commit {stem}_key.jsonl (ids + pool, no")
     print("  corpus text):")
-    print("    git add data/annotation/batch_02_key.jsonl")
-    print("    git commit -m \"Revision round: key for the 30 fresh items\"")
+    print(f"    git add data/annotation/{stem}_key.jsonl")
+    print(f"    git commit -m \"Revision batch {stem}: key for the {args.n} fresh items\"")
     print("    git push")
-    print("\n  Both annotators label ALL 30 items, independently, at the same time:")
-    print("    python -m saferag.pilot.annotate --batch data/annotation/batch_02.jsonl "
+    print(f"\n  Both annotators label ALL {args.n} items, independently, at the same time:")
+    print(f"    python -m saferag.pilot.annotate --batch data/annotation/{stem}.jsonl "
           "--annotator adnan")
-    print("    python -m saferag.pilot.annotate --batch data/annotation/batch_02.jsonl "
+    print(f"    python -m saferag.pilot.annotate --batch data/annotation/{stem}.jsonl "
           "--annotator riyad")
     print("\n  Do not discuss any item with each other until both files are complete.")
-    print("  Then: python scripts/05b_compute_revision_kappa.py --annotator adnan --second riyad\n")
+    print(f"  Then: python scripts/05b_compute_revision_kappa.py --annotator adnan "
+          f"--second riyad --batch-stem {stem}\n")
     return 0
 
 
