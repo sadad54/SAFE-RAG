@@ -365,7 +365,20 @@ class VLLMGenerator(Generator):
             raise ImportError(
                 "vLLM is Linux + CUDA only: pip install -e '.[serve]' on the cluster."
             ) from exc
-        self.llm = LLM(model=model, seed=seed)
+        # bfloat16 (vLLM's default for these model configs) needs compute
+        # capability >= 8.0 (Ampere+). Pre-Ampere cards (e.g. Turing, capability
+        # 7.5) must use float16 instead, or vLLM raises at engine init.
+        import torch as _torch
+
+        dtype = "auto"
+        if _torch.cuda.is_available() and _torch.cuda.get_device_capability()[0] < 8:
+            dtype = "float16"
+        # vLLM's default gpu_memory_utilization=0.9 is computed against TOTAL
+        # device memory, not free memory -- on a shared desktop/lab GPU where a
+        # display session, window manager, and remote-desktop daemon already
+        # hold a slice of VRAM, that overshoots and OOMs at engine init. Lower
+        # headroom to leave room for whatever else is resident on the card.
+        self.llm = LLM(model=model, seed=seed, dtype=dtype, gpu_memory_utilization=0.85)
         self.params = SamplingParams(temperature=temperature, max_tokens=max_new_tokens, seed=seed)
 
     def generate(self, prompts: Sequence[str]) -> list[str]:

@@ -12,6 +12,7 @@ import numpy as np
 import pytest
 
 from saferag.pilot.stats import (
+    bootstrap_kappa_interval,
     cohens_kappa,
     decision,
     estimate_base_rate,
@@ -140,6 +141,66 @@ def test_interpret_kappa_thresholds():
     assert "usable" in interpret_kappa(0.60)
     assert "NOT RELIABLE" in interpret_kappa(0.30)
     assert "undefined" in interpret_kappa(float("nan"))
+
+
+# --------------------------------------------------------------------------
+# Kappa bootstrap interval
+# --------------------------------------------------------------------------
+
+
+def test_bootstrap_kappa_perfect_agreement_is_a_point():
+    """No disagreement anywhere -- every resample also agrees perfectly, so the
+    interval collapses to a point at 1.0."""
+    ci = bootstrap_kappa_interval(["A", "B"] * 15, ["A", "B"] * 15, seed=1)
+    assert ci.point == pytest.approx(1.0)
+    assert ci.low == pytest.approx(1.0, abs=1e-6)
+    assert ci.high == pytest.approx(1.0, abs=1e-6)
+
+
+def test_bootstrap_kappa_interval_contains_point_estimate():
+    """Basic sanity check any interval must satisfy."""
+    a = ["A", "B", "A", "B", "A", "C", "B", "A", "C", "B"] * 3
+    b = ["A", "B", "A", "A", "A", "C", "B", "B", "C", "B"] * 3
+    ci = bootstrap_kappa_interval(a, b, seed=20260728)
+    assert ci.low <= ci.point <= ci.high
+
+
+def test_bootstrap_kappa_is_deterministic_given_seed():
+    a = ["A", "B", "C", "A", "B", "C", "A", "B"] * 4
+    b = ["A", "C", "C", "A", "B", "B", "A", "B"] * 4
+    ci1 = bootstrap_kappa_interval(a, b, seed=42)
+    ci2 = bootstrap_kappa_interval(a, b, seed=42)
+    assert ci1 == ci2
+
+
+def test_bootstrap_kappa_too_few_items_is_nan_interval():
+    ci = bootstrap_kappa_interval(["A"], ["B"], seed=1)
+    assert math.isnan(ci.low) and math.isnan(ci.high)
+
+
+def test_bootstrap_kappa_excludes_na_like_point_estimate():
+    a = ["A", "B", "NA", "A", "B"] * 4
+    b = ["A", "B", "C", "A", "B"] * 4
+    ci = bootstrap_kappa_interval(a, b, seed=1)
+    assert ci.point == pytest.approx(cohens_kappa(a, b))
+
+
+def test_bootstrap_kappa_at_revision_round_scale():
+    """n=30-shaped check: mostly agreement, a few scattered disagreements,
+    labels spread across categories (not dominated by one label, as skewed
+    marginals inflate chance agreement and were exactly what made the original
+    50-item round's raw 80% agreement translate into a low 0.37 kappa -- see
+    PREREGISTRATION.md Deviation 1). The interval must be wide at this n but
+    should not span all the way down to 0 when agreement is this strong."""
+    agree = [("A", "A")] * 12 + [("B", "B")] * 9 + [("C", "C")] * 6
+    disagree = [("A", "B"), ("B", "C"), ("A", "C")]
+    pairs = agree + disagree
+    a = [x for x, _ in pairs]
+    b = [y for _, y in pairs]
+    ci = bootstrap_kappa_interval(a, b, seed=20260728)
+    assert ci.point > 0.7
+    assert ci.low > 0.3  # wide at n=30, but should not touch "no agreement"
+    assert ci.high <= 1.0
 
 
 # --------------------------------------------------------------------------

@@ -134,6 +134,67 @@ def cohens_kappa(
     return (observed - expected) / (1.0 - expected)
 
 
+def bootstrap_kappa_interval(
+    labels_a: Sequence[str],
+    labels_b: Sequence[str],
+    exclude: Sequence[str] = ("NA",),
+    n_resamples: int = 10_000,
+    confidence: float = 0.95,
+    seed: int = 20260728,
+) -> Interval:
+    """Non-parametric bootstrap interval on Cohen's kappa.
+
+    A bare kappa point estimate says nothing about how much it would move under
+    a different draw of items -- exactly the question worth asking of a 30-item
+    revision batch before treating 0.79 as a settled number. Resamples ITEMS
+    (i.e. resamples the paired (label_a, label_b) rows together, with
+    replacement), not individual labels, so each resample is itself a valid
+    paired agreement table with its own kappa.
+
+    Small n means this interval can be wide, or even fail to be computable on
+    some resamples (a resample that happens to contain only one category has
+    undefined kappa) -- those resamples are excluded from the interval rather
+    than treated as kappa=0, which would bias the interval toward zero.
+
+    >>> ci = bootstrap_kappa_interval(["A","B","A","B","A","B"], ["A","B","A","B","A","B"], seed=1)
+    >>> round(ci.point, 4)
+    1.0
+    """
+    point = cohens_kappa(labels_a, labels_b, exclude=exclude)
+    if math.isnan(point):
+        return Interval(point, float("nan"), float("nan"), confidence)
+
+    excluded = set(exclude)
+    pairs = [
+        (a, b) for a, b in zip(labels_a, labels_b, strict=True)
+        if a not in excluded and b not in excluded
+    ]
+    n = len(pairs)
+    if n < 2:
+        return Interval(point, float("nan"), float("nan"), confidence)
+
+    rng = np.random.default_rng(seed)
+    idx = np.arange(n)
+    draws: list[float] = []
+    for _ in range(n_resamples):
+        sample_idx = rng.choice(idx, size=n, replace=True)
+        sample = [pairs[i] for i in sample_idx]
+        k = cohens_kappa([a for a, _ in sample], [b for _, b in sample], exclude=exclude)
+        if not math.isnan(k):
+            draws.append(k)
+
+    if len(draws) < n_resamples // 2:
+        # More than half the resamples were degenerate (e.g. one category only)
+        # -- at this point the interval itself is not trustworthy, and saying so
+        # is more honest than reporting a number computed from a minority of
+        # the resamples.
+        return Interval(point, float("nan"), float("nan"), confidence)
+
+    alpha = 1.0 - confidence
+    lo, hi = np.quantile(draws, [alpha / 2, 1.0 - alpha / 2])
+    return Interval(point, float(max(-1.0, lo)), float(min(1.0, hi)), confidence)
+
+
 def interpret_kappa(kappa: float) -> str:
     """The pre-registered reading of kappa (PREREGISTRATION.md Section 8)."""
     if math.isnan(kappa):

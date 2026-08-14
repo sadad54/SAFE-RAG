@@ -116,11 +116,14 @@ ambiguous.** 36.3% of schema-valid answers contain at least one unresolvable id.
 **Deceptive grounding — primary result, revision round complete.**
 `r = 5.9% [2.2%, 10.7%]`, unconditional `R = 2.2% [0.8%, 4.0%]`.
 Per stratum: recoverable 13.8%, unrecoverable 5.0%, control 4.0%.
-**Operative kappa = 0.7860** (30-item revision batch, 2026-08-12, "reliable"
-band). The original round's kappa = 0.3663 (50 items, 2026-08-03) is retained as
-history — the reason the revision round ran — not as the current reliability
-figure. See "The revision round result" above for the open v1.0/v1.1 audit
-decision.
+**Operative kappa = 0.7860, 95% bootstrap CI [0.4563, 1.0000]** (30-item
+revision batch, CI added 2026-08-13 after Riyad asked whether 30 items was
+really enough to trust). The point estimate clears "reliable"; the interval's
+lower bound sits in "moderate" territory, honestly reflecting how much a
+30-item estimate can move. Report both, not the point estimate alone. The
+original round's kappa = 0.3663 (50 items, 2026-08-03) is retained as history —
+the reason the revision round ran — not as the current reliability figure.
+See "The revision round result" above for the open v1.0/v1.1 audit decision.
 
 **RQ-a (2026-08-12).** Operational definition declared first as Amendment 2
 (`PREREGISTRATION.md` §11): cross-reference = >1 gold passage, single-reference

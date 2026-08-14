@@ -96,6 +96,8 @@ def main() -> int:
     # than silently dropping it.
     kappa = float("nan")
     kappa_source = "none"
+    kappa_ci_low = None
+    kappa_ci_high = None
     original_kappa = None
 
     revision_path = p["runs"] / "revision_kappa.json"
@@ -103,6 +105,8 @@ def main() -> int:
         revision = json.loads(revision_path.read_text(encoding="utf-8"))
         kappa = revision["cohens_kappa"]
         kappa_source = f"revision round ({revision['n_shared']} items, {revision['batch']})"
+        kappa_ci_low = revision.get("cohens_kappa_ci_low")
+        kappa_ci_high = revision.get("cohens_kappa_ci_high")
     elif args.second:
         second = load_labels(p["annotation"] / f"labels_{args.second}_batch_01_double.jsonl")
         shared = sorted(set(labels) & set(second))
@@ -130,7 +134,10 @@ def main() -> int:
         print("    + scripts/05b_compute_revision_kappa.py. A result without kappa is not")
         print("    publishable.")
     else:
-        print(f"    operative kappa     {kappa:.4f}   ({kappa_source})")
+        if kappa_ci_low is not None and kappa_ci_high is not None:
+            print(f"    operative kappa     {kappa:.4f}   95% CI [{kappa_ci_low:.4f}, {kappa_ci_high:.4f}]   ({kappa_source})")
+        else:
+            print(f"    operative kappa     {kappa:.4f}   ({kappa_source})")
         print(f"    reading             {interpret_kappa(kappa)}")
         if original_kappa is not None and "revision" in kappa_source:
             print(f"    original round      {original_kappa:.4f}   (superseded, kept for history)")
@@ -167,6 +174,8 @@ def main() -> int:
                 "n_annotated": result.n_annotated,
                 "n_excluded_na": result.n_excluded_na,
                 "cohens_kappa": None if kappa != kappa else kappa,
+                "cohens_kappa_ci_low": kappa_ci_low,
+                "cohens_kappa_ci_high": kappa_ci_high,
                 "cohens_kappa_source": kappa_source,
                 "cohens_kappa_original_round": original_kappa,
                 "verdict": verdict,

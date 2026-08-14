@@ -383,6 +383,23 @@ operative reliability figure. κ = 0.3663 (original round, 50 items) is retained
 and reported as history — the reason the revision round was run — not
 presented as the current reliability estimate.
 
+**Addendum — 2026-08-13, bootstrap interval on κ.** Raised by Riyad as a fair
+question: is 30 items enough to trust 0.7860 as settled? It wasn't previously
+possible to answer that quantitatively — κ had only ever been reported as a
+bare point estimate, here and in the original round. `bootstrap_kappa_interval`
+was added to `src/saferag/pilot/stats.py` (paired non-parametric bootstrap,
+10,000 resamples, same seed convention as the rest of the study) and run on the
+real revision-round labels: **κ = 0.7860, 95% CI [0.4563, 1.0000].** The
+interval is genuinely wide at n=30, and its lower bound sits in "moderate," not
+"reliable," territory — so the honest statement is not "reliability is
+settled" but "the point estimate clears the bar, and the data cannot rule out,
+at 95% confidence, that the true reliability is only moderate." Report the
+interval alongside the point estimate in the paper, not the point estimate
+alone. This does not reopen Section 8's decision rule, which is defined on the
+point estimate and was satisfied — but it is real information the rule itself
+doesn't capture, and hiding it would be exactly the kind of smoothing this
+document exists to prevent.
+
 **The v1.0-vs-v1.1 consistency caveat, resolved.** Flagged when Deviation 2 was
 opened: the original 150 were labelled under v1.0, so a passing κ on v1.1 does
 not by itself certify those specific labels. Evidence bearing on this, from the
