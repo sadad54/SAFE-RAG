@@ -168,19 +168,68 @@ prompt use the composite form `DocumentID::PassageID` (`19::100)`,
 drop trailing punctuation, and sometimes emit a bare DocumentID. That format was
 an implementation choice, not a finding about models.
 
-**The experiment**, run on the university GPU cluster (access obtained 2026-08-03,
-via AnyDesk; repo not yet cloned there -- see `docs/CLUSTER_SETUP.md`), no
-annotation required:
+**The experiment**, run on the lab desktop (16GB Turing card; the university
+cluster access obtained 2026-08-03 was never needed in the end -- see
+`docs/CLUSTER_SETUP.md`), no annotation required:
 
 | | composite ids | ordinal ids `[1]`…`[10]` |
 |---|---|---|
-| Qwen2.5-3B-Instruct | done — 36.3% failure | to run |
-| Qwen2.5-7B-Instruct | to run | to run |
+| Qwen2.5-3B-Instruct | done — 8.3% of cited ids unresolved (pilot, 2,786 q) | done — 0.0% (1/2,706 cited ids), 2026-08-12 |
+| Qwen2.5-7B-Instruct-AWQ | done — 18.3% of cited ids unresolved (337/1,841), 2026-08-13 | done — 0.0% (0/2,258 cited ids), 2026-08-13 |
 
-If failure collapses under ordinal ids, apparent citation hallucination in
-structured-output RAG is largely an artefact of identifier design — a concrete,
-actionable result. If it does not collapse, the 8.3% residual is genuine model
-behaviour. Either outcome is publishable; that is what makes it worth running.
+All four cells generated and filtered. Headline: unresolved-citation rate
+collapses to ~0% under ordinal ids at both model sizes, while composite ids
+fail substantially at both -- and the 7B rate (18.3%) is *higher* than 3B's
+(8.3%), not lower. That's counterintuitive enough to report as-is rather than
+smooth over; don't assume it's noise without checking. Two things to verify
+before writing this up as the result: (1) the 3B composite figure comes from
+the full 2,786-question registered pilot, the other three cells from the
+2,000-question ablation subset (`configs/ablation.yaml`) -- not the same
+sample, so the 3B-vs-7B composite comparison is suggestive, not a controlled
+comparison; a same-subset 3B×composite rerun would close that gap if it
+matters for the write-up. (2) "8.3%" and "18.3%" here are the
+per-cited-id unresolved rate (`CITATION RESOLUTION` block in
+`03_run_filters.py`'s output); the pilot's separately-reported "36.3%" is a
+different metric, per-answer ("answers containing an unresolved citation"),
+not directly comparable to these -- see `docs/PREREGISTRATION.md` L269 vs
+L296 for both pilot numbers side by side.
+
+**2026-08-13 incident, and the resulting model-id change for the 7B row.**
+An attempt to run the 7B cells locally on the lab desktop used vLLM's
+`cpu_offload_gb` to make the fp16 weights fit, and took the whole machine
+down mid-run — a hard power loss, not a CUDA OOM (kernel log shows nothing:
+no OOM-killer, no thermal event, the log just stops). Offloading keeps CPU
+and GPU both under sustained heavy load streaming weights over PCIe every
+forward pass; the combined draw is the likely trigger on this desktop's PSU.
+The 7B row now runs on `Qwen/Qwen2.5-7B-Instruct-AWQ` (Qwen's own 4-bit
+checkpoint) instead of the fp16 identifier — no offload needed, ~5GiB of
+weights. Same base weights and instruction tune as the 3B row's family, just
+quantized; not a change to `PREREGISTRATION.md` (generation model precision
+was never registered, only that one open-weight model is used and its
+identifier recorded — see §5), but the identifier differs from what's named
+above and in `configs/ablation.yaml`'s original header, so record
+`Qwen2.5-7B-Instruct-AWQ` explicitly in the write-up rather than shortening it
+to "Qwen2.5-7B-Instruct". Details: `src/saferag/generation/generator.py`'s
+`VLLMGenerator` docstring.
+
+The crash also surfaced a second, independent bug: `02_run_rag.py`'s resume
+cache (`data/interim/<run_name>/_generations.jsonl`) invalidates entries by
+prompt hash only, not by which model produced them. The pre-incident fp16
+attempt left a cache under `ablation_7b_composite` that the AWQ rerun would
+have silently resumed from — reusing fp16-generated answers inside what's
+supposed to be a pure-AWQ cell — had the file not also been corrupted
+mid-write by the power loss, which is what actually surfaced it (crashed on
+the corrupted line instead of silently mixing models). Worked around by
+moving the stale file aside (`_generations.jsonl.pre-incident-fp16-corrupt.bak`)
+before rerunning. Not fixed at the code level yet: the cache key should
+include the model identifier. Low urgency day-to-day (`run_name` is
+conventionally one model per cell) but worth doing before the next time a
+model gets swapped under an existing `run_name`.
+
+Failure collapses under ordinal ids at both model sizes (see table above) --
+apparent citation-resolution failure in structured-output RAG is largely an
+artefact of identifier design, not a capability limit. That's the concrete,
+actionable result this ablation was built to get either way.
 
 **What needs building first — done 2026-08-10:**
 
@@ -202,16 +251,19 @@ behaviour. Either outcome is publishable; that is what makes it worth running.
    migrated into `data/interim/pilot_v1/` and `runs/pilot_v1/` (gitignored,
    no history impact).
 
-**Not yet run.** The repo isn't cloned onto the cluster yet — see
-`docs/CLUSTER_SETUP.md` for that, then the run commands in
-`configs/ablation.yaml`'s header comment. Not urgent while the revision round is
-the priority.
+**Status 2026-08-13.** All four cells generated and filtered on the lab
+desktop; the cluster was never needed. Result is in the table above. Next:
+build the actual comparison table/figure for the write-up (the numbers exist
+now, just scattered across four `03_run_filters.py` runs), decide on the
+2,786-vs-2,000-question sample-size caveat above, then write.
 
 **Once the ablation has run:**
 
-1. Run all four ablation configurations. vLLM on the cluster (`backend: vllm`) —
-   roughly 10× the Colab transformers path; the full 2,786 questions in minutes.
-2. `scripts/03_run_filters.py` on each; build the comparison table.
+1. ~~Run all four ablation configurations.~~ Done -- see the table above.
+2. ~~`scripts/03_run_filters.py` on each.~~ Done for all four. Build the
+   actual comparison table/figure from the four `filtered.jsonl` runs for the
+   write-up -- the per-cell numbers exist (table above) but aren't yet pulled
+   into one artefact.
 3. Write. **ALTA 2026, deadline 11 September**, archival, ACL Anthology.
 
 **Paper structure (short paper) — settled 2026-08-12, kappa cleared:**

@@ -104,6 +104,19 @@ def main() -> int:
     ap.add_argument("--batch-size", type=int, default=8, help="Generation batch size")
     ap.add_argument("--model", default=None, help="Override the generation model")
     ap.add_argument(
+        "--cpu-offload-gb", type=float, default=0.0,
+        help=(
+            "vLLM: GiB of model weights to keep in host RAM instead of GPU VRAM. "
+            "AVOID on the lab desktop (16GB Turing, shared) -- it keeps CPU and GPU "
+            "both under sustained load streaming weights over PCIe every forward "
+            "pass, and that combined draw took the whole machine down mid-run on "
+            "2026-08-13 (hard power loss, not a CUDA OOM -- see generator.py's "
+            "VLLMGenerator docstring). For Qwen2.5-7B-Instruct on this card, use "
+            "--model Qwen/Qwen2.5-7B-Instruct-AWQ instead: no offload needed, "
+            "~5GiB of weights, no code change required."
+        ),
+    )
+    ap.add_argument(
         "--id-style", default=None, choices=ID_STYLES,
         help=(
             "Override generation.id_style -- 'composite' (DocumentID::PassageID, "
@@ -178,6 +191,8 @@ def main() -> int:
         }
         if backend == "vllm":
             gen_kwargs["temperature"] = cfg.generation.temperature
+            if args.cpu_offload_gb:
+                gen_kwargs["cpu_offload_gb"] = args.cpu_offload_gb
     generator = build_generator(backend, model_name, **gen_kwargs)
 
     # Retrieve first, so generation can be batched.
