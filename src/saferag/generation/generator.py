@@ -381,11 +381,21 @@ class VLLMGenerator(Generator):
             raise ImportError(
                 "vLLM is Linux + CUDA only: pip install -e '.[serve]' on the cluster."
             ) from exc
-        # vLLM's init profiling pass runs a dummy forward at max_model_len tokens
-        # to size the KV cache. The model's native 32768 makes that dummy batch
-        # alone OOM on this 16GB Turing card once the fp16 weights (~14.2GiB)
-        # are loaded -- there's well under 1GiB left. Our prompts (top_k=10
-        # passages, ~150 tok avg) plus 512 generated tokens fit well inside 8192.
+        # bfloat16 (vLLM's default for these model configs) needs compute
+        # capability >= 8.0 (Ampere+); this card is Turing (7.5), so float16 is
+        # required, not optional.
+        #
+        # vLLM's default gpu_memory_utilization=0.9 is computed against TOTAL
+        # device memory, not free memory -- on this shared desktop, the display
+        # session and remote-desktop daemon already hold a slice of VRAM, which
+        # overshoots that budget and OOMs at engine init. 0.85 leaves headroom.
+        #
+        # vLLM's init profiling pass also runs a dummy forward at max_model_len
+        # tokens to size the KV cache. The model's native 32768 makes that dummy
+        # batch alone OOM on this 16GB card once the fp16 weights (~14.2GiB) are
+        # loaded -- there's well under 1GiB left. Our prompts (top_k=10 passages,
+        # ~150 tok avg) plus 512 generated tokens fit well inside 8192.
+        #
         # cpu_offload_gb keeps that many GiB of weights in host RAM instead of
         # VRAM, streamed over PCIe per forward pass. Left at 0 by default -- see
         # the class docstring for why this is not the fix for the 7B model on

@@ -21,7 +21,7 @@ from pathlib import Path
 
 from _common import base_parser, load_cfg, paths  # noqa: E402
 
-from saferag.pilot.stats import cohens_kappa, interpret_kappa  # noqa: E402
+from saferag.pilot.stats import bootstrap_kappa_interval, cohens_kappa, interpret_kappa  # noqa: E402
 from saferag.utils.io import read_jsonl  # noqa: E402
 from saferag.utils.logging import get_logger  # noqa: E402
 
@@ -82,13 +82,22 @@ def main() -> int:
     kappa = cohens_kappa(labels_a, labels_b)
     observed = sum(1 for a, b in zip(labels_a, labels_b, strict=True) if a == b) / len(shared)
 
+    # How much would kappa move on a different draw of the same 30 items? Bare
+    # point estimates on a small revision batch invite exactly the "is this
+    # solid" question -- answer it with a number instead of reassurance.
+    kappa_ci = bootstrap_kappa_interval(labels_a, labels_b, seed=cfg.seed)
+
     print("\n" + "=" * 74)
     print("  REVISION-ROUND INTER-ANNOTATOR AGREEMENT")
     print("=" * 74)
     print(f"    batch                  {args.batch_stem}")
     print(f"    overlapping items      {len(shared)} of {len(pools)}")
     print(f"    observed agreement     {observed:.4f}")
-    print(f"    Cohen's kappa          {kappa:.4f}")
+    if kappa_ci.low == kappa_ci.low:  # not nan
+        print(f"    Cohen's kappa          {kappa:.4f}   95% bootstrap CI [{kappa_ci.low:.4f}, {kappa_ci.high:.4f}]")
+    else:
+        print(f"    Cohen's kappa          {kappa:.4f}   (bootstrap CI not computable -- too many "
+              "degenerate resamples at this n; treat the point estimate cautiously)")
     print(f"    reading                {interpret_kappa(kappa)}")
 
     disagreements = [i for i in shared if first[i]["label"] != second[i]["label"]]
@@ -110,6 +119,9 @@ def main() -> int:
                 "n_total": len(pools),
                 "observed_agreement": observed,
                 "cohens_kappa": kappa,
+                "cohens_kappa_ci_low": None if kappa_ci.low != kappa_ci.low else kappa_ci.low,
+                "cohens_kappa_ci_high": None if kappa_ci.high != kappa_ci.high else kappa_ci.high,
+                "cohens_kappa_ci_confidence": kappa_ci.confidence,
                 "reading": interpret_kappa(kappa),
                 "disagreements": [
                     {
