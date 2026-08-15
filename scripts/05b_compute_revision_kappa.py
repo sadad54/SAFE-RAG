@@ -109,7 +109,17 @@ def main() -> int:
         print(f"    {args.annotator:<10}  {a_rec['label']:<3}  note: {a_rec.get('note') or '(none)'}")
         print(f"    {args.second:<10}  {b_rec['label']:<3}  note: {b_rec.get('note') or '(none)'}")
 
-    out = p["runs"] / "revision_kappa.json"
+    # revision_kappa.json (no suffix) is specifically the Section 8-registered
+    # single revision round -- batch_02, the construct-validation figure
+    # scripts/05_compute_results.py's fallback logic treats as "the" operative
+    # reliability figure when no --extra-batch is given. Any OTHER batch stem
+    # (e.g. batch_03, an Amendment-3-style volume extension) gets its own file
+    # so it can never silently clobber that figure -- see 2026-08-15 incident,
+    # PREREGISTRATION.md Section 11 Amendment 3, where batch_03's run
+    # overwrote batch_02's cached result (no data lost -- source labels are
+    # committed and the file is reproducible -- but the naming bug is real).
+    out_name = "revision_kappa.json" if args.batch_stem == "batch_02" else f"revision_kappa_{args.batch_stem}.json"
+    out = p["runs"] / out_name
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
         json.dumps(

@@ -8,9 +8,10 @@ passage; single-reference = exactly one. Declared BEFORE this script was run
 against real labels, specifically to keep the category boundary from being
 chosen by whichever split makes the numbers look best.
 
-This is a DESCRIPTIVE secondary cut over the same 150 primary labels used for
-the headline `r` -- unweighted (not re-stratified by S3 pool, which would
-fragment n=150 into cells too small to interpret). It does not change the
+This is a DESCRIPTIVE secondary cut over the same primary labels used for the
+headline `r` (pass --extra-batch to match whatever scripts/05_compute_results.py
+was run with) -- unweighted (not re-stratified by S3 pool, which would
+fragment the sample into cells too small to interpret). It does not change the
 primary stratified estimate in scripts/05_compute_results.py.
 
 Output: runs/<run>/rqa_breakdown.json
@@ -43,6 +44,11 @@ def load_labels(path: Path) -> dict[str, str]:
 def main() -> int:
     ap = base_parser("RQ-a: deceptive-grounding rate by question type (cross-reference vs single).")
     ap.add_argument("--annotator", required=True, help="Primary annotator name")
+    ap.add_argument(
+        "--extra-batch", action="append", default=[],
+        help="Additional batch stem(s) folded into the primary sample, matching "
+             "scripts/05_compute_results.py's --extra-batch (e.g. --extra-batch batch_03).",
+    )
     args = ap.parse_args()
 
     cfg = load_cfg(args)
@@ -61,8 +67,15 @@ def main() -> int:
         if "item_id" in r:
             n_gold[r["item_id"]] = len(r.get("gold_passage_ids", []))
 
+    labels: dict[str, str] = {}
     try:
-        labels = load_labels(p["annotation"] / "labels_{}_batch_01.jsonl".format(args.annotator))
+        for stem in ["batch_01", *args.extra_batch]:
+            stem_labels = load_labels(p["annotation"] / f"labels_{args.annotator}_{stem}.jsonl")
+            overlap = set(stem_labels) & set(labels)
+            if overlap:
+                log.error("%d item_id(s) in %s already present from an earlier batch -- refusing to merge.", len(overlap), stem)
+                return 1
+            labels.update(stem_labels)
     except FileNotFoundError as exc:
         log.error(str(exc))
         return 1

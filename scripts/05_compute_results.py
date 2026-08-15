@@ -37,19 +37,41 @@ def main() -> int:
     ap = base_parser("Compute the deceptive grounding base rate.")
     ap.add_argument("--annotator", required=True, help="Primary annotator name")
     ap.add_argument("--second", default=None, help="Second annotator name (for kappa)")
+    ap.add_argument(
+        "--extra-batch", action="append", default=[],
+        help=(
+            "Additional batch stem(s) whose double-annotated items fold into the "
+            "primary sample, e.g. --extra-batch batch_03. Each must have its own "
+            "<stem>_key.jsonl and labels_<annotator>_<stem>.jsonl. See "
+            "PREREGISTRATION.md Section 11, Amendment 3."
+        ),
+    )
     args = ap.parse_args()
 
     cfg = load_cfg(args)
     p = paths(cfg)
 
-    key_path = p["annotation"] / "batch_01_key.jsonl"
-    if not key_path.exists():
-        log.error("%s not found. Run scripts/04_make_annotation_batch.py first.", key_path)
-        return 1
-    pools = {r["item_id"]: r["pool"] for r in read_jsonl(key_path)}
+    batch_stems = ["batch_01", *args.extra_batch]
 
-    labels = load_labels(p["annotation"] / f"labels_{args.annotator}_batch_01.jsonl")
-    log.info("Primary labels: %d", len(labels))
+    pools: dict[str, str] = {}
+    labels: dict[str, str] = {}
+    for stem in batch_stems:
+        key_path = p["annotation"] / f"{stem}_key.jsonl"
+        if not key_path.exists():
+            log.error("%s not found. Run scripts/04_make_annotation_batch.py first.", key_path)
+            return 1
+        stem_pools = {r["item_id"]: r["pool"] for r in read_jsonl(key_path)}
+        overlap = set(stem_pools) & set(pools)
+        if overlap:
+            log.error("%d item_id(s) in %s already present from an earlier batch -- refusing to merge.", len(overlap), stem)
+            return 1
+        pools.update(stem_pools)
+
+        stem_labels = load_labels(p["annotation"] / f"labels_{args.annotator}_{stem}.jsonl")
+        labels.update(stem_labels)
+        log.info("%s: %d labels", stem, len(stem_labels))
+
+    log.info("Primary labels (%s): %d", ", ".join(batch_stems), len(labels))
 
     missing = set(pools) - set(labels)
     if missing:

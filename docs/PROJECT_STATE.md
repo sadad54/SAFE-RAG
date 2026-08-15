@@ -22,8 +22,11 @@ instead). **Reversed 2026-08-10:** Riyad asked for another attempt at the B/C
 boundary. The one registered revision round (Section 8) was run — guidelines
 sharpened to v1.1, 30 fresh items double-annotated by both Adnan and Riyad in
 parallel — and **cleared the threshold convincingly: κ = 0.7860, "reliable,"
-27/30 exact agreement.** The base rate `r = 5.9% [2.2%, 10.7%]` is a primary
-result again. The ID-format ablation is still fully built and still a good
+27/30 exact agreement.** The base rate is a primary result again, and as of
+2026-08-15 a further 50-item batch (batch_03, Amendment 3) has been folded
+into the primary sample: `r = 8.6% [4.5%, 13.5%]` on n=200, up from
+`r = 5.9% [2.2%, 10.7%]` on n=150 — see "The batch_03 extension result" below.
+The ID-format ablation is still fully built and still a good
 secondary result; it's queued behind writing up the revision-round outcome and
 one open scope decision (below).
 
@@ -70,12 +73,32 @@ the time budget you were explicit about, and that's your and Riyad's call.
 
 A further 50 items, double-annotated by both Adnan and Riyad (Amendment 3,
 `PREREGISTRATION.md` §11), scored **κ = 0.6678** — "usable," not "reliable"
-(the Deviation-2 revision batch cleared 0.7860). 6/50 disagreements; 5 of them
-run PI-B/Riyad-A, the same direction as the original round's bias but now with
-Adnan over-calling B rather than under-calling it. Reported plainly rather than
-smoothed over. **Open:** whether these 50 fold into the primary n=150
-(→200) or stand as a second, separate reliability check — undecided, see the
-Amendment 3 entry.
+(the Deviation-2 revision batch cleared 0.7860, and remains the operative
+figure for construct validity — see below). 6/50 disagreements; 5 of them run
+PI-B/Riyad-A, the same direction as the original round's bias but now with
+Adnan over-calling B rather than under-calling it. Reported plainly rather
+than smoothed over.
+
+**Resolved: folded into the primary sample.** `scripts/05_compute_results.py
+--extra-batch batch_03` (n=150→200):
+
+```
+r = 8.6% [4.5%, 13.5%]   (was 5.9% [2.2%, 10.7%])
+R = 3.2% [1.7%, 5.1%]
+```
+
+Verdict stays `THIN BUT REAL` (still the 0.05–0.099 band), but the point
+estimate moved up meaningfully — mostly `candidate_recoverable`'s B-rate,
+13.8%→20.8%. **This is now the current primary result, superseding the
+5.9% figure above** wherever it's quoted elsewhere in this document or the
+README.
+
+In the process, a file-naming bug was caught and fixed:
+`05b_compute_revision_kappa.py` was overwriting one shared `revision_kappa.json`
+regardless of batch, so the batch_03 run had silently clobbered the batch_02
+result. No data lost (reproducible from committed labels, `runs/` is
+gitignored) but the script now writes batch-specific filenames. Full detail
+in `PREREGISTRATION.md` §11, Amendment 3.
 
 ## The 2026-08-10 decision — Path B reversed
 
@@ -126,26 +149,37 @@ Generation ran on Colab; retrieval and filtering are CPU-reproducible.
 ambiguous.** 36.3% of schema-valid answers contain at least one unresolvable id.
 126 answers cite nothing resolvable.
 
-**Deceptive grounding — primary result, revision round complete.**
-`r = 5.9% [2.2%, 10.7%]`, unconditional `R = 2.2% [0.8%, 4.0%]`.
-Per stratum: recoverable 13.8%, unrecoverable 5.0%, control 4.0%.
-**Operative kappa = 0.7860, 95% bootstrap CI [0.4563, 1.0000]** (30-item
-revision batch, CI added 2026-08-13 after Riyad asked whether 30 items was
-really enough to trust). The point estimate clears "reliable"; the interval's
-lower bound sits in "moderate" territory, honestly reflecting how much a
-30-item estimate can move. Report both, not the point estimate alone. The
-original round's kappa = 0.3663 (50 items, 2026-08-03) is retained as history —
-the reason the revision round ran — not as the current reliability figure.
-See "The revision round result" above for the open v1.0/v1.1 audit decision.
+**Deceptive grounding — primary result, batch_03 folded in (n=200).**
+`r = 8.6% [4.5%, 13.5%]`, unconditional `R = 3.2% [1.7%, 5.1%]` (2026-08-15,
+`scripts/05_compute_results.py --extra-batch batch_03`; supersedes the
+n=150 figure `r = 5.9% [2.2%, 10.7%]` from before the fold-in — see "The
+batch_03 extension result" above for the full detail and the file-naming bug
+caught along the way).
+Per stratum: recoverable 20.8% (n=106), unrecoverable 3.7% (n=27),
+control 6.0% (n=67).
+**Operative kappa = 0.7860, 95% bootstrap CI [0.4563, 1.0000]** — this is
+construct-validity evidence from the batch_02 revision round specifically
+(30 items, CI added 2026-08-13 after Riyad asked whether 30 items was really
+enough to trust) and is unaffected by the batch_03 fold-in, which is a
+volume extension to the primary sample, not a second construct-validation
+round. The point estimate clears "reliable"; the interval's lower bound sits
+in "moderate" territory, honestly reflecting how much a 30-item estimate can
+move. Report both, not the point estimate alone. batch_03's own κ = 0.6678
+("usable") is separate, later evidence — see Amendment 3 — not a replacement
+for the 0.7860 figure. The original round's kappa = 0.3663 (50 items,
+2026-08-03) is retained as history — the reason the revision round ran — not
+as a current reliability figure. See "The revision round result" above for
+the open v1.0/v1.1 audit decision.
 
-**RQ-a (2026-08-12).** Operational definition declared first as Amendment 2
-(`PREREGISTRATION.md` §11): cross-reference = >1 gold passage, single-reference
-= 1. Result over the 150 primary labels: cross-reference **8.6% [3.0%, 22.4%]**
-(n=35), single-reference **9.6% [5.4%, 16.3%]** (n=115). Intervals overlap
-heavily — **no detectable difference by this cut**, and the cross-reference
-group is small enough (n=35) that this doesn't rule much out either way. Report
-honestly as a null secondary result, not a finding. `scripts/05c_rqa_breakdown.py`,
-`runs/pilot_v1/rqa_breakdown.json`.
+**RQ-a (2026-08-15, recomputed after the batch_03 fold-in).** Operational
+definition declared first as Amendment 2 (`PREREGISTRATION.md` §11):
+cross-reference = >1 gold passage, single-reference = 1. Result over the 200
+primary labels: cross-reference **16.3% [8.1%, 30.0%]** (n=43),
+single-reference **12.7% [8.4%, 18.9%]** (n=157). Intervals still overlap
+heavily — **no detectable difference by this cut**, same qualitative
+conclusion as the n=150 version, just both rates shifted up with the overall
+base rate. Report honestly as a null secondary result, not a finding.
+`scripts/05c_rqa_breakdown.py --extra-batch batch_03`, `runs/pilot_v1/rqa_breakdown.json`.
 
 ## Next task: commit labels, finalize the primary result, decide on the audit
 
@@ -282,9 +316,11 @@ now, just scattered across four `03_run_filters.py` runs), decide on the
 **Paper structure (short paper) — settled 2026-08-12, kappa cleared:**
 
 1. Funnel evaluation of structured-output RAG on ObliQA
-2. Deceptive-grounding base rate (`r = 5.9%`), κ = 0.7860 after the one
-   permitted revision round, both rounds narrated honestly (0.37 → guideline
-   fix → 0.79, not just the final number)
+2. Deceptive-grounding base rate (`r = 8.6%`, n=200 after the batch_03
+   fold-in), κ = 0.7860 after the one permitted revision round, all rounds
+   narrated honestly (0.37 → guideline fix → 0.79, not just the final number;
+   batch_03's later κ = 0.6678 reported alongside as separate volume-extension
+   evidence, not conflated with the construct-validation figure)
 3. **Citation-ID resolution failure and its dependence on identifier format**
    (from the ablation, once run)
 4. Released pipeline and pre-registration

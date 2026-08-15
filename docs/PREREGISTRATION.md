@@ -518,6 +518,40 @@ silently by whichever script happens to run next.
 
 **Who decided.** Adnan and Riyad, jointly, 2026-08-15.
 
+**Resolution — 2026-08-15.** Fold in. `scripts/05_compute_results.py` gained
+an `--extra-batch` argument (merges an additional `<stem>_key.jsonl` +
+`labels_<annotator>_<stem>.jsonl` pair into the primary pools/labels before
+estimation; refuses to merge on any `item_id` collision). Re-run with
+`--extra-batch batch_03`:
+
+```
+r = 8.6% [4.5%, 13.5%]   (was 5.9% [2.2%, 10.7%] on n=150)
+R = 3.2% [1.7%, 5.1%]
+n = 200 (150 + 50)
+```
+
+Verdict unchanged (`THIN BUT REAL`, 0.05–0.099 band) but the point estimate
+moved up meaningfully — driven mostly by `candidate_recoverable`'s B-rate
+rising from 13.8% (n=80) to 20.8% (n=106). Reported as-is, not smoothed
+toward the earlier figure.
+
+**A file-naming bug caught in the process.** `scripts/05b_compute_revision_kappa.py`
+wrote every batch's result to the same `runs/pilot_v1/revision_kappa.json`
+regardless of `--batch-stem`, so running it for batch_03 silently overwrote
+the batch_02 result (κ = 0.7860) that Deviation 2's resolution depends on. No
+data was actually lost — `runs/` is gitignored so the file itself was never
+authoritative, and it's fully reproducible from the committed
+`labels_*_batch_02.jsonl` files, which is how it was restored — but the bug
+was real and is fixed: output is now `revision_kappa.json` only for
+`batch_02` specifically (the Section 8-registered construct-validation
+figure `05_compute_results.py`'s fallback logic depends on), and
+`revision_kappa_<stem>.json` for every other batch, so this class of
+collision can't recur. **The operative reliability figure for whether B/C is
+distinguishable at all remains batch_02's κ = 0.7860** ("reliable") — batch_03's
+κ = 0.6678 ("usable") is a second, later, separate check on different items,
+not a replacement for it, and the two are no longer capable of clobbering
+each other on disk.
+
 | Date | Section | Deviation | Reason |
 |---|---|---|---|
 | 2026-08-15 | 6, 8 | Amendment 3 (above) | Further 50-item double-annotation extension (batch_03), κ = 0.6678, "usable" band. Disagreement direction reversed from the original round. Whether to fold into the primary n=150 is open. |
