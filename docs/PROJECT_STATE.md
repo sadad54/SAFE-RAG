@@ -1,9 +1,11 @@
 # Project state — read this first
 
-**Last updated:** 2026-08-12
+**Last updated:** 2026-08-15
 **Current plan: base rate reinstated as a primary result.** The revision round
 succeeded — κ = 0.7860, "reliable" band. See "The revision round result
-(2026-08-12)" below.
+(2026-08-12)" below. A further 50-item extension (batch_03) scored κ = 0.6678,
+"usable" band — see "The batch_03 extension result (2026-08-15)" below; whether
+it folds into the primary sample is still an open decision.
 
 A handoff document. If you are picking this project up cold — a new conversation,
 a collaborator, or yourself in three weeks — read this, then `PREREGISTRATION.md`.
@@ -63,6 +65,17 @@ tightly, and the primary sample is 150. Two live options:
 Neither is registered — either is now a further §11 entry regardless of which
 you pick. This is flagged rather than decided because it trades rigor against
 the time budget you were explicit about, and that's your and Riyad's call.
+
+## The batch_03 extension result (2026-08-15)
+
+A further 50 items, double-annotated by both Adnan and Riyad (Amendment 3,
+`PREREGISTRATION.md` §11), scored **κ = 0.6678** — "usable," not "reliable"
+(the Deviation-2 revision batch cleared 0.7860). 6/50 disagreements; 5 of them
+run PI-B/Riyad-A, the same direction as the original round's bias but now with
+Adnan over-calling B rather than under-calling it. Reported plainly rather than
+smoothed over. **Open:** whether these 50 fold into the primary n=150
+(→200) or stand as a second, separate reliability check — undecided, see the
+Amendment 3 entry.
 
 ## The 2026-08-10 decision — Path B reversed
 

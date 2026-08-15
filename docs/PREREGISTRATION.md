@@ -469,8 +469,58 @@ as a limitation of this specific breakdown rather than hidden. `scripts/05c_rqa_
 
 **Who decided.** Adnan, 2026-08-12, on the recommendation above.
 
+### Amendment 3 — batch_03: a further 50-item double-annotation extension
+
+**Date.** 2026-08-15
+**Sections affected.** 6 (sampling), 8 (inter-annotator agreement)
+**Status when made.** After Deviation 2's revision round had already succeeded
+(κ = 0.7860 on 30 items). This is a further, voluntary extension beyond what
+Section 8 requires, not a response to a failed threshold.
+
+**What happened.** A further 50 items were drawn with `04b_make_revision_batch.py
+--stem batch_03` (seed 20260728), disjoint from the 180 items already used
+across the primary 150 and the Deviation-2 revision batch, stratified
+proportionally to the registered allocation (26 candidate_recoverable / 7
+candidate_unrecoverable / 17 control — no shortfall in any stratum). Both
+annotators (Adnan, Riyad) labelled all 50, independently, guidelines v1.1
+unchanged.
+
+**Result.** Observed agreement 0.8800, **Cohen's κ = 0.6678**, 95% bootstrap CI
+[0.4068, 0.8837] — the "usable" band (0.50–0.69), not the "reliable" band
+(≥0.70) the Deviation-2 revision batch cleared. Per Section 8's decision table
+for this band: proceed, report κ prominently, and include a qualitative
+disagreement analysis. 6 of 50 items disagreed; full detail with both
+annotators' notes in `runs/pilot_v1/revision_kappa.json`
+(`--batch-stem batch_03`).
+
+**Disagreement pattern, reported plainly.** 5 of the 6 disagreements are cases
+where Adnan labelled B and Riyad labelled A — the same *direction* as the
+original 50-item round's bias (Deviation 1), but now running the opposite way:
+in the original round the PI under-called B relative to Riyad (7 A→B flips out
+of 50); here Adnan over-calls B relative to Riyad. Not assumed to be noise
+without comment — flagged here rather than smoothed over, per the project's
+standing practice of reporting bias direction rather than only the aggregate
+number.
+
+**Why this is an Amendment, not a Deviation.** Nothing in Sections 2–9 is
+violated or reinterpreted. Section 8 permits exactly one guideline-revision
+round in response to a failing κ (Deviation 2, already used and closed); this
+extension does not revise the guidelines again and is not a response to a
+failing threshold — κ here is comfortably above 0.50 on first attempt. It adds
+annotated volume under the existing, already-validated v1.1 guidelines.
+
+**Open decision — not yet made.** Whether these 50 items are folded into the
+primary stratified estimator (Section 7), moving `n` from 150 to 200 and
+tightening the confidence interval on `r`, or reported as a standalone
+second reliability check alongside the existing 150, is undecided as of this
+entry. Either is defensible; recorded here as open rather than decided
+silently by whichever script happens to run next.
+
+**Who decided.** Adnan and Riyad, jointly, 2026-08-15.
+
 | Date | Section | Deviation | Reason |
 |---|---|---|---|
+| 2026-08-15 | 6, 8 | Amendment 3 (above) | Further 50-item double-annotation extension (batch_03), κ = 0.6678, "usable" band. Disagreement direction reversed from the original round. Whether to fold into the primary n=150 is open. |
 | 2026-08-12 | 2 | Amendment 2 (above) | RQ-a's "cross-reference" was never operationally defined in Section 4. Defined as >1 gold passage, declared before the breakdown was computed. |
 | 2026-08-12 | 8, 9 | Deviation 2 resolution (above) | κ = 0.7860 on the 30-item revision batch, "reliable" band. Base rate reinstated as primary result. v1.0/v1.1 label-consistency gap reported as a limitation, not audited. |
 | 2026-08-10 | 8, 9 | Deviation 2 (above) | Deviation 1 reversed. Registered revision round now executing: guidelines sharpened to v1.1, 30 fresh items double-annotated by both annotators in parallel, κ to be recomputed. |
