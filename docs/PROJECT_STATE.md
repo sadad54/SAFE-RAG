@@ -442,6 +442,14 @@ annotators.
 - Every artefact carries a provenance header: git SHA, config hash, seed, models.
   Scripts warn on a dirty tree and print the resolved repo root.
 - Data is gitignored. Annotation **labels** are committed; **batches** are not.
+- **Exception, 2026-08-16:** `answers.jsonl` and `filtered.jsonl` for the three
+  completed ablation cells (`ablation_3b_ordinal`, `ablation_7b_composite`,
+  `ablation_7b_ordinal`) are force-committed under `data/interim/`, despite the
+  blanket gitignore rule above -- a second machine needed them and git was the
+  only channel available. They embed ADGM passage text like everything else
+  `data/interim/` normally excludes; this is a one-off, not a policy change.
+  `_generations.jsonl` (resume cache) and the `pilot_v1` pipeline's own
+  interim data are NOT committed and remain regenerate-locally as usual.
 - `labels_adnan_batch_01RIP.jsonl` is a voided first pass, kept for transparency.
   It is not loaded by any script.
 - `pytest` before anything that produces a number. 96 tests.
