@@ -174,3 +174,6 @@ current status.
 ## Licence
 
 MIT. See [`LICENSE`](LICENSE).
+
+
+For resume and manuscript claims, see [Research evidence and claim boundaries](docs/RESEARCH_EVIDENCE.md).

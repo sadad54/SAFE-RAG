@@ -4,8 +4,8 @@
 **Current plan: base rate reinstated as a primary result.** The revision round
 succeeded — κ = 0.7860, "reliable" band. See "The revision round result
 (2026-08-12)" below. A further 50-item extension (batch_03) scored κ = 0.6678,
-"usable" band — see "The batch_03 extension result (2026-08-15)" below; whether
-it folds into the primary sample is still an open decision.
+"usable" band — see "The batch_03 extension result (2026-08-15)" below.
+It has been folded into the primary sample (n=200); the earlier open decision is resolved.
 
 A handoff document. If you are picking this project up cold — a new conversation,
 a collaborator, or yourself in three weeks — read this, then `PREREGISTRATION.md`.
